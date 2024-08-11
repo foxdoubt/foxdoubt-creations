@@ -14,7 +14,8 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-source-sanity",
       options: {
-        projectId: appConfig.sanityToken,
+        token: appConfig.sanityToken,
+        projectId: appConfig.sanityProjectId,
         dataset: appConfig.sanityDataset,
       },
     },
