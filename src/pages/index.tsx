@@ -140,18 +140,18 @@ const IndexPage: React.FC<PageProps> = ({ data }) => {
   console.log({ data });
   return (
     <main style={pageStyles}>
-      <h1 className="alegreya" style={headingStyles}>
+      <h1 className="font-site-title" style={headingStyles}>
         Congratulations
         <br />
-        <span style={headingAccentStyles}>
+        <span className="font-main" style={headingAccentStyles}>
           — you just made a Gatsby site! 🎉🎉🎉
         </span>
       </h1>
-      <p style={paragraphStyles}>
+      <p className="font-heading" style={paragraphStyles}>
         Edit <code style={codeStyles}>src/pages/index.tsx</code> to see this
         page update in real-time. 😎
       </p>
-      <ul style={doclistStyles}>
+      <ul className="font-secondary" style={doclistStyles}>
         {docLinks.map((doc) => (
           <li key={doc.url} style={docLinkStyle}>
             <a

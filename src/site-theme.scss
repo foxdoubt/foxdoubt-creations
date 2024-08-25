@@ -1,0 +1,71 @@
+@font-face {
+  font-family: "Alegreya Sans";
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Regular";
+  src: url(/fonts/alegreya-sans-latin-400-normal.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Light";
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Light";
+  src: url(/fonts/roboto-latin-300-normal.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Regular";
+  src: url(/fonts/roboto-latin-400-normal.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Medium";
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Medium";
+  src: url(/fonts/roboto-latin-ext-500-normal.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Slab";
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Regular";
+  src: url(/fonts/roboto-slab-latin-500-normal.woff2) format("woff2");
+}
+
+$black: #000000;
+$orange: #eb8b1a;
+$grey: #999696;
+$font-color: $black;
+$font-color-accent: $orange;
+$font-color-secondary: $grey;
+$font-site-title: "Alegreya Sans", sans-serif;
+$font-main: "Roboto", sans-serif;
+$font-secondary: "Roboto Light", sans-serif;
+$font-heading: "Roboto Slab", serif;
+
+.font-site-title {
+  font-family: $font-site-title;
+}
+
+.font-main {
+  font-family: $font-main;
+}
+
+.font-heading {
+  font-family: $font-heading;
+}
+
+.font-secondary {
+  font-family: $font-secondary;
+}

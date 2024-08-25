@@ -1,1 +1,1 @@
-import "./src/theme.css";
+import "./src/site-theme.scss";
