@@ -69,3 +69,5 @@ $font-heading: "Roboto Slab", serif;
 .font-secondary {
   font-family: $font-secondary;
 }
+
+@import "../shared-components/header/header.scss";
