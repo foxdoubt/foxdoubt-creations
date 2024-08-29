@@ -20,7 +20,7 @@ $tablet-title-font-size: 55px;
   width: $logo-size * 1.25;
   align-items: center;
   @include tablet {
-    width: $logo-size * 1.5;
+    width: $logo-size * 1.75;
   }
   .site-logo {
     width: $logo-size;
@@ -45,6 +45,6 @@ $tablet-title-font-size: 55px;
   .accent-text {
     color: $font-color-accent;
     font-family: $font-site-title-bold;
-    margin: 0 $space-xs;
+    margin: 0 $space-xs 0 10px;
   }
 }
