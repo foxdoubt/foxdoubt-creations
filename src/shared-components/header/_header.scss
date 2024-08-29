@@ -1,0 +1,50 @@
+$logo-image-path: url("/sunguk-kim-fox-unsplash.jpg");
+$logo-size: 75px;
+$logo-container-width: 30%;
+$tablet-header-width: 80%;
+$tablet-title-font-size: 55px;
+
+.header-container {
+  margin-top: $space-sm;
+  header {
+    @include tablet {
+      width: $tablet-header-width;
+      .font-site-title {
+        font-size: $tablet-title-font-size;
+      }
+    }
+  }
+}
+
+.site-logo-container {
+  width: $logo-size * 1.25;
+  align-items: center;
+  @include tablet {
+    width: $logo-size * 1.75;
+  }
+  .site-logo {
+    width: $logo-size;
+    height: $logo-size;
+    background-image: $logo-image-path;
+    background-size: cover;
+    border-radius: 50%;
+    @include tablet {
+      width: $logo-size * 1.25;
+      height: $logo-size * 1.25;
+    }
+  }
+}
+.site-title-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .site-description {
+    font-family: $font-main;
+    font-size: $font-size-md;
+  }
+  .accent-text {
+    color: $font-color-accent;
+    font-family: $font-site-title-bold;
+    margin: 0 $space-xs 0 10px;
+  }
+}
