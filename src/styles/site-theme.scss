@@ -67,9 +67,23 @@ $font-secondary: "Roboto Light", sans-serif;
 $font-heading: "Roboto Slab", serif;
 $font-size-xl: 36px;
 $font-size-md: 18px;
-$space-xs: 3px;
 
-$logo-image-path: url("/tavis-beck-fox-unsplash.jpg");
+// spacing
+$space-xs: 3px;
+$space-sm: 20px;
+
+// screen widths
+$tablet-width: 768px;
+$desktop-width: 1024px;
+
+$logo-image-path: url("/sunguk-kim-fox-unsplash.jpg");
+
+// common layouts
+.flex-row-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
 .font-site-title {
   font-family: $font-site-title;
@@ -88,4 +102,5 @@ $logo-image-path: url("/tavis-beck-fox-unsplash.jpg");
   font-family: $font-secondary;
 }
 
-@import "../shared-components/header/header.scss";
+@import "../styles/mixins";
+@import "../shared-components/header/header";
