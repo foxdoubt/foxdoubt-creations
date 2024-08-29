@@ -6,6 +6,7 @@ const fontNames = [
   "roboto-latin-ext-500-normal",
   "roboto-slab-latin-500-normal",
   "alegreya-sans-latin-400-normal",
+  "alegreya-sans-latin-700-normal",
 ];
 
 export const onRenderBody = ({ setHeadComponents }) => {

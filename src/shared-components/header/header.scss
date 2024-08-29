@@ -1,14 +1,36 @@
-$logo-width: 30%;
+$logo-size: 75px;
+$logo-container-width: 30%;
 
 .header-container {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .site-logo-container {
-  width: $logo-width;
+  width: $logo-container-width;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .site-logo {
+    width: $logo-size;
+    height: $logo-size;
+    background-image: $logo-image-path;
+    background-size: cover;
     border-radius: 50%;
-    width: 100%;
+  }
+}
+.site-title-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .site-description {
+    font-family: $font-main;
+    font-size: $font-size-md;
+  }
+  .accent-text {
+    color: $font-color-accent;
+    font-family: $font-site-title-bold;
+    margin: 0 $space-xs;
   }
 }

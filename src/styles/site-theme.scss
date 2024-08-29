@@ -1,3 +1,5 @@
+@import "../styles/user-agent-overrides.scss";
+
 @font-face {
   font-family: "Alegreya Sans";
   font-weight: 400;
@@ -5,6 +7,15 @@
   font-style: normal;
   font-named-instance: "Regular";
   src: url(/fonts/alegreya-sans-latin-400-normal.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Alegreya Sans Bold";
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Bold";
+  src: url(/fonts/alegreya-sans-latin-700-normal.woff2) format("woff2");
 }
 
 @font-face {
@@ -50,12 +61,19 @@ $font-color: $black;
 $font-color-accent: $orange;
 $font-color-secondary: $grey;
 $font-site-title: "Alegreya Sans", sans-serif;
+$font-site-title-bold: "Alegreya Sans Bold", sans-serif;
 $font-main: "Roboto", sans-serif;
 $font-secondary: "Roboto Light", sans-serif;
 $font-heading: "Roboto Slab", serif;
+$font-size-xl: 36px;
+$font-size-md: 18px;
+$space-xs: 3px;
+
+$logo-image-path: url("/tavis-beck-fox-unsplash.jpg");
 
 .font-site-title {
   font-family: $font-site-title;
+  font-size: $font-size-xl;
 }
 
 .font-main {
