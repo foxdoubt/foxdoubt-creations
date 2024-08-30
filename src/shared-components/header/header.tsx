@@ -5,8 +5,6 @@ const Header = () => {
   const siteDescription = "By Daniel DeWald";
   return (
     <div className="flex-row-center header-container">
-      {/* <SiteLogo />
-        <SiteTitle /> */}
       <header className="flex-row-center">
         <div className="flex-row-center site-logo-container">
           <div className="site-logo"></div>

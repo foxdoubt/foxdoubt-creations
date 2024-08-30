@@ -3,6 +3,7 @@ import * as React from "react";
 const fontNames = [
   "roboto-latin-300-normal",
   "roboto-latin-400-normal",
+  "roboto-latin-700-normal",
   "roboto-latin-ext-500-normal",
   "roboto-slab-latin-500-normal",
   "alegreya-sans-latin-400-normal",
