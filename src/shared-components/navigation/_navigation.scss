@@ -1,0 +1,28 @@
+$nav-padding: 3px;
+$nav-border: 1px solid $light-grey;
+
+.site-navigation-container {
+  border-top: $nav-border;
+  border-bottom: $nav-border;
+  .site-navigation {
+    padding: $space-sm + $nav-padding 0;
+    display: flex;
+  }
+  .about-nav-item {
+    width: 25%;
+    text-align: center;
+    border-right: $nav-border;
+    font-family: $font-main-bold;
+  }
+  .nav-item-container {
+    width: 75%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .nav-item {
+    text-transform: uppercase;
+  }
+  .selected {
+    border-bottom: 2px solid $font-color-accent;
+  }
+}

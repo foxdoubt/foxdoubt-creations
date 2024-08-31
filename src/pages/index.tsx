@@ -2,6 +2,7 @@ import * as React from "react";
 import type { HeadFC, PageProps } from "gatsby";
 import { graphql } from "gatsby";
 import Header from "../shared-components/header/header";
+import Navigation from "../shared-components/navigation/navigation";
 
 const pageStyles = {
   color: "#232129",
@@ -142,6 +143,7 @@ const IndexPage: React.FC<PageProps> = ({ data }) => {
   return (
     <>
       <Header />
+      <Navigation />
       <main style={pageStyles}>
         <h1 className="font-site-title" style={headingStyles}>
           Congratulations
