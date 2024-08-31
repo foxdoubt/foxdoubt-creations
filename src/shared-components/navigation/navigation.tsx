@@ -6,20 +6,22 @@ const Navigation = () => {
   const selected = "artwork";
   return (
     <div className="site-navigation-container">
-      <nav className="site-navigation">
-        <p className="nav-item about-nav-item">{aboutNav}</p>
-        <div className="nav-item-container">
-          {items.map((navItem, i) => {
-            const isSelected = navItem === selected;
-            const classNames = isSelected ? "selected nav-item" : "nav-item";
-            return (
-              <p className={classNames} key={`nav-item-${navItem}-${i}`}>
-                {navItem}
-              </p>
-            );
-          })}
-        </div>
-      </nav>
+      <div className="nav-center">
+        <nav className="site-navigation">
+          <p className="nav-item about-nav-item">{aboutNav}</p>
+          <div className="nav-item-container">
+            {items.map((navItem, i) => {
+              const isSelected = navItem === selected;
+              const classNames = isSelected ? "selected nav-item" : "nav-item";
+              return (
+                <p className={classNames} key={`nav-item-${navItem}-${i}`}>
+                  {navItem}
+                </p>
+              );
+            })}
+          </div>
+        </nav>
+      </div>
     </div>
   );
 };

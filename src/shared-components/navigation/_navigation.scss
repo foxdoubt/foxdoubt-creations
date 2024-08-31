@@ -26,3 +26,10 @@ $nav-border: 1px solid $light-grey;
     border-bottom: 2px solid $font-color-accent;
   }
 }
+
+.nav-center {
+  @include tablet {
+    width: 700px;
+    margin: 0 auto;
+  }
+}
