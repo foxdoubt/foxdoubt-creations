@@ -1,0 +1,12 @@
+.artwork-label {
+  text-transform: capitalize;
+  .artwork-description,
+  .artwork-year {
+    font-family: $font-secondary;
+  }
+}
+
+.artwork-title {
+  font-family: $font-heading;
+  font-size: $font-size-lg;
+}
