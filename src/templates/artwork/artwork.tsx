@@ -1,23 +1,20 @@
 import * as React from "react";
+import { PageProps } from "gatsby";
 
-// todo: figure out how to type props here
-const Artwork = ({ data }: { data: any }) => {
-  const props = {
-    title: "Duck pond trail",
-    medium: "watercolor",
-    size: "9 X 12",
-    year: "2023",
-  };
-  const { title, medium, size, year } = props;
-  console.log("from sanity:", data);
+// todo: write a GraphQL query that uses current slug to query
+// all specific artwork data from Sanity
+// todo: figure out how to type the pageContext
+const Artwork = (props: PageProps) => {
+  const {
+    node: { title, medium, size, completionYear },
+  } = props.pageContext;
+
   return (
     <div className="artwork-template-container">
       <div className="flex-column-center artwork-label">
         <h3 className="artwork-title">{title}</h3>
         <p className="artwork-description">{[medium, size].join(", ")}</p>
-        <p className="artwork-year">{year}</p>
-        <p>data that came from Sanity...</p>
-        <p>{data?.slug}</p>
+        <p className="artwork-year">{completionYear}</p>
       </div>
     </div>
   );

@@ -1,12 +1,17 @@
-import type { GatsbyNode } from "gatsby";
+import type { GatsbyNode, PageProps } from "gatsby";
 import path from "path";
+
+type ArtworkQueryEdges =
+  PageProps<Queries.GetAllArtworkQuery>["data"]["allSanityArtwork"]["edges"];
 
 export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   actions,
 }) => {
-  const { data } = await graphql(`
-    {
+  const { data, errors } = await graphql<
+    PageProps<Queries.GetAllArtworkQuery>["data"]
+  >(`
+    query GetAllArtwork {
       allSanityArtwork {
         edges {
           node {
@@ -28,14 +33,18 @@ export const createPages: GatsbyNode["createPages"] = async ({
       }
     }
   `);
+  if (errors) {
+    throw errors;
+  }
+  const edges: ArtworkQueryEdges = data?.allSanityArtwork.edges || [];
 
-  // figure out how to type `data`
-  (data as any).allSanityArtwork.edges.forEach((node: any) => {
-    const slug = node.slug.current;
-    actions.createPage({
-      path: slug,
-      component: path.resolve(`./src/templates/artwork/artwork.tsx`),
-      context: { slug: slug },
-    });
+  edges.forEach(({ node }) => {
+    if (node.slug?.current) {
+      actions.createPage({
+        path: `/artwork/${node.slug.current}`,
+        component: path.resolve(`./src/templates/artwork/artwork.tsx`),
+        context: { node },
+      });
+    }
   });
 };
