@@ -1,14 +1,11 @@
 import * as React from "react";
-import { PageProps } from "gatsby";
+import { PageProps, graphql } from "gatsby";
 
-// todo: write a GraphQL query that uses current slug to query
-// all specific artwork data from Sanity
-// todo: figure out how to type the pageContext
-const Artwork = (props: PageProps) => {
-  const {
-    node: { title, medium, size, completionYear },
-  } = props.pageContext;
-
+const Artwork = ({ data }: PageProps<Queries.GetArtworkPostQuery>) => {
+  const title = data.sanityArtwork?.title;
+  const medium = data.sanityArtwork?.medium;
+  const size = data.sanityArtwork?.size;
+  const completionYear = data.sanityArtwork?.completionYear;
   return (
     <div className="artwork-template-container">
       <div className="flex-column-center artwork-label">
@@ -19,5 +16,30 @@ const Artwork = (props: PageProps) => {
     </div>
   );
 };
+
+export const query = graphql`
+  query GetArtworkPost($slug: SanitySlugFilterInput) {
+    sanityArtwork(slug: $slug) {
+      size
+      medium
+      completionYear
+      title
+      mainImage {
+        asset {
+          gatsbyImageData
+        }
+      }
+      publishedAt
+      body {
+        children {
+          text
+          marks
+        }
+        style
+        listItem
+      }
+    }
+  }
+`;
 
 export default Artwork;

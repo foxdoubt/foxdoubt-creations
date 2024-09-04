@@ -19,15 +19,6 @@ export const createPages: GatsbyNode["createPages"] = async ({
             slug {
               current
             }
-            medium
-            size
-            completionYear
-            mainImage {
-              _key
-            }
-            body {
-              _rawChildren
-            }
           }
         }
       }
@@ -43,7 +34,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
       actions.createPage({
         path: `/artwork/${node.slug.current}`,
         component: path.resolve(`./src/templates/artwork/artwork.tsx`),
-        context: { node },
+        context: { slug: { current: { eq: node.slug.current } } },
       });
     }
   });
