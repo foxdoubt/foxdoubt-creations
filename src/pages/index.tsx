@@ -6,7 +6,6 @@ import { graphql } from "gatsby";
 // will route later with pages, templates, etc.
 import Header from "../shared-components/header/header";
 import Navigation from "../shared-components/navigation/navigation";
-import Artwork from "../templates/artwork/artwork";
 
 const pageStyles = {
   color: "#232129",
@@ -148,7 +147,6 @@ const IndexPage: React.FC<PageProps> = ({ data }) => {
     <>
       <Header />
       <Navigation />
-      <Artwork />
       <main style={pageStyles}>
         <h1 className="font-site-title" style={headingStyles}>
           Congratulations
