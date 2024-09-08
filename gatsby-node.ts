@@ -3,7 +3,6 @@ import type {
   GatsbyNode,
   PageProps,
 } from "gatsby";
-// import { isNull, isUndefined } from "lodash";
 import path from "path";
 import {
   ArtworkQueryEdges,
