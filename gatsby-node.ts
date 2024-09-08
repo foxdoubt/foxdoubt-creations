@@ -1,8 +1,11 @@
 import type { GatsbyNode, PageProps } from "gatsby";
+// import { isNull, isUndefined } from "lodash";
 import path from "path";
-
-type ArtworkQueryEdges =
-  PageProps<Queries.GetAllArtworkQuery>["data"]["allSanityArtwork"]["edges"];
+import {
+  getPreviousSlug,
+  getNextSlug,
+  ArtworkQueryEdges,
+} from "./src/util/create-artwork-page";
 
 export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
@@ -31,12 +34,8 @@ export const createPages: GatsbyNode["createPages"] = async ({
 
   edges.forEach(({ node }, index) => {
     if (node.slug?.current) {
-      const prevIndex = index > 0 ? index - 1 : null;
-      const nextIndex = index < edges.length - 1 ? index + 1 : null;
-      const previousPost =
-        prevIndex !== null ? edges[prevIndex].node.slug?.current : null;
-      const nextPost =
-        nextIndex !== null ? edges[nextIndex].node.slug?.current : null;
+      const previousPost = getPreviousSlug(edges, index);
+      const nextPost = getNextSlug(edges, index);
       const context = {
         slug: { current: { eq: node.slug.current } },
         previousPost,
