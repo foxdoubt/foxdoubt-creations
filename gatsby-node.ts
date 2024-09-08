@@ -1,11 +1,27 @@
-import type { GatsbyNode, PageProps } from "gatsby";
+import type {
+  CreateSchemaCustomizationArgs,
+  GatsbyNode,
+  PageProps,
+} from "gatsby";
 // import { isNull, isUndefined } from "lodash";
 import path from "path";
 import {
-  getPreviousSlug,
-  getNextSlug,
   ArtworkQueryEdges,
+  createArtworkPageContext,
+  CreateArtworkPageContext,
 } from "./src/util/create-artwork-page";
+
+export const createSchemaCustomization = ({
+  actions,
+}: CreateSchemaCustomizationArgs) => {
+  const { createTypes } = actions;
+  createTypes(`
+    type SitePage implements Node {
+      context: SitePageContext
+    }
+    ${CreateArtworkPageContext}
+  `);
+};
 
 export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
@@ -34,17 +50,10 @@ export const createPages: GatsbyNode["createPages"] = async ({
 
   edges.forEach(({ node }, index) => {
     if (node.slug?.current) {
-      const previousPost = getPreviousSlug(edges, index);
-      const nextPost = getNextSlug(edges, index);
-      const context = {
-        slug: { current: { eq: node.slug.current } },
-        previousPost,
-        nextPost,
-      };
       actions.createPage({
         path: `/artwork/${node.slug.current}`,
         component: path.resolve(`./src/templates/artwork/artwork.tsx`),
-        context,
+        context: createArtworkPageContext(node, edges, index),
       });
     }
   });

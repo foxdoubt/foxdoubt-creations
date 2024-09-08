@@ -1,24 +1,30 @@
 import * as React from "react";
+import isNull from "lodash/isNull";
 import { PageProps, graphql, Link } from "gatsby";
 import { GatsbyImage, StaticImage } from "gatsby-plugin-image";
 
 const Artwork = ({
   data,
   pageContext,
-}: PageProps<Queries.GetArtworkPostQuery>) => {
+}: PageProps<Queries.GetArtworkPostQuery, Queries.SitePageContext>) => {
   const title = data.sanityArtwork?.title;
   const medium = data.sanityArtwork?.medium;
   const size = data.sanityArtwork?.size;
   const completionYear = data.sanityArtwork?.completionYear;
   const gatsbyImageData = data.sanityArtwork?.mainImage?.asset?.gatsbyImageData;
-  const currentPostPath = `/artwork/${(pageContext as any).slug.current.eq}`;
-  const prevPostPath = (pageContext as any).previousPost
-    ? `/artwork/${(pageContext as any).previousPost}`
+
+  const { previousSlug, nextSlug, currentSlug } = pageContext;
+
+  const currentPostPath = `/artwork/${currentSlug}`;
+
+  const prevPostPath = !isNull(previousSlug)
+    ? `/artwork/${previousSlug}`
     : currentPostPath;
 
-  const nextPostPath = (pageContext as any).nextPost
-    ? `/artwork/${(pageContext as any).nextPost}`
+  const nextPostPath = !isNull(nextSlug)
+    ? `/artwork/${nextSlug}`
     : currentPostPath;
+
   return (
     <div className="artwork-template-container">
       <div className="flex-column-center artwork-label">
