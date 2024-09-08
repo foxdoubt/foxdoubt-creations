@@ -1,14 +1,23 @@
+.artwork-template-container {
+  margin: $space-md 0;
+}
+
 .artwork-label {
   text-transform: capitalize;
+
   .artwork-description,
   .artwork-year {
     font-family: $font-secondary;
   }
+  .artwork-year {
+    margin: $space-xs 0;
+  }
   .navigation-container {
+    margin: $space-xs 0;
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-around;
   }
 }
 
