@@ -1,8 +1,41 @@
 import * as React from "react";
 import isNull from "lodash/isNull";
 import { PageProps, graphql, Link } from "gatsby";
-import { GatsbyImage, StaticImage } from "gatsby-plugin-image";
+import {
+  GatsbyImage,
+  IGatsbyImageData,
+  StaticImage,
+} from "gatsby-plugin-image";
+import SanityImage from "gatsby-plugin-sanity-image";
 import Layout from "../../shared-components/layout/layout";
+
+const { useState } = React;
+
+const getMainImageProps = (
+  title: string,
+  imageData: IGatsbyImageData,
+  hotspot: { width: number | null; height: number | null } | null | undefined,
+  showOriginalDims: boolean
+) => {
+  let finalProps: {
+    alt: string;
+    loading: "eager" | "lazy";
+    image: IGatsbyImageData;
+  } = {
+    alt: title,
+    loading: "eager",
+    image: imageData,
+  };
+  if (!showOriginalDims) {
+    const croppedWidth = hotspot?.width || 1;
+    const croppedHeight = hotspot?.height || 1;
+    const width = imageData.width * croppedWidth;
+    const height = imageData.height * croppedHeight;
+    console.log(hotspot, width, height);
+    finalProps.image = { ...finalProps.image, ...{ width, height } };
+  }
+  return finalProps;
+};
 
 const Artwork = ({
   data,
@@ -13,9 +46,12 @@ const Artwork = ({
   const size = data.sanityArtwork?.size;
   const completionYear = data.sanityArtwork?.completionYear;
   const gatsbyImageData = data.sanityArtwork?.mainImage?.asset?.gatsbyImageData;
-
   const { previousSlug, nextSlug, currentSlug } = pageContext;
+  const hotspot = data.sanityArtwork?.mainImage?.hotspot;
 
+  const [showOriginalDimensions, setShowOriginalDimensions] = useState(
+    !(hotspot?.height || hotspot?.width)
+  );
   const currentPostPath = `/artwork/${currentSlug}`;
 
   const prevPostPath = !isNull(previousSlug)
@@ -25,6 +61,8 @@ const Artwork = ({
   const nextPostPath = !isNull(nextSlug)
     ? `/artwork/${nextSlug}`
     : currentPostPath;
+
+  const croppedMessage = "Cropped for optimum viewing on mobile devices.";
 
   return (
     <Layout>
@@ -53,8 +91,23 @@ const Artwork = ({
           </div>
         </div>
         {gatsbyImageData && title && (
-          <GatsbyImage alt={title} image={gatsbyImageData} />
+          <GatsbyImage
+            {...getMainImageProps(
+              title,
+              gatsbyImageData,
+              hotspot,
+              showOriginalDimensions
+            )}
+          />
         )}
+        <p>{!showOriginalDimensions && croppedMessage}</p>
+        <p
+          onClick={() => {
+            setShowOriginalDimensions(!showOriginalDimensions);
+          }}
+        >
+          {!showOriginalDimensions && "Click to view original dimensions"}
+        </p>
       </div>
     </Layout>
   );
@@ -68,8 +121,12 @@ export const query = graphql`
       completionYear
       title
       mainImage {
+        hotspot {
+          width
+          height
+        }
         asset {
-          gatsbyImageData
+          gatsbyImageData(placeholder: BLURRED)
         }
       }
       publishedAt
@@ -84,5 +141,27 @@ export const query = graphql`
     }
   }
 `;
+// export const query = graphql`
+//   query GetArtworkPost($slug: SanitySlugFilterInput) {
+//     sanityArtwork(slug: $slug) {
+//       size
+//       medium
+//       completionYear
+//       title
+//       mainImage {
+//         ...ImageWithPreview
+//       }
+//       publishedAt
+//       body {
+//         children {
+//           text
+//           marks
+//         }
+//         style
+//         listItem
+//       }
+//     }
+//   }
+// `;
 
 export default Artwork;
