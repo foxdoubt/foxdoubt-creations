@@ -79,6 +79,7 @@ $font-heading: "Roboto Slab", serif;
 $font-size-xl: 36px;
 $font-size-lg: 30px;
 $font-size-md: 18px;
+$font-size-sm: 15px;
 
 // spacing
 $space-xs: 5px;
@@ -116,6 +117,16 @@ p {
 
 .font-secondary {
   font-family: $font-secondary;
+}
+
+.button-main {
+  font-size: $font-size-sm;
+  color: $grey;
+  text-align: center;
+  text-decoration: underline;
+  &::first-letter {
+    text-transform: capitalize;
+  }
 }
 
 @import "../styles/mixins";

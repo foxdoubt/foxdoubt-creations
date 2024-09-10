@@ -62,7 +62,11 @@ const Artwork = ({
     ? `/artwork/${nextSlug}`
     : currentPostPath;
 
-  const croppedMessage = "Cropped for optimum viewing on mobile devices.";
+  const artworkViewMessages = {
+    croppedMessage: "cropped for optimum viewing on mobile devices.",
+    originalFormatMessage: "click to view original format.",
+    backToCroppedMessage: "click to view cropped format.",
+  };
 
   return (
     <Layout>
@@ -100,14 +104,19 @@ const Artwork = ({
             )}
           />
         )}
-        <p>{!showOriginalDimensions && croppedMessage}</p>
-        <p
+        <p className="font-main artwork-message">
+          {!showOriginalDimensions && artworkViewMessages.croppedMessage}
+        </p>
+        <button
+          className="font-main button-main"
           onClick={() => {
             setShowOriginalDimensions(!showOriginalDimensions);
           }}
         >
-          {!showOriginalDimensions && "Click to view original dimensions"}
-        </p>
+          {!showOriginalDimensions
+            ? artworkViewMessages.originalFormatMessage
+            : artworkViewMessages.backToCroppedMessage}
+        </button>
       </div>
     </Layout>
   );

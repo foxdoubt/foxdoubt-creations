@@ -25,3 +25,14 @@
   font-family: $font-heading;
   font-size: $font-size-lg;
 }
+
+.artwork-message {
+  margin: $space-xs 0;
+  width: 100%;
+  text-align: center;
+  font-size: $font-size-sm;
+  color: $grey;
+  &::first-letter {
+    text-transform: capitalize;
+  }
+}

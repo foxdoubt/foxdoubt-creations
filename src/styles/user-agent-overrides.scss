@@ -4,3 +4,20 @@ p,
 body {
   margin: 0;
 }
+
+button {
+  width: 100%;
+  appearance: initial;
+  text-shadow: none;
+  display: block;
+  cursor: default;
+  box-sizing: border-box;
+  background-color: initial;
+  margin: 0;
+  padding-block: 0;
+  padding-inline: 0;
+  border-width: 0;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+}
