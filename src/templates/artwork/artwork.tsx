@@ -1,5 +1,7 @@
 import * as React from "react";
 import { isNull, isUndefined } from "lodash";
+import useScreenDimensions from "../../hooks/use-screen-dimensions";
+
 import { PageProps, graphql, Link } from "gatsby";
 import {
   GatsbyImage,
@@ -8,6 +10,8 @@ import {
 } from "gatsby-plugin-image";
 import { PortableText } from "@portabletext/react";
 import Layout from "../../shared-components/layout/layout";
+
+const MOBILE_BREAKPOINT_WIDTH = 480;
 
 const { useState } = React;
 
@@ -59,6 +63,10 @@ const Artwork = ({
   const hotspot = data.sanityArtwork?.mainImage?.hotspot;
   const hasImageCrop = Boolean(hotspot?.height || hotspot?.width);
 
+  const screenDimensions = useScreenDimensions();
+  const isUserOnMobileDevice =
+    screenDimensions.width <= MOBILE_BREAKPOINT_WIDTH;
+
   const [shouldShowCroppedImage, setShouldShowCroppedImage] =
     useState(hasImageCrop);
 
@@ -78,24 +86,26 @@ const Artwork = ({
     backToCroppedMessage: "click to view cropped format.",
   };
 
-  const artworkMessageHtml = shouldShowCroppedImage ? (
-    <p className="font-main artwork-message">
-      {artworkViewMessages.croppedMessage}
-    </p>
-  ) : null;
+  const artworkMessageHtml =
+    isUserOnMobileDevice && shouldShowCroppedImage ? (
+      <p className="font-main artwork-message">
+        {artworkViewMessages.croppedMessage}
+      </p>
+    ) : null;
 
-  const artworkFormatButtonHtml = hasImageCrop ? (
-    <button
-      className="font-main button-main"
-      onClick={() => {
-        setShouldShowCroppedImage(!shouldShowCroppedImage);
-      }}
-    >
-      {shouldShowCroppedImage
-        ? artworkViewMessages.originalFormatMessage
-        : artworkViewMessages.backToCroppedMessage}
-    </button>
-  ) : null;
+  const artworkFormatButtonHtml =
+    isUserOnMobileDevice && hasImageCrop ? (
+      <button
+        className="font-main button-main"
+        onClick={() => {
+          setShouldShowCroppedImage(!shouldShowCroppedImage);
+        }}
+      >
+        {shouldShowCroppedImage
+          ? artworkViewMessages.originalFormatMessage
+          : artworkViewMessages.backToCroppedMessage}
+      </button>
+    ) : null;
 
   return (
     <Layout>
@@ -129,7 +139,7 @@ const Artwork = ({
               title,
               gatsbyImageData,
               hotspot,
-              shouldShowCroppedImage
+              shouldShowCroppedImage && isUserOnMobileDevice
             )}
           />
         )}
