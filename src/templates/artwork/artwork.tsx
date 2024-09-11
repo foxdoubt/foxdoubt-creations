@@ -1,5 +1,5 @@
 import * as React from "react";
-import isNull from "lodash/isNull";
+import { isNull, isUndefined } from "lodash";
 import { PageProps, graphql, Link } from "gatsby";
 import {
   GatsbyImage,
@@ -15,7 +15,7 @@ const getMainImageProps = (
   title: string,
   imageData: IGatsbyImageData,
   hotspot: { width: number | null; height: number | null } | null | undefined,
-  showOriginalDims: boolean
+  showCroppedDims: boolean
 ) => {
   let finalProps: {
     alt: string;
@@ -26,7 +26,7 @@ const getMainImageProps = (
     loading: "eager",
     image: imageData,
   };
-  if (!showOriginalDims) {
+  if (showCroppedDims) {
     const croppedWidth = hotspot?.width || 1;
     const croppedHeight = hotspot?.height || 1;
     const width = imageData.width * croppedWidth;
@@ -48,10 +48,11 @@ const Artwork = ({
   const gatsbyImageData = data.sanityArtwork?.mainImage?.asset?.gatsbyImageData;
   const { previousSlug, nextSlug, currentSlug } = pageContext;
   const hotspot = data.sanityArtwork?.mainImage?.hotspot;
+  const hasImageCrop = Boolean(hotspot?.height || hotspot?.width);
 
-  const [showOriginalDimensions, setShowOriginalDimensions] = useState(
-    !(hotspot?.height || hotspot?.width)
-  );
+  const [shouldShowCroppedImage, setShouldShowCroppedImage] =
+    useState(hasImageCrop);
+
   const currentPostPath = `/artwork/${currentSlug}`;
 
   const prevPostPath = !isNull(previousSlug)
@@ -67,6 +68,25 @@ const Artwork = ({
     originalFormatMessage: "click to view original format.",
     backToCroppedMessage: "click to view cropped format.",
   };
+
+  const artworkMessageHtml = shouldShowCroppedImage ? (
+    <p className="font-main artwork-message">
+      {artworkViewMessages.croppedMessage}
+    </p>
+  ) : null;
+
+  const artworkFormatButtonHtml = hasImageCrop ? (
+    <button
+      className="font-main button-main"
+      onClick={() => {
+        setShouldShowCroppedImage(!shouldShowCroppedImage);
+      }}
+    >
+      {shouldShowCroppedImage
+        ? artworkViewMessages.originalFormatMessage
+        : artworkViewMessages.backToCroppedMessage}
+    </button>
+  ) : null;
 
   return (
     <Layout>
@@ -100,23 +120,13 @@ const Artwork = ({
               title,
               gatsbyImageData,
               hotspot,
-              showOriginalDimensions
+              shouldShowCroppedImage
             )}
           />
         )}
-        <p className="font-main artwork-message">
-          {!showOriginalDimensions && artworkViewMessages.croppedMessage}
-        </p>
-        <button
-          className="font-main button-main"
-          onClick={() => {
-            setShowOriginalDimensions(!showOriginalDimensions);
-          }}
-        >
-          {!showOriginalDimensions
-            ? artworkViewMessages.originalFormatMessage
-            : artworkViewMessages.backToCroppedMessage}
-        </button>
+
+        {artworkMessageHtml}
+        {artworkFormatButtonHtml}
       </div>
     </Layout>
   );
