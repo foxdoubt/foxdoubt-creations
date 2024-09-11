@@ -19,13 +19,6 @@ const config: GatsbyConfig = {
         dataset: appConfig.sanityDataset,
       },
     },
-    {
-      resolve: "gatsby-plugin-sanity-image",
-      options: {
-        projectId: appConfig.sanityProjectId,
-        dataset: appConfig.sanityDataset,
-      },
-    },
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",

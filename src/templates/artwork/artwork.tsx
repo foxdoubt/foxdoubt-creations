@@ -6,7 +6,7 @@ import {
   IGatsbyImageData,
   StaticImage,
 } from "gatsby-plugin-image";
-import SanityImage from "gatsby-plugin-sanity-image";
+import { PortableText } from "@portabletext/react";
 import Layout from "../../shared-components/layout/layout";
 
 const { useState } = React;
@@ -35,6 +35,15 @@ const getMainImageProps = (
     finalProps.image = { ...finalProps.image, ...{ width, height } };
   }
   return finalProps;
+};
+
+const ArtworkPostBody = ({
+  sanityArtwork,
+}: PageProps<Queries.GetArtworkPostQuery>["data"]) => {
+  if (sanityArtwork?._rawBody) {
+    return <PortableText value={sanityArtwork._rawBody} />;
+  }
+  return null;
 };
 
 const Artwork = ({
@@ -127,6 +136,7 @@ const Artwork = ({
 
         {artworkMessageHtml}
         {artworkFormatButtonHtml}
+        <ArtworkPostBody {...data} />
       </div>
     </Layout>
   );
@@ -149,6 +159,7 @@ export const query = graphql`
         }
       }
       publishedAt
+      _rawBody
       body {
         children {
           text
@@ -160,27 +171,5 @@ export const query = graphql`
     }
   }
 `;
-// export const query = graphql`
-//   query GetArtworkPost($slug: SanitySlugFilterInput) {
-//     sanityArtwork(slug: $slug) {
-//       size
-//       medium
-//       completionYear
-//       title
-//       mainImage {
-//         ...ImageWithPreview
-//       }
-//       publishedAt
-//       body {
-//         children {
-//           text
-//           marks
-//         }
-//         style
-//         listItem
-//       }
-//     }
-//   }
-// `;
 
 export default Artwork;
