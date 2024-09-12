@@ -92,6 +92,21 @@ $desktop-width: 1024px;
 
 p {
   font-family: $font-main;
+  &.text-body {
+    font-family: $font-secondary;
+    line-height: ($space-xs + $space-md);
+  }
+}
+
+h2,
+h3 {
+  font-family: $font-main-bold;
+  margin: $space-sm 0;
+}
+
+blockquote {
+  color: $grey;
+  font-size: $font-size-sm;
 }
 
 // common layouts
@@ -123,6 +138,10 @@ p {
   font-family: $font-secondary;
 }
 
+.font-bold {
+  font-family: $font-main-bold;
+}
+
 .button-main {
   font-size: $font-size-sm;
   color: $grey;
@@ -131,6 +150,10 @@ p {
   &::first-letter {
     text-transform: capitalize;
   }
+}
+
+.post-container {
+  margin: 0 $space-md;
 }
 
 @import "../styles/mixins";

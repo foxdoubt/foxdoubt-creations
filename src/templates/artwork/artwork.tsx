@@ -1,5 +1,5 @@
 import * as React from "react";
-import { isNull, isUndefined } from "lodash";
+import { isNull } from "lodash";
 import useScreenDimensions from "../../hooks/use-screen-dimensions";
 
 import { PageProps, graphql, Link } from "gatsby";
@@ -8,7 +8,12 @@ import {
   IGatsbyImageData,
   StaticImage,
 } from "gatsby-plugin-image";
-import { PortableText } from "@portabletext/react";
+import {
+  PortableText,
+  PortableTextBlock,
+  PortableTextComponentProps,
+  PortableTextMarkComponentProps,
+} from "@portabletext/react";
 import Layout from "../../shared-components/layout/layout";
 
 const MOBILE_BREAKPOINT_WIDTH = 480;
@@ -43,11 +48,38 @@ const getMainImageProps = (
   return finalProps;
 };
 
+const richTextComponents = {
+  block: {
+    normal: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
+      <p className="text-body">{children}</p>
+    ),
+    h2: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
+      <h3>{children}</h3>
+    ),
+    blockquote: ({
+      children,
+    }: PortableTextComponentProps<PortableTextBlock>) => (
+      <blockquote className="font-secondary">{children}</blockquote>
+    ),
+  },
+  marks: {
+    strong: ({ children }: PortableTextMarkComponentProps) => (
+      <span className="font-bold">{children}</span>
+    ),
+  },
+};
+
 const ArtworkPostBody = ({
   sanityArtwork,
 }: PageProps<Queries.GetArtworkPostQuery>["data"]) => {
   if (sanityArtwork?._rawBody) {
-    return <PortableText value={sanityArtwork._rawBody} />;
+    const value = sanityArtwork._rawBody as any;
+    return (
+      <div className="post-container">
+        <h2>Description</h2>
+        <PortableText value={value} components={richTextComponents} />
+      </div>
+    );
   }
   return null;
 };
@@ -149,9 +181,10 @@ const Artwork = ({
             </div>
           </div>
         )}
-
-        {artworkMessageHtml}
-        {artworkFormatButtonHtml}
+        <div className="artwork-options-container full-width-container">
+          {artworkMessageHtml}
+          {artworkFormatButtonHtml}
+        </div>
         <ArtworkPostBody {...data} />
       </div>
     </Layout>
