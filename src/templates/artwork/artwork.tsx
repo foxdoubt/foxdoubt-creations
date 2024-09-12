@@ -25,10 +25,12 @@ const getMainImageProps = (
     alt: string;
     loading: "eager" | "lazy";
     image: IGatsbyImageData;
+    className: string;
   } = {
     alt: title,
     loading: "eager",
     image: imageData,
+    // className: ,
   };
   if (showCroppedDims) {
     const croppedWidth = hotspot?.width || 1;
@@ -134,14 +136,18 @@ const Artwork = ({
           </div>
         </div>
         {gatsbyImageData && title && (
-          <GatsbyImage
-            {...getMainImageProps(
-              title,
-              gatsbyImageData,
-              hotspot,
-              shouldShowCroppedImage && isUserOnMobileDevice
-            )}
-          />
+          <div className="full-width-container flex-row-center">
+            <div className="artwork-image-wrapper">
+              <GatsbyImage
+                {...getMainImageProps(
+                  title,
+                  gatsbyImageData,
+                  hotspot,
+                  shouldShowCroppedImage && isUserOnMobileDevice
+                )}
+              />
+            </div>
+          </div>
         )}
 
         {artworkMessageHtml}
