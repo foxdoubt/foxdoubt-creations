@@ -85,10 +85,12 @@ $font-size-sm: 15px;
 $space-xs: 5px;
 $space-sm: 10px;
 $space-md: 20px;
+$navigation-max-width: 650px;
 
 // screen widths
 $tablet-width: 768px;
 $desktop-width: 1024px;
+$post-text-max-width: 700px;
 
 p {
   font-family: $font-main;
@@ -150,10 +152,6 @@ blockquote {
   &::first-letter {
     text-transform: capitalize;
   }
-}
-
-.post-container {
-  margin: 0 $space-md;
 }
 
 @import "../styles/mixins";

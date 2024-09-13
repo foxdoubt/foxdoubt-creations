@@ -30,19 +30,16 @@ const getMainImageProps = (
     alt: string;
     loading: "eager" | "lazy";
     image: IGatsbyImageData;
-    className: string;
   } = {
     alt: title,
     loading: "eager",
     image: imageData,
-    // className: ,
   };
   if (showCroppedDims) {
     const croppedWidth = hotspot?.width || 1;
     const croppedHeight = hotspot?.height || 1;
     const width = imageData.width * croppedWidth;
     const height = imageData.height * croppedHeight;
-    console.log(hotspot, width, height);
     finalProps.image = { ...finalProps.image, ...{ width, height } };
   }
   return finalProps;
@@ -75,9 +72,11 @@ const ArtworkPostBody = ({
   if (sanityArtwork?._rawBody) {
     const value = sanityArtwork._rawBody as any;
     return (
-      <div className="post-container">
-        <h2>Description</h2>
-        <PortableText value={value} components={richTextComponents} />
+      <div className="artwork-post-outer-container flex-row-center">
+        <div className="artwork-post-inner-container">
+          <h2>Description</h2>
+          <PortableText value={value} components={richTextComponents} />
+        </div>
       </div>
     );
   }
