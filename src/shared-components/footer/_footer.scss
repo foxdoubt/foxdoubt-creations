@@ -1,0 +1,16 @@
+.footer-container {
+  height: 200px;
+}
+
+.footer {
+  height: 100%;
+  margin: 0 $space-lg;
+  border-top: 1px solid $light-grey;
+  justify-content: flex-end;
+}
+
+.copyright {
+  font-size: $font-size-xs;
+  color: $grey;
+  padding-bottom: $space-lg;
+}

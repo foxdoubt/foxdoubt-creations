@@ -80,11 +80,13 @@ $font-size-xl: 36px;
 $font-size-lg: 30px;
 $font-size-md: 18px;
 $font-size-sm: 15px;
+$font-size-xs: 13px;
 
 // spacing
 $space-xs: 5px;
 $space-sm: 10px;
 $space-md: 20px;
+$space-lg: 30px;
 $navigation-max-width: 650px;
 
 // screen widths
@@ -158,3 +160,4 @@ blockquote {
 @import "../shared-components/header/header";
 @import "../shared-components/navigation/navigation";
 @import "../templates/artwork/artwork";
+@import "../shared-components/footer/footer";

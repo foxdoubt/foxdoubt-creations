@@ -181,8 +181,10 @@ const Artwork = ({
           </div>
         )}
         <div className="artwork-options-container full-width-container">
-          {artworkMessageHtml}
-          {artworkFormatButtonHtml}
+          <div className="artwork-options">
+            {artworkMessageHtml}
+            {artworkFormatButtonHtml}
+          </div>
         </div>
         <ArtworkPostBody {...data} />
       </div>
