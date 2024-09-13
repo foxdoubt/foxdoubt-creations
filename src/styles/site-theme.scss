@@ -79,18 +79,38 @@ $font-heading: "Roboto Slab", serif;
 $font-size-xl: 36px;
 $font-size-lg: 30px;
 $font-size-md: 18px;
+$font-size-sm: 15px;
+$font-size-xs: 13px;
 
 // spacing
 $space-xs: 5px;
 $space-sm: 10px;
 $space-md: 20px;
+$space-lg: 30px;
+$navigation-max-width: 650px;
 
 // screen widths
 $tablet-width: 768px;
 $desktop-width: 1024px;
+$post-text-max-width: 700px;
 
 p {
   font-family: $font-main;
+  &.text-body {
+    font-family: $font-secondary;
+    line-height: ($space-xs + $space-md);
+  }
+}
+
+h2,
+h3 {
+  font-family: $font-main-bold;
+  margin: $space-sm 0;
+}
+
+blockquote {
+  color: $grey;
+  font-size: $font-size-sm;
 }
 
 // common layouts
@@ -106,6 +126,10 @@ p {
   align-items: center;
 }
 
+.full-width-container {
+  width: 100%;
+}
+
 .font-main {
   font-family: $font-main;
 }
@@ -118,7 +142,22 @@ p {
   font-family: $font-secondary;
 }
 
+.font-bold {
+  font-family: $font-main-bold;
+}
+
+.button-main {
+  font-size: $font-size-sm;
+  color: $grey;
+  text-align: center;
+  text-decoration: underline;
+  &::first-letter {
+    text-transform: capitalize;
+  }
+}
+
 @import "../styles/mixins";
 @import "../shared-components/header/header";
 @import "../shared-components/navigation/navigation";
 @import "../templates/artwork/artwork";
+@import "../shared-components/footer/footer";

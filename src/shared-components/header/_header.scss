@@ -1,14 +1,13 @@
 $logo-image-path: url("/sunguk-kim-fox-unsplash.jpg");
 $logo-size: 70px;
 $logo-container-width: 30%;
-$tablet-header-width: 80%;
 $tablet-title-font-size: 30px;
 
 .header-container {
   margin: $space-md 0;
   header {
     @include tablet {
-      width: $tablet-header-width;
+      @include navigation-max-width();
       .font-site-title {
         font-size: $tablet-title-font-size;
       }

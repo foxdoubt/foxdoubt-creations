@@ -3,3 +3,7 @@
     @content;
   }
 }
+
+@mixin navigation-max-width() {
+  max-width: $navigation-max-width;
+}

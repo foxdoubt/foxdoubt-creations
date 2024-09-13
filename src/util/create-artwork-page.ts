@@ -25,3 +25,27 @@ export const getNextSlug = (allNodes: ArtworkQueryEdges, index: number) => {
   }
   return null;
 };
+
+export const createArtworkPageContext = (
+  node: ArtworkQueryEdges[0]["node"],
+  allNodes: ArtworkQueryEdges,
+  index: number
+) => {
+  const currentSlug = node.slug!.current;
+  return {
+    slug: { current: { eq: currentSlug } },
+    // `currentSlug` is a workaround to avoid TypeGen error on SanitySlugFilterInput
+    // error: `The type of SitePageContext.slug must be Output Type but got: SanitySlugFilterInput`
+    currentSlug,
+    previousSlug: getPreviousSlug(allNodes, index),
+    nextSlug: getNextSlug(allNodes, index),
+  };
+};
+
+export const CreateArtworkPageContext = `
+  type SitePageContext {
+    currentSlug: String!
+    previousSlug: String!
+    nextSlug: String!
+  }
+`;

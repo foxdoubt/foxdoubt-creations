@@ -23,12 +23,6 @@ const config: GatsbyConfig = {
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     "gatsby-plugin-sass",
-    // {
-    //   resolve: "gatsby-plugin-google-gtag",
-    //   options: {
-    //     trackingIds: ["1234"],
-    //   },
-    // },
     "gatsby-plugin-sitemap",
     {
       resolve: "gatsby-plugin-manifest",
