@@ -1,3 +1,6 @@
+// based on calculation of 9X12 canvas which is currently the only artwork size
+$max-artwork-width: 864px;
+
 .artwork-template-container {
   margin: $space-md 0;
 }
@@ -58,6 +61,9 @@
 }
 
 .artwork-image-wrapper {
-  max-width: 900px;
-  max-height: 1150px;
+  max-height: 100vh;
+  max-width: $max-artwork-width;
+  img.artwork-image {
+    max-height: 100vh;
+  }
 }
