@@ -7,6 +7,7 @@ import {
   GatsbyImage,
   IGatsbyImageData,
   StaticImage,
+  GatsbyImageProps,
 } from "gatsby-plugin-image";
 import {
   PortableText,
@@ -26,21 +27,21 @@ const getMainImageProps = (
   hotspot: { width: number | null; height: number | null } | null | undefined,
   showCroppedDims: boolean
 ) => {
-  let finalProps: {
-    alt: string;
-    loading: "eager" | "lazy";
-    image: IGatsbyImageData;
-  } = {
+  let finalProps: GatsbyImageProps = {
     alt: title,
     loading: "eager",
     image: imageData,
+    imgClassName: "artwork-image",
   };
   if (showCroppedDims) {
     const croppedWidth = hotspot?.width || 1;
     const croppedHeight = hotspot?.height || 1;
     const width = imageData.width * croppedWidth;
     const height = imageData.height * croppedHeight;
-    finalProps.image = { ...finalProps.image, ...{ width, height } };
+    finalProps.image = {
+      ...finalProps.image,
+      ...{ width, height },
+    };
   }
   return finalProps;
 };
@@ -205,7 +206,10 @@ export const query = graphql`
           height
         }
         asset {
-          gatsbyImageData(placeholder: BLURRED)
+          gatsbyImageData(
+            placeholder: BLURRED,
+            height: 800
+          )
         }
       }
       publishedAt
