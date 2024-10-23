@@ -31,7 +31,6 @@ const getMainImageProps = (
     alt: title,
     loading: "eager",
     image: imageData,
-    objectFit: "contain",
     imgClassName: "artwork-image",
   };
   if (showCroppedDims) {
