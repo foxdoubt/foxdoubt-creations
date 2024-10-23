@@ -50,6 +50,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
   edges.forEach(({ node }, index) => {
     if (node.slug?.current) {
       actions.createPage({
+        // /artwork/{node.show}/${node.slug.current}
         path: `/artwork/${node.slug.current}`,
         component: path.resolve(`./src/templates/artwork/artwork.tsx`),
         context: createArtworkPageContext(node, edges, index),
