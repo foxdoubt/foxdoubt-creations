@@ -1,5 +1,6 @@
-// based on calculation of 9X12 canvas which is currently the only artwork size
-$max-artwork-width: 864px;
+// based on calculation of 9 X 12 canvas which is currently the only artwork size
+// 1152px corresponds roughly to 12 in. (96 PPI)
+$max-artwork-width: 1152px;
 
 .artwork-template-container {
   margin: $space-md 0;
