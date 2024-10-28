@@ -5,7 +5,7 @@ import type {
 } from "gatsby";
 import path from "path";
 import {
-  ArtworkQueryEdges,
+  ShowQueryEdges,
   createArtworkPageContext,
   CreateArtworkPageContext,
 } from "./src/util/create-artwork-page";
@@ -27,34 +27,44 @@ export const createPages: GatsbyNode["createPages"] = async ({
   actions,
 }) => {
   const { data, errors } = await graphql<
-    PageProps<Queries.GetAllArtworkQuery>["data"]
+    PageProps<Queries.GetAllShowsQuery>["data"]
   >(`
-    query GetAllArtwork {
-      allSanityArtwork(sort: { publishedAt: ASC }) {
+    query GetAllShows {
+      allSanityShow(sort: {selectedWorks: {publishedAt: ASC}}) {
         edges {
           node {
-            slug {
-              current
+            name
+            selectedWorks {
+              slug {
+                current
+              }
             }
           }
         }
       }
     }
-  `);
+`);
 
   if (errors) {
     throw errors;
   }
-  const edges: ArtworkQueryEdges = data?.allSanityArtwork.edges || [];
+  const edges: ShowQueryEdges = data?.allSanityShow.edges || [];
 
-  edges.forEach(({ node }, index) => {
-    if (node.slug?.current) {
-      actions.createPage({
-        // /artwork/{node.show}/${node.slug.current}
-        path: `/artwork/${node.slug.current}`,
-        component: path.resolve(`./src/templates/artwork/artwork.tsx`),
-        context: createArtworkPageContext(node, edges, index),
-      });
-    }
+  edges.forEach(({ node }) => {
+    const showName = node.name;
+    node.selectedWorks?.forEach((work, index) => {
+      if (work && work.slug?.current) {
+        actions.createPage({
+          path: `/artwork/${showName}/${work.slug.current}`,
+          component: path.resolve(`./src/templates/artwork/artwork.tsx`),
+          context: createArtworkPageContext(
+            work,
+            node.selectedWorks || [],
+            showName,
+            index
+          ),
+        });
+      }
+    });
   });
 };
