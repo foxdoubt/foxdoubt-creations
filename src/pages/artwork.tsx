@@ -1,16 +1,19 @@
 import * as React from "react";
 import Layout from "../shared-components/layout/layout";
-import { graphql } from "gatsby";
+import { graphql, Link } from "gatsby";
 
-export default ({ data }: any) => {
+export default (props: any) => {
+  console.log("data: ", props.data);
   return (
     <Layout>
-      {data.allSanityShow.edges.map(({ node }: any) => {
+      {props.data.allSanityShow.edges.map(({ node }: any) => {
         return (
           <>
             <h3>{node.name}</h3>
-            {node.included_works.map((work: any) => (
-              <p>{work.title}</p>
+            {node.selectedWorks.map((work) => (
+              <Link to={`${node.name}/${work.slug.current}`}>
+                <p>{work.slug.current}</p>
+              </Link>
             ))}
           </>
         );
@@ -21,23 +24,17 @@ export default ({ data }: any) => {
 
 export const query = graphql`
   query GetAllShows {
-  allSanityShow {
-    edges {
-      node {
-        name
-        included_works {
-          title
-          mainImage {
-            asset {
-              url
+      allSanityShow(sort: {selectedWorks: {publishedAt: ASC}}) {
+        edges {
+          node {
+            name
+            selectedWorks {
+              slug {
+                current
+              }
             }
           }
         }
-        category {
-          title
-        }
       }
     }
-  }
-}
 `;
