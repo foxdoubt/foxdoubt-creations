@@ -104,15 +104,9 @@ const Artwork = ({
   const [shouldShowCroppedImage, setShouldShowCroppedImage] =
     useState(hasImageCrop);
 
-  const currentPostPath = `/artwork/${currentSlug}`;
+  const prevPostPath = !isNull(previousSlug) ? previousSlug : currentSlug;
 
-  const prevPostPath = !isNull(previousSlug)
-    ? `/artwork/${previousSlug}`
-    : currentPostPath;
-
-  const nextPostPath = !isNull(nextSlug)
-    ? `/artwork/${nextSlug}`
-    : currentPostPath;
+  const nextPostPath = !isNull(nextSlug) ? nextSlug : currentSlug;
 
   const artworkViewMessages = {
     croppedMessage: "cropped for optimum viewing on mobile devices.",
