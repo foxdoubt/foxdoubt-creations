@@ -51,7 +51,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
   const edges: ShowQueryEdges = data?.allSanityShow.edges || [];
 
   edges.forEach(({ node }) => {
-    const showName = node.name;
+    const showName = node.name || "misc";
     node.selectedWorks?.forEach((work, index) => {
       if (work && work.slug?.current) {
         actions.createPage({
@@ -59,7 +59,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
           component: path.resolve(`./src/templates/artwork/artwork.tsx`),
           context: createArtworkPageContext(
             work,
-            node.selectedWorks || [],
+            node.selectedWorks,
             showName,
             index
           ),

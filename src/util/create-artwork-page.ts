@@ -1,53 +1,52 @@
 import { PageProps } from "gatsby";
-import { isNull, isUndefined } from "lodash";
+import { isNull, isUndefined, isNaN } from "lodash";
 
 export type ShowQueryEdges =
   PageProps<Queries.GetAllShowsQuery>["data"]["allSanityShow"]["edges"];
 
-export type SelectedWork = Pick<
-  PageProps<Queries.SanityArtwork>["data"],
-  "slug"
->;
+export type SelectedWorks = ShowQueryEdges[0]["node"]["selectedWorks"];
+
+type Artwork = { readonly slug: { readonly current: string | null } | null };
 
 export const getPreviousSlug = (
-  allWorks: SelectedWork[],
+  allWorks: SelectedWorks,
   showName: string,
   index: number
 ) => {
-  const prevIndex = index > 0 ? index - 1 : null;
-  if (!isNull(prevIndex) && !isUndefined(allWorks[prevIndex].slug?.current)) {
-    return `${showName}/${allWorks[prevIndex].slug?.current}`;
-  }
-  return null;
+  const prevWork = allWorks ? allWorks[index] : null;
+  return prevWork && getSlug(prevWork!, showName);
 };
 
 export const getNextSlug = (
-  allWorks: SelectedWork[],
+  allWorks: SelectedWorks,
   showName: string,
   index: number
 ) => {
-  const nextIndex = index < allWorks.length - 1 ? index + 1 : null;
-  console.log("getNextSlug: nextIndex: ", nextIndex);
-  if (!isNull(nextIndex) && !isUndefined(allWorks[nextIndex].slug?.current)) {
-    return `${showName}/${allWorks[nextIndex].slug?.current}`;
-  }
-  return null;
+  const nextWork = allWorks ? allWorks[index] : null;
+
+  return nextWork && getSlug(nextWork, showName);
 };
 
+const getSlug = (work: Artwork, showName: string) =>
+  `/artwork/${showName}/${work.slug?.current}`;
+
 export const createArtworkPageContext = (
-  artwork: SelectedWork,
-  allArtworks: SelectedWork[],
+  artwork: Artwork,
+  allArtworks: SelectedWorks,
   showName: string,
   index: number
 ) => {
-  const currentSlug = artwork.slug?.current;
+  const works = allArtworks || [];
   return {
-    slug: { current: { eq: currentSlug } },
+    slug: { current: { eq: artwork.slug?.current } },
     // `currentSlug` is a workaround to avoid TypeGen error on SanitySlugFilterInput
     // error: `The type of SitePageContext.slug must be Output Type but got: SanitySlugFilterInput`
-    currentSlug,
-    previousSlug: getPreviousSlug(allArtworks, showName, index),
-    nextSlug: getNextSlug(allArtworks, showName, index),
+    currentSlug: getSlug(artwork, showName),
+    previousSlug: isNaN(index - 1)
+      ? null
+      : getPreviousSlug(works, showName, index - 1),
+    nextSlug:
+      index > works.length - 1 ? null : getNextSlug(works, showName, index + 1),
   };
 };
 
