@@ -26,6 +26,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   actions,
 }) => {
+  // handle shows taxonomy for artwork
   const { data, errors } = await graphql<
     PageProps<Queries.GetAllShowsQuery>["data"]
   >(`
@@ -66,5 +67,13 @@ export const createPages: GatsbyNode["createPages"] = async ({
         });
       }
     });
+  });
+
+  // handle redirect from index to about
+  actions.createRedirect({
+    fromPath: `/`,
+    toPath: `/about`,
+    redirectInBrowser: true,
+    isPermanent: true,
   });
 };

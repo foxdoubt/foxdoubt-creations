@@ -21,11 +21,23 @@ const Navigation = ({
       }
     }`);
 
+  const aboutItemClassNames = "nav-item about-nav-item";
+
   return (
     <div className="site-navigation-container">
       <div className="nav-center">
         <nav className="site-navigation">
-          <p className="nav-item about-nav-item">about</p>
+          <Link to="/about">
+            <p
+              className={
+                selectedNavItem === "about"
+                  ? aboutItemClassNames.concat(" ", "selected")
+                  : aboutItemClassNames
+              }
+            >
+              about
+            </p>
+          </Link>
           <div className="nav-item-container">
             {result.allSanityCategory.edges.map(({ node }, i) => {
               const slug = node.slug?.current;
