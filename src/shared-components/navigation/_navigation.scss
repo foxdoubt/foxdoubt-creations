@@ -21,6 +21,9 @@ $nav-border: 1px solid $light-grey;
   }
   .nav-item {
     text-transform: uppercase;
+    &.disabled {
+      color: $light-grey;
+    }
   }
   .selected {
     border-bottom: 2px solid $font-color-accent;
