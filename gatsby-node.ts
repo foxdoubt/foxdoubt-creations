@@ -68,12 +68,4 @@ export const createPages: GatsbyNode["createPages"] = async ({
       }
     });
   });
-
-  // handle redirect from index to about
-  actions.createRedirect({
-    fromPath: `/`,
-    toPath: `/about`,
-    redirectInBrowser: true,
-    isPermanent: true,
-  });
 };
