@@ -27,20 +27,22 @@ const Navigation = ({
     <div className="site-navigation-container">
       <div className="nav-center">
         <nav className="site-navigation">
-          <div className="about-item-container">
-            <Link to="/about">
-              <p
-                className={
-                  selectedNavItem === "about"
-                    ? aboutItemClassNames.concat(" ", "selected")
-                    : aboutItemClassNames
-                }
-              >
-                about
-              </p>
-            </Link>
+          <div className="about-item-container flex-row-center">
+            <div className="width-fit-content">
+              <Link to="/about">
+                <p
+                  className={
+                    selectedNavItem === "about"
+                      ? aboutItemClassNames.concat(" ", "selected")
+                      : aboutItemClassNames
+                  }
+                >
+                  about
+                </p>
+              </Link>
+            </div>
           </div>
-          <div className="full-width-container nav-items-container">
+          <div className="nav-items-container">
             <div className="flex-container">
               {result.allSanityCategory.edges.map(({ node }, i) => {
                 const slug = node.slug?.current;

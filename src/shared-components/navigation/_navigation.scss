@@ -8,21 +8,22 @@ $nav-border: 1px solid $light-grey;
     display: flex;
   }
   .about-item-container {
-    padding: $space-xs $space-lg;
+    padding: $space-xs;
     border-right: $nav-border;
+    width: 25%;
   }
   .about-nav-item {
     text-align: center;
     font-family: $font-main-bold;
   }
   .nav-items-container {
-    padding-left: $space-sm + $space-xs;
+    width: 75%;
     padding-top: $space-xs;
     padding-bottom: $space-xs;
   }
   .flex-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
   }
   .nav-item {
     text-transform: uppercase;
@@ -38,7 +39,7 @@ $nav-border: 1px solid $light-grey;
 .nav-center {
   padding: $space-xs 0;
   @include tablet {
-    width: 700px;
+    width: 600px;
     margin: 0 auto;
   }
 }
