@@ -5,19 +5,24 @@ $nav-border: 1px solid $light-grey;
   border-top: $nav-border;
   border-bottom: $nav-border;
   .site-navigation {
-    padding: $space-sm + $nav-padding 0;
     display: flex;
+  }
+  .about-item-container {
+    padding: $space-xs $space-lg;
+    border-right: $nav-border;
   }
   .about-nav-item {
-    width: 25%;
     text-align: center;
-    border-right: $nav-border;
     font-family: $font-main-bold;
   }
-  .nav-item-container {
-    width: 75%;
+  .nav-items-container {
+    padding-left: $space-sm + $space-xs;
+    padding-top: $space-xs;
+    padding-bottom: $space-xs;
+  }
+  .flex-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
   }
   .nav-item {
     text-transform: uppercase;
@@ -31,6 +36,7 @@ $nav-border: 1px solid $light-grey;
 }
 
 .nav-center {
+  padding: $space-xs 0;
   @include tablet {
     width: 700px;
     margin: 0 auto;

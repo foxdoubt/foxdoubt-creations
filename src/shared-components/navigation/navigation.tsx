@@ -27,43 +27,50 @@ const Navigation = ({
     <div className="site-navigation-container">
       <div className="nav-center">
         <nav className="site-navigation">
-          <Link to="/about">
-            <p
-              className={
-                selectedNavItem === "about"
-                  ? aboutItemClassNames.concat(" ", "selected")
-                  : aboutItemClassNames
-              }
-            >
-              about
-            </p>
-          </Link>
-          <div className="nav-item-container">
-            {result.allSanityCategory.edges.map(({ node }, i) => {
-              const slug = node.slug?.current;
+          <div className="about-item-container">
+            <Link to="/about">
+              <p
+                className={
+                  selectedNavItem === "about"
+                    ? aboutItemClassNames.concat(" ", "selected")
+                    : aboutItemClassNames
+                }
+              >
+                about
+              </p>
+            </Link>
+          </div>
+          <div className="full-width-container nav-items-container">
+            <div className="flex-container">
+              {result.allSanityCategory.edges.map(({ node }, i) => {
+                const slug = node.slug?.current;
 
-              // temporary link disabling for non-existent category pages
-              let classNames = "nav-item disabled";
-              let linkPath = "#";
+                // temporary link disabling for non-existent category pages
+                let classNames = "nav-item disabled";
+                let linkPath = "#";
 
-              if (slug === "artwork") {
-                classNames = "nav-item";
-                linkPath = `/${slug}`;
-              }
+                if (slug === "artwork") {
+                  classNames = "nav-item";
+                  linkPath = `/${slug}`;
+                }
 
-              classNames =
-                selectedNavItem && selectedNavItem === slug
-                  ? classNames.concat(" ", "selected")
-                  : classNames;
+                classNames =
+                  selectedNavItem && selectedNavItem === slug
+                    ? classNames.concat(" ", "selected")
+                    : classNames;
 
-              return (
-                <Link to={linkPath}>
-                  <p className={classNames} key={`nav-item-${node.title}-${i}`}>
-                    {node.title}
-                  </p>
-                </Link>
-              );
-            })}
+                return (
+                  <Link to={linkPath}>
+                    <p
+                      className={classNames}
+                      key={`nav-item-${node.title}-${i}`}
+                    >
+                      {node.title}
+                    </p>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </nav>
       </div>
