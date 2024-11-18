@@ -87,6 +87,7 @@ const ArtworkPostBody = ({
 const Artwork = ({
   data,
   pageContext,
+  location,
 }: PageProps<Queries.GetArtworkPostQuery, Queries.SitePageContext>) => {
   const title = data.sanityArtwork?.title;
   const medium = data.sanityArtwork?.medium;
@@ -136,7 +137,7 @@ const Artwork = ({
     ) : null;
 
   return (
-    <Layout>
+    <Layout pathname={location.pathname}>
       <div className="artwork-template-container">
         <div className="flex-column-center artwork-label">
           <h3 className="artwork-title">{title}</h3>

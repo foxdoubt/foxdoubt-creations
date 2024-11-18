@@ -5,22 +5,31 @@ $nav-border: 1px solid $light-grey;
   border-top: $nav-border;
   border-bottom: $nav-border;
   .site-navigation {
-    padding: $space-sm + $nav-padding 0;
     display: flex;
   }
-  .about-nav-item {
-    width: 25%;
-    text-align: center;
+  .about-item-container {
+    padding: $space-xs;
     border-right: $nav-border;
+    width: 25%;
+  }
+  .about-nav-item {
+    text-align: center;
     font-family: $font-main-bold;
   }
-  .nav-item-container {
+  .nav-items-container {
     width: 75%;
+    padding-top: $space-xs;
+    padding-bottom: $space-xs;
+  }
+  .flex-container {
     display: flex;
     justify-content: space-evenly;
   }
   .nav-item {
     text-transform: uppercase;
+    &.disabled {
+      color: $light-grey;
+    }
   }
   .selected {
     border-bottom: 2px solid $font-color-accent;
@@ -28,8 +37,9 @@ $nav-border: 1px solid $light-grey;
 }
 
 .nav-center {
+  padding: $space-xs 0;
   @include tablet {
-    width: 700px;
+    width: 600px;
     margin: 0 auto;
   }
 }

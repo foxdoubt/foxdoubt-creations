@@ -26,6 +26,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   actions,
 }) => {
+  // handle shows taxonomy for artwork
   const { data, errors } = await graphql<
     PageProps<Queries.GetAllShowsQuery>["data"]
   >(`

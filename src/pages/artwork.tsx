@@ -1,18 +1,17 @@
 import * as React from "react";
 import Layout from "../shared-components/layout/layout";
-import { graphql, Link } from "gatsby";
+import { graphql, Link, PageProps } from "gatsby";
 
-export default (props: any) => {
-  console.log("data: ", props.data);
+export default ({ data, location }: PageProps<Queries.GetAllShowsQuery>) => {
   return (
-    <Layout>
-      {props.data.allSanityShow.edges.map(({ node }: any) => {
+    <Layout pathname={location.pathname}>
+      {data.allSanityShow.edges.map(({ node }) => {
         return (
           <>
             <h3>{node.name}</h3>
-            {node.selectedWorks.map((work) => (
-              <Link to={`${node.name}/${work.slug.current}`}>
-                <p>{work.slug.current}</p>
+            {(node.selectedWorks || []).map((work) => (
+              <Link to={`${node.name}/${work?.slug?.current}`}>
+                <p>{work?.slug?.current}</p>
               </Link>
             ))}
           </>
