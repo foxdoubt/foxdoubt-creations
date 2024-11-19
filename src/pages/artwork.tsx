@@ -15,6 +15,9 @@ export default ({
             return (
               <div className="show-preview-outer-container">
                 <h3>{node.name}</h3>
+                <Link to={`/artwork/${node.slug?.current}/introduction`}>
+                  <h3>Show Introduction</h3>
+                </Link>
                 <div className="show-preview-inner-container">
                   {(node.selectedWorks || []).map((work) => (
                     <Link
@@ -45,6 +48,9 @@ export const query = graphql`
       edges {
         node {
           name
+          slug {
+            current
+          }
           selectedWorks {
             title
             publishedAt

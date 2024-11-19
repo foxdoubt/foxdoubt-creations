@@ -26,8 +26,10 @@ export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   actions,
 }) => {
+  // TODO: come back and encapsulate each concern here into its own function
+
   // handle shows taxonomy for artwork
-  const { data, errors } = await graphql<
+  const { data: showsData, errors: showsErrors } = await graphql<
     PageProps<Queries.GetAllShowsQuery>["data"]
   >(`
     query GetAllShows {
@@ -35,6 +37,10 @@ export const createPages: GatsbyNode["createPages"] = async ({
         edges {
           node {
             name
+            _rawIntroduction
+            slug {
+              current
+            }
             selectedWorks {
               slug {
                 current
@@ -46,12 +52,13 @@ export const createPages: GatsbyNode["createPages"] = async ({
     }
 `);
 
-  if (errors) {
-    throw errors;
+  if (showsErrors) {
+    throw showsErrors;
   }
-  const edges: ShowQueryEdges = data?.allSanityShow.edges || [];
+  const edges: ShowQueryEdges = showsData?.allSanityShow.edges || [];
 
   edges.forEach(({ node }) => {
+    // todo: showName needs to change to showSlug
     const showName = node.name || "misc";
     node.selectedWorks?.forEach((work, index) => {
       if (work && work.slug?.current) {
@@ -67,5 +74,16 @@ export const createPages: GatsbyNode["createPages"] = async ({
         });
       }
     });
+
+    if (node._rawIntroduction) {
+      actions.createPage({
+        path: `/artwork/${node.slug?.current || "misc"}/introduction`,
+        component: path.resolve(`./src/templates/post/post.tsx`),
+        context: {
+          postJSON: node._rawIntroduction,
+          title: `${node.name || "Show"} Introduction`,
+        },
+      });
+    }
   });
 };

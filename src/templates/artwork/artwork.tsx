@@ -16,6 +16,7 @@ import {
   PortableTextMarkComponentProps,
 } from "@portabletext/react";
 import Layout from "../../shared-components/layout/layout";
+import PostBody from "../../shared-components/post-body/post-body";
 
 const MOBILE_BREAKPOINT_WIDTH = 480;
 
@@ -72,14 +73,7 @@ const ArtworkPostBody = ({
 }: PageProps<Queries.GetArtworkPostQuery>["data"]) => {
   if (sanityArtwork?._rawBody) {
     const value = sanityArtwork._rawBody as any;
-    return (
-      <div className="artwork-post-outer-container flex-row-center">
-        <div className="artwork-post-inner-container">
-          <h2>Description</h2>
-          <PortableText value={value} components={richTextComponents} />
-        </div>
-      </div>
-    );
+    return <PostBody value={value} title="Description" />;
   }
   return null;
 };
