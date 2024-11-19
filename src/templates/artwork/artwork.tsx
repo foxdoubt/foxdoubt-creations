@@ -9,12 +9,7 @@ import {
   StaticImage,
   GatsbyImageProps,
 } from "gatsby-plugin-image";
-import {
-  PortableText,
-  PortableTextBlock,
-  PortableTextComponentProps,
-  PortableTextMarkComponentProps,
-} from "@portabletext/react";
+
 import Layout from "../../shared-components/layout/layout";
 import PostBody from "../../shared-components/post-body/post-body";
 
@@ -45,27 +40,6 @@ const getMainImageProps = (
     };
   }
   return finalProps;
-};
-
-const richTextComponents = {
-  block: {
-    normal: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
-      <p className="text-body">{children}</p>
-    ),
-    h2: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
-      <h3>{children}</h3>
-    ),
-    blockquote: ({
-      children,
-    }: PortableTextComponentProps<PortableTextBlock>) => (
-      <blockquote className="font-secondary">{children}</blockquote>
-    ),
-  },
-  marks: {
-    strong: ({ children }: PortableTextMarkComponentProps) => (
-      <span className="font-bold">{children}</span>
-    ),
-  },
 };
 
 const ArtworkPostBody = ({
