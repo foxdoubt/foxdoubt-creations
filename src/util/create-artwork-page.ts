@@ -49,11 +49,3 @@ export const createArtworkPageContext = (
       index > works.length - 1 ? null : getNextSlug(works, showName, index + 1),
   };
 };
-
-export const CreateArtworkPageContext = `
-  type SitePageContext {
-    currentSlug: String!
-    previousSlug: String!
-    nextSlug: String!
-  }
-`;

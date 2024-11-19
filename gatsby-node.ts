@@ -7,18 +7,24 @@ import path from "path";
 import {
   ShowQueryEdges,
   createArtworkPageContext,
-  CreateArtworkPageContext,
 } from "./src/util/create-artwork-page";
 
 export const createSchemaCustomization = ({
   actions,
 }: CreateSchemaCustomizationArgs) => {
   const { createTypes } = actions;
+
   createTypes(`
-    type SitePage implements Node {
-      context: SitePageContext
+    type ArtworkTemplateContext {
+      currentSlug: String!
+      previousSlug: String!
+      nextSlug: String!
     }
-    ${CreateArtworkPageContext}
+
+    type PostContext {
+      value: JSON!
+      title: String
+    }
   `);
 };
 

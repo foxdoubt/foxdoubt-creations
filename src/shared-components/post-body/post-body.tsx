@@ -35,7 +35,7 @@ export default ({
   title,
 }: {
   value: ArbitraryTypedObject;
-  title?: string;
+  title?: string | null;
 }) => {
   return (
     <div className="post-body-outer-container flex-row-center">

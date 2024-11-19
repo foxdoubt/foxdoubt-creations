@@ -56,7 +56,7 @@ const Artwork = ({
   data,
   pageContext,
   location,
-}: PageProps<Queries.GetArtworkPostQuery, Queries.SitePageContext>) => {
+}: PageProps<Queries.GetArtworkPostQuery, Queries.ArtworkTemplateContext>) => {
   const title = data.sanityArtwork?.title;
   const medium = data.sanityArtwork?.medium;
   const size = data.sanityArtwork?.size;
