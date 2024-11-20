@@ -1,11 +1,7 @@
-import { PageProps } from "gatsby";
-import { isNull, isUndefined, isNaN } from "lodash";
+import { isNaN } from "lodash";
 
-export type ShowQueryEdges =
-  PageProps<Queries.GetAllShowsQuery>["data"]["allSanityShow"]["edges"];
-
+export type ShowQueryEdges = Queries.GetAllShowsQuery["allSanityShow"]["edges"];
 export type SelectedWorks = ShowQueryEdges[0]["node"]["selectedWorks"];
-
 type Artwork = { readonly slug: { readonly current: string | null } | null };
 
 export const getPreviousSlug = (
@@ -14,7 +10,7 @@ export const getPreviousSlug = (
   index: number
 ) => {
   const prevWork = allWorks ? allWorks[index] : null;
-  return prevWork && getSlug(prevWork!, showSlug);
+  return prevWork && getArtworkPostPath(prevWork!, showSlug);
 };
 
 export const getNextSlug = (
@@ -23,14 +19,13 @@ export const getNextSlug = (
   index: number
 ) => {
   const nextWork = allWorks ? allWorks[index] : null;
-
-  return nextWork && getSlug(nextWork, showSlug);
+  return nextWork && getArtworkPostPath(nextWork, showSlug);
 };
 
-const getSlug = (work: Artwork, showSlug: string) =>
+export const getArtworkPostPath = (work: Artwork, showSlug: string) =>
   `/artwork/${showSlug}/${work.slug?.current}`;
 
-export const createArtworkPageContext = (
+export const createArtworkPostContext = (
   artwork: Artwork,
   allArtworks: SelectedWorks,
   showSlug: string,
@@ -39,7 +34,7 @@ export const createArtworkPageContext = (
   const works = allArtworks || [];
   return {
     slug: { current: { eq: artwork.slug?.current } },
-    currentSlug: getSlug(artwork, showSlug),
+    currentSlug: getArtworkPostPath(artwork, showSlug),
     previousSlug: isNaN(index - 1)
       ? null
       : getPreviousSlug(works, showSlug, index - 1),

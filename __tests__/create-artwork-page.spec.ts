@@ -1,4 +1,7 @@
-import { getPreviousSlug, getNextSlug } from "../src/util/create-artwork-page";
+import {
+  getPreviousSlug,
+  getNextSlug,
+} from "../src/util/create-artwork-post-context";
 
 describe("createPages helpers", () => {
   const slugAtIndex0 = "/artwork/test-artwork";
