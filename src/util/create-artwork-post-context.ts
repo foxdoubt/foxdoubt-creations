@@ -11,7 +11,7 @@ export const joinArtworkPathSegments = (
   return path.join(CONSTANTS.artworkCategoryPath, showSlug, postSlug);
 };
 
-const generateArtworkPostPath = (
+export const generateArtworkPostPath = (
   allWorks: SelectedWorks,
   showSlug: string,
   index: number

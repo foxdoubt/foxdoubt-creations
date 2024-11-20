@@ -35,9 +35,9 @@ export const createShowIntroductionPosts = (
   node: ShowNode,
   actions: Actions
 ) => {
-  const { createPage } = actions;
-  const showTitle = `${node.name || CONSTANTS.fallbackShowName} Introduction`;
   if (node._rawIntroduction) {
+    const { createPage } = actions;
+    const showTitle = `${node.name || CONSTANTS.fallbackShowName} Introduction`;
     const introductionPostPath = path.join(
       CONSTANTS.artworkCategoryPath,
       node.slug?.current || CONSTANTS.missingShowSlugValue,
