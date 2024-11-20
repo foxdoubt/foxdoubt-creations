@@ -1,5 +1,5 @@
 import type { CreateSchemaCustomizationArgs, GatsbyNode } from "gatsby";
-import { ShowQueryEdges } from "./src/util/create-artwork-post-context";
+import { ShowQueryEdges } from "./src/util/types";
 import {
   createArtworkPostsFromShow,
   createShowIntroductionPosts,
@@ -12,9 +12,9 @@ export const createSchemaCustomization = ({
 
   createTypes(`
     type ArtworkTemplateContext {
-      currentSlug: String!
-      previousSlug: String!
-      nextSlug: String!
+      currentArtworkPostPath: String!
+      previousArtworkPostPath: String!
+      nextArtworkPostPath: String!
     }
 
     type PostContext {

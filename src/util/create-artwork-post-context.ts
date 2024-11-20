@@ -1,29 +1,24 @@
-import { isNaN } from "lodash";
+import { isNaN, isNil } from "lodash";
+import { SelectedWorks, Artwork } from "./types";
+import path from "path";
+import CONSTANTS from "./constants";
 
-export type ShowQueryEdges = Queries.GetAllShowsQuery["allSanityShow"]["edges"];
-export type SelectedWorks = ShowQueryEdges[0]["node"]["selectedWorks"];
-type Artwork = { readonly slug: { readonly current: string | null } | null };
+export const joinArtworkPathSegments = (
+  work: Artwork | null,
+  showSlug: string
+) => {
+  const postSlug = work?.slug?.current || "";
+  return path.join(CONSTANTS.artworkCategoryPath, showSlug, postSlug);
+};
 
-export const getPreviousSlug = (
+const generateArtworkPostPath = (
   allWorks: SelectedWorks,
   showSlug: string,
   index: number
 ) => {
-  const prevWork = allWorks ? allWorks[index] : null;
-  return prevWork && getArtworkPostPath(prevWork!, showSlug);
+  const artwork = allWorks ? allWorks[index] : null;
+  return joinArtworkPathSegments(artwork, showSlug);
 };
-
-export const getNextSlug = (
-  allWorks: SelectedWorks,
-  showSlug: string,
-  index: number
-) => {
-  const nextWork = allWorks ? allWorks[index] : null;
-  return nextWork && getArtworkPostPath(nextWork, showSlug);
-};
-
-export const getArtworkPostPath = (work: Artwork, showSlug: string) =>
-  `/artwork/${showSlug}/${work.slug?.current}`;
 
 export const createArtworkPostContext = (
   artwork: Artwork,
@@ -34,11 +29,13 @@ export const createArtworkPostContext = (
   const works = allArtworks || [];
   return {
     slug: { current: { eq: artwork.slug?.current } },
-    currentSlug: getArtworkPostPath(artwork, showSlug),
-    previousSlug: isNaN(index - 1)
+    currentArtworkPostPath: joinArtworkPathSegments(artwork, showSlug),
+    previousArtworkPostPath: isNaN(index - 1)
       ? null
-      : getPreviousSlug(works, showSlug, index - 1),
-    nextSlug:
-      index > works.length - 1 ? null : getNextSlug(works, showSlug, index + 1),
+      : generateArtworkPostPath(works, showSlug, index - 1),
+    nextArtworkPostPath:
+      index > works.length - 1
+        ? null
+        : generateArtworkPostPath(works, showSlug, index + 1),
   };
 };

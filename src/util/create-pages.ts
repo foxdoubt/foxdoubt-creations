@@ -1,7 +1,7 @@
 import { Actions } from "gatsby";
 import path from "path";
 import {
-  getArtworkPostPath,
+  joinArtworkPathSegments,
   createArtworkPostContext,
 } from "./create-artwork-post-context";
 import CONSTANTS from "./constants";
@@ -23,7 +23,7 @@ export const createArtworkPostsFromShow = (
         index
       );
       createPage({
-        path: getArtworkPostPath(work, showSlug),
+        path: joinArtworkPathSegments(work, showSlug),
         component: path.resolve(CONSTANTS.artworkTemplatePath),
         context: artworkPostContext,
       });
@@ -36,16 +36,19 @@ export const createShowIntroductionPosts = (
   actions: Actions
 ) => {
   const { createPage } = actions;
+  const showTitle = `${node.name || CONSTANTS.fallbackShowName} Introduction`;
   if (node._rawIntroduction) {
-    const introductionPostPath = `/artwork/${
-      node.slug?.current || CONSTANTS.missingShowSlugValue
-    }/introduction`;
+    const introductionPostPath = path.join(
+      CONSTANTS.artworkCategoryPath,
+      node.slug?.current || CONSTANTS.missingShowSlugValue,
+      "introduction"
+    );
     createPage({
       path: introductionPostPath,
       component: path.resolve(CONSTANTS.postPath),
       context: {
         value: node._rawIntroduction,
-        title: `${node.name || "Show"} Introduction`,
+        title: showTitle,
       },
     });
   }
