@@ -14,9 +14,9 @@ export default ({
           {data.allSanityShow.edges.map(({ node }) => {
             return (
               <div className="show-preview-outer-container">
-                <h3>{node.name}</h3>
+                <h3 className="show-name">{node.name}</h3>
                 <Link to={`/artwork/${node.slug?.current}/introduction`}>
-                  <h3>Show Introduction</h3>
+                  <h3 className="show-introduction">Read Introduction</h3>
                 </Link>
                 <div className="show-preview-inner-container">
                   {(node.selectedWorks || []).map((work) => (

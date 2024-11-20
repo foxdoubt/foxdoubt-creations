@@ -1,11 +1,24 @@
+.all-shows-outer-container {
+  margin: $space-xl 0;
+}
+
 .show-preview-outer-container {
   @include tablet {
     width: 600px;
     margin: 0 auto;
   }
+  .show-name {
+    font-family: $font-heading;
+    font-size: $font-size-md + 7;
+  }
+  .show-introduction {
+    font-family: $font-heading;
+    color: $font-color-accent;
+  }
 }
 
 .show-preview-inner-container {
+  margin: $space-md 0;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
