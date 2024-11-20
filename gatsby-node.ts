@@ -64,17 +64,16 @@ export const createPages: GatsbyNode["createPages"] = async ({
   const edges: ShowQueryEdges = showsData?.allSanityShow.edges || [];
 
   edges.forEach(({ node }) => {
-    // todo: showName needs to change to showSlug
-    const showName = node.name || "misc";
+    const showSlug = node.slug?.current || "misc";
     node.selectedWorks?.forEach((work, index) => {
       if (work && work.slug?.current) {
         actions.createPage({
-          path: `/artwork/${showName}/${work.slug.current}`,
+          path: `/artwork/${showSlug}/${work.slug.current}`,
           component: path.resolve(`./src/templates/artwork/artwork.tsx`),
           context: createArtworkPageContext(
             work,
             node.selectedWorks,
-            showName,
+            showSlug,
             index
           ),
         });
@@ -86,7 +85,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
         path: `/artwork/${node.slug?.current || "misc"}/introduction`,
         component: path.resolve(`./src/templates/post/post.tsx`),
         context: {
-          postJSON: node._rawIntroduction,
+          value: node._rawIntroduction,
           title: `${node.name || "Show"} Introduction`,
         },
       });

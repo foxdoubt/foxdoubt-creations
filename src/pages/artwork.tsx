@@ -21,7 +21,7 @@ export default ({
                 <div className="show-preview-inner-container">
                   {(node.selectedWorks || []).map((work) => (
                     <Link
-                      to={`${node.name}/${work?.slug?.current}`}
+                      to={`${node.slug?.current}/${work?.slug?.current}`}
                       className="artwork-thumbnail"
                     >
                       {work?.mainImage?.asset?.gatsbyImageData && (

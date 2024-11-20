@@ -10,42 +10,40 @@ type Artwork = { readonly slug: { readonly current: string | null } | null };
 
 export const getPreviousSlug = (
   allWorks: SelectedWorks,
-  showName: string,
+  showSlug: string,
   index: number
 ) => {
   const prevWork = allWorks ? allWorks[index] : null;
-  return prevWork && getSlug(prevWork!, showName);
+  return prevWork && getSlug(prevWork!, showSlug);
 };
 
 export const getNextSlug = (
   allWorks: SelectedWorks,
-  showName: string,
+  showSlug: string,
   index: number
 ) => {
   const nextWork = allWorks ? allWorks[index] : null;
 
-  return nextWork && getSlug(nextWork, showName);
+  return nextWork && getSlug(nextWork, showSlug);
 };
 
-const getSlug = (work: Artwork, showName: string) =>
-  `/artwork/${showName}/${work.slug?.current}`;
+const getSlug = (work: Artwork, showSlug: string) =>
+  `/artwork/${showSlug}/${work.slug?.current}`;
 
 export const createArtworkPageContext = (
   artwork: Artwork,
   allArtworks: SelectedWorks,
-  showName: string,
+  showSlug: string,
   index: number
 ) => {
   const works = allArtworks || [];
   return {
     slug: { current: { eq: artwork.slug?.current } },
-    // `currentSlug` is a workaround to avoid TypeGen error on SanitySlugFilterInput
-    // error: `The type of SitePageContext.slug must be Output Type but got: SanitySlugFilterInput`
-    currentSlug: getSlug(artwork, showName),
+    currentSlug: getSlug(artwork, showSlug),
     previousSlug: isNaN(index - 1)
       ? null
-      : getPreviousSlug(works, showName, index - 1),
+      : getPreviousSlug(works, showSlug, index - 1),
     nextSlug:
-      index > works.length - 1 ? null : getNextSlug(works, showName, index + 1),
+      index > works.length - 1 ? null : getNextSlug(works, showSlug, index + 1),
   };
 };
