@@ -54,9 +54,10 @@ export const createPages: GatsbyNode["createPages"] = async ({
     throw showsErrors;
   }
   const edges: ShowQueryEdges = showsData?.allSanityShow.edges || [];
+  const { createPage } = actions;
 
   edges.forEach(({ node }) => {
-    createArtworkPostsFromShow(node, actions);
-    createShowIntroductionPosts(node, actions);
+    createArtworkPostsFromShow(node, createPage);
+    createShowIntroductionPosts(node, createPage);
   });
 };

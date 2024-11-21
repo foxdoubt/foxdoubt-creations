@@ -10,9 +10,8 @@ type ShowNode = Queries.GetAllShowsQuery["allSanityShow"]["edges"][0]["node"];
 
 export const createArtworkPostsFromShow = (
   node: ShowNode,
-  actions: Actions
+  createPage: Actions["createPage"]
 ) => {
-  const { createPage } = actions;
   const showSlug = node.slug?.current || CONSTANTS.missingShowSlugValue;
   node.selectedWorks?.forEach((work, index) => {
     if (work && work.slug?.current) {
@@ -33,10 +32,9 @@ export const createArtworkPostsFromShow = (
 
 export const createShowIntroductionPosts = (
   node: ShowNode,
-  actions: Actions
+  createPage: Actions["createPage"]
 ) => {
   if (node._rawIntroduction) {
-    const { createPage } = actions;
     const showTitle = `${node.name || CONSTANTS.fallbackShowName} Introduction`;
     const introductionPostPath = path.join(
       CONSTANTS.artworkCategoryPath,

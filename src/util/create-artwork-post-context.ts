@@ -30,11 +30,12 @@ export const createArtworkPostContext = (
   return {
     slug: { current: { eq: artwork.slug?.current } },
     currentArtworkPostPath: joinArtworkPathSegments(artwork, showSlug),
-    previousArtworkPostPath: isNaN(index - 1)
-      ? null
-      : generateArtworkPostPath(works, showSlug, index - 1),
+    previousArtworkPostPath:
+      index - 1 < 0
+        ? null
+        : generateArtworkPostPath(works, showSlug, index - 1),
     nextArtworkPostPath:
-      index > works.length - 1
+      index === works.length - 1
         ? null
         : generateArtworkPostPath(works, showSlug, index + 1),
   };
