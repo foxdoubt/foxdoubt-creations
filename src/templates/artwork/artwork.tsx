@@ -62,7 +62,11 @@ const Artwork = ({
   const size = data.sanityArtwork?.size;
   const completionYear = data.sanityArtwork?.completionYear;
   const gatsbyImageData = data.sanityArtwork?.mainImage?.asset?.gatsbyImageData;
-  const { previousSlug, nextSlug, currentSlug } = pageContext;
+  const {
+    previousArtworkPostPath,
+    nextArtworkPostPath,
+    currentArtworkPostPath,
+  } = pageContext;
   const hotspot = data.sanityArtwork?.mainImage?.hotspot;
   const hasImageCrop = Boolean(hotspot?.height || hotspot?.width);
 
@@ -73,9 +77,13 @@ const Artwork = ({
   const [shouldShowCroppedImage, setShouldShowCroppedImage] =
     useState(hasImageCrop);
 
-  const prevPostPath = !isNull(previousSlug) ? previousSlug : currentSlug;
+  const prevPostPath = !isNull(previousArtworkPostPath)
+    ? previousArtworkPostPath
+    : currentArtworkPostPath;
 
-  const nextPostPath = !isNull(nextSlug) ? nextSlug : currentSlug;
+  const nextPostPath = !isNull(nextArtworkPostPath)
+    ? nextArtworkPostPath
+    : currentArtworkPostPath;
 
   const artworkViewMessages = {
     croppedMessage: "cropped for optimum viewing on mobile devices.",
