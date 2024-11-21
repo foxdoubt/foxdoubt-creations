@@ -9,13 +9,9 @@ import {
   StaticImage,
   GatsbyImageProps,
 } from "gatsby-plugin-image";
-import {
-  PortableText,
-  PortableTextBlock,
-  PortableTextComponentProps,
-  PortableTextMarkComponentProps,
-} from "@portabletext/react";
+
 import Layout from "../../shared-components/layout/layout";
+import PostBody from "../../shared-components/post-body/post-body";
 
 const MOBILE_BREAKPOINT_WIDTH = 480;
 
@@ -46,40 +42,12 @@ const getMainImageProps = (
   return finalProps;
 };
 
-const richTextComponents = {
-  block: {
-    normal: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
-      <p className="text-body">{children}</p>
-    ),
-    h2: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
-      <h3>{children}</h3>
-    ),
-    blockquote: ({
-      children,
-    }: PortableTextComponentProps<PortableTextBlock>) => (
-      <blockquote className="font-secondary">{children}</blockquote>
-    ),
-  },
-  marks: {
-    strong: ({ children }: PortableTextMarkComponentProps) => (
-      <span className="font-bold">{children}</span>
-    ),
-  },
-};
-
 const ArtworkPostBody = ({
   sanityArtwork,
 }: PageProps<Queries.GetArtworkPostQuery>["data"]) => {
   if (sanityArtwork?._rawBody) {
     const value = sanityArtwork._rawBody as any;
-    return (
-      <div className="artwork-post-outer-container flex-row-center">
-        <div className="artwork-post-inner-container">
-          <h2>Description</h2>
-          <PortableText value={value} components={richTextComponents} />
-        </div>
-      </div>
-    );
+    return <PostBody value={value} title="Description" />;
   }
   return null;
 };
@@ -88,13 +56,17 @@ const Artwork = ({
   data,
   pageContext,
   location,
-}: PageProps<Queries.GetArtworkPostQuery, Queries.SitePageContext>) => {
+}: PageProps<Queries.GetArtworkPostQuery, Queries.ArtworkTemplateContext>) => {
   const title = data.sanityArtwork?.title;
   const medium = data.sanityArtwork?.medium;
   const size = data.sanityArtwork?.size;
   const completionYear = data.sanityArtwork?.completionYear;
   const gatsbyImageData = data.sanityArtwork?.mainImage?.asset?.gatsbyImageData;
-  const { previousSlug, nextSlug, currentSlug } = pageContext;
+  const {
+    previousArtworkPostPath,
+    nextArtworkPostPath,
+    currentArtworkPostPath,
+  } = pageContext;
   const hotspot = data.sanityArtwork?.mainImage?.hotspot;
   const hasImageCrop = Boolean(hotspot?.height || hotspot?.width);
 
@@ -105,9 +77,13 @@ const Artwork = ({
   const [shouldShowCroppedImage, setShouldShowCroppedImage] =
     useState(hasImageCrop);
 
-  const prevPostPath = !isNull(previousSlug) ? previousSlug : currentSlug;
+  const prevPostPath = !isNull(previousArtworkPostPath)
+    ? previousArtworkPostPath
+    : currentArtworkPostPath;
 
-  const nextPostPath = !isNull(nextSlug) ? nextSlug : currentSlug;
+  const nextPostPath = !isNull(nextArtworkPostPath)
+    ? nextArtworkPostPath
+    : currentArtworkPostPath;
 
   const artworkViewMessages = {
     croppedMessage: "cropped for optimum viewing on mobile devices.",

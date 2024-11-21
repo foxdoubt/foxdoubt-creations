@@ -2,19 +2,6 @@
 // 1152px corresponds roughly to 12 in. (96 PPI)
 $max-artwork-width: 1152px;
 
-.artwork-template-container {
-  margin: $space-md 0;
-}
-
-.artwork-post-outer-container {
-  margin: 0 $space-md;
-  @include tablet {
-    .artwork-post-inner-container {
-      max-width: $post-text-max-width;
-    }
-  }
-}
-
 .artwork-label {
   text-transform: capitalize;
 

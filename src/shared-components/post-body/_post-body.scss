@@ -1,0 +1,8 @@
+.post-body-outer-container {
+  margin: 0 $space-md;
+  @include tablet {
+    .post-body-inner-container {
+      max-width: $post-text-max-width;
+    }
+  }
+}

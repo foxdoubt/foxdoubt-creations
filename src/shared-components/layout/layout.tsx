@@ -15,7 +15,7 @@ const Layout = ({
     <>
       <Header />
       <Navigation selectedNavItem={selectedNavItem} />
-      {children}
+      <main className="main-page-content">{children}</main>
       <Footer />
     </>
   );

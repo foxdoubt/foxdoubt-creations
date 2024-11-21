@@ -1,0 +1,94 @@
+@font-face {
+  font-family: "Alegreya Sans";
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Regular";
+  src: url(/fonts/alegreya-sans-latin-400-normal.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Alegreya Sans Bold";
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Bold";
+  src: url(/fonts/alegreya-sans-latin-700-normal.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Light";
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Light";
+  src: url(/fonts/roboto-latin-300-normal.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Regular";
+  src: url(/fonts/roboto-latin-400-normal.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Medium";
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Medium";
+  src: url(/fonts/roboto-latin-ext-500-normal.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Bold";
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Bold";
+  src: url(/fonts/roboto-latin-700-normal.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Slab";
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: "Regular";
+  src: url(/fonts/roboto-slab-latin-500-normal.woff2) format("woff2");
+}
+
+$black: #000000;
+$orange: #eb8b1a;
+$grey: #999696;
+$light-grey: #d9d9d9;
+$font-color: $black;
+$font-color-accent: $orange;
+$font-color-secondary: $grey;
+$font-site-title: "Alegreya Sans", sans-serif;
+$font-site-title-bold: "Alegreya Sans Bold", sans-serif;
+$font-main: "Roboto", sans-serif;
+$font-main-bold: "Roboto Bold", sans-serif;
+$font-secondary: "Roboto Light", sans-serif;
+$font-heading: "Roboto Slab", serif;
+$font-size-xl: 36px;
+$font-size-lg: 30px;
+$font-size-md: 18px;
+$font-size-sm: 15px;
+$font-size-xs: 13px;
+
+// spacing
+$space-xs: 5px;
+$space-sm: 10px;
+$space-md: 20px;
+$space-lg: 30px;
+$space-xl: 40px;
+$navigation-max-width: 650px;
+
+// screen widths
+$tablet-width: 768px;
+$desktop-width: 1024px;
+$post-text-max-width: 700px;

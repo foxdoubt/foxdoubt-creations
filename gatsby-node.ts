@@ -1,24 +1,26 @@
-import type {
-  CreateSchemaCustomizationArgs,
-  GatsbyNode,
-  PageProps,
-} from "gatsby";
-import path from "path";
+import type { CreateSchemaCustomizationArgs, GatsbyNode } from "gatsby";
+import { ShowQueryEdges } from "./src/util/types";
 import {
-  ShowQueryEdges,
-  createArtworkPageContext,
-  CreateArtworkPageContext,
-} from "./src/util/create-artwork-page";
+  createArtworkPostsFromShow,
+  createShowIntroductionPosts,
+} from "./src/util/create-pages";
 
 export const createSchemaCustomization = ({
   actions,
 }: CreateSchemaCustomizationArgs) => {
   const { createTypes } = actions;
+
   createTypes(`
-    type SitePage implements Node {
-      context: SitePageContext
+    type ArtworkTemplateContext {
+      currentArtworkPostPath: String!
+      previousArtworkPostPath: String!
+      nextArtworkPostPath: String!
     }
-    ${CreateArtworkPageContext}
+
+    type PostContext {
+      value: JSON!
+      title: String
+    }
   `);
 };
 
@@ -26,15 +28,17 @@ export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   actions,
 }) => {
-  // handle shows taxonomy for artwork
-  const { data, errors } = await graphql<
-    PageProps<Queries.GetAllShowsQuery>["data"]
-  >(`
+  const { data: showsData, errors: showsErrors } =
+    await graphql<Queries.GetAllShowsQuery>(`
     query GetAllShows {
       allSanityShow(sort: {selectedWorks: {publishedAt: ASC}}) {
         edges {
           node {
             name
+            _rawIntroduction
+            slug {
+              current
+            }
             selectedWorks {
               slug {
                 current
@@ -46,26 +50,14 @@ export const createPages: GatsbyNode["createPages"] = async ({
     }
 `);
 
-  if (errors) {
-    throw errors;
+  if (showsErrors) {
+    throw showsErrors;
   }
-  const edges: ShowQueryEdges = data?.allSanityShow.edges || [];
+  const edges: ShowQueryEdges = showsData?.allSanityShow.edges || [];
+  const { createPage } = actions;
 
   edges.forEach(({ node }) => {
-    const showName = node.name || "misc";
-    node.selectedWorks?.forEach((work, index) => {
-      if (work && work.slug?.current) {
-        actions.createPage({
-          path: `/artwork/${showName}/${work.slug.current}`,
-          component: path.resolve(`./src/templates/artwork/artwork.tsx`),
-          context: createArtworkPageContext(
-            work,
-            node.selectedWorks,
-            showName,
-            index
-          ),
-        });
-      }
-    });
+    createArtworkPostsFromShow(node, createPage);
+    createShowIntroductionPosts(node, createPage);
   });
 };
