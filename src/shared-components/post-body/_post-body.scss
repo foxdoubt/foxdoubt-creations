@@ -1,5 +1,12 @@
 .post-body-outer-container {
   margin: 0 $space-md;
+  .paragraph {
+    font-family: $font-secondary;
+    line-height: ($space-xs + $space-md);
+  }
+  .line-break {
+    margin: $space-md 0;
+  }
   @include tablet {
     .post-body-inner-container {
       max-width: $post-text-max-width;

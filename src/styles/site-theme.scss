@@ -4,10 +4,6 @@
 
 p {
   font-family: $font-main;
-  &.text-body {
-    font-family: $font-secondary;
-    line-height: ($space-xs + $space-md);
-  }
 }
 
 h2,

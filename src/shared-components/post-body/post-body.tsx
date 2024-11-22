@@ -2,21 +2,26 @@ import * as React from "react";
 
 import {
   PortableText,
-  PortableTextBlock,
   PortableTextComponentProps,
   PortableTextMarkComponentProps,
+  PortableTextReactComponents,
 } from "@portabletext/react";
 
-import type { ArbitraryTypedObject } from "@portabletext/types";
+import { PortableTextBlock, ArbitraryTypedObject } from "@portabletext/types";
 
-const richTextComponents = {
+const richTextComponents: Partial<PortableTextReactComponents> = {
   block: {
-    normal: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
-      <p className="text-body">{children}</p>
-    ),
-    h2: ({ children }: PortableTextComponentProps<PortableTextBlock>) => (
-      <h3>{children}</h3>
-    ),
+    normal: ({
+      value,
+      children,
+    }: PortableTextComponentProps<PortableTextBlock>) => {
+      const classNames =
+        value.children.length === 1 && value.children[0].text === ""
+          ? "line-break"
+          : "paragraph";
+      return <p className={classNames}>{children}</p>;
+    },
+    h2: ({ children }) => <h3>{children}</h3>,
     blockquote: ({
       children,
     }: PortableTextComponentProps<PortableTextBlock>) => (
