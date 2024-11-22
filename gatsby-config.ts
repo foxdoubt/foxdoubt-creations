@@ -1,8 +1,6 @@
 import type { GatsbyConfig } from "gatsby";
 import appConfig from "./app-config";
 
-console.log("gatsby-config: ", __dirname);
-
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `foxdoubt-blogcast`,
