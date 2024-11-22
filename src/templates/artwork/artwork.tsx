@@ -1,12 +1,13 @@
 import * as React from "react";
 import { isNull } from "lodash";
 import useScreenDimensions from "../../hooks/use-screen-dimensions";
+import leftArrow from "../../images/caret-left.svg";
+import rightArrow from "../../images/caret-right.svg";
 
 import { PageProps, graphql, Link } from "gatsby";
 import {
   GatsbyImage,
   IGatsbyImageData,
-  StaticImage,
   GatsbyImageProps,
 } from "gatsby-plugin-image";
 
@@ -119,10 +120,7 @@ const Artwork = ({
           <h3 className="artwork-title">{title}</h3>
           <div className="navigation-container">
             <Link to={prevPostPath}>
-              <StaticImage
-                src={"../../images/caret-left.svg"}
-                alt="left-arrow"
-              />
+              <img src={leftArrow} alt="left-arrow" />
             </Link>
 
             <div className="flex-column-center">
@@ -131,10 +129,7 @@ const Artwork = ({
             </div>
 
             <Link to={nextPostPath}>
-              <StaticImage
-                src={"../../images/caret-right.svg"}
-                alt="right-arrow"
-              />
+              <img src={rightArrow} alt="right-arrow" />
             </Link>
           </div>
         </div>

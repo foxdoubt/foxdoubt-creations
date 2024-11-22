@@ -1,6 +1,8 @@
 import type { GatsbyConfig } from "gatsby";
 import appConfig from "./app-config";
 
+console.log("gatsby-config: ", __dirname);
+
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `foxdoubt-blogcast`,
@@ -34,7 +36,7 @@ const config: GatsbyConfig = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "images",
-        path: "./src/images/",
+        path: `${__dirname}/src/images/`,
       },
       __key: "images",
     },
