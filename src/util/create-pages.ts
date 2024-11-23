@@ -3,7 +3,8 @@ import path from "path";
 import {
   joinArtworkPathSegments,
   createArtworkPostContext,
-} from "./create-artwork-post-context";
+  portableTextBlocksToPlainText,
+} from "./create-post-context";
 import CONSTANTS from "./constants";
 
 type ShowNode = Queries.GetAllShowsQuery["allSanityShow"]["edges"][0]["node"];
@@ -35,6 +36,19 @@ export const createShowIntroductionPosts = (
   createPage: Actions["createPage"]
 ) => {
   if (node._rawIntroduction) {
+    const wordsPerMinute = 200;
+    const introductionPlainText = portableTextBlocksToPlainText(
+      node._rawIntroduction as any
+    );
+    const wordTokens = introductionPlainText.split(/\w+/g).filter(Boolean);
+    const wordCount = wordTokens.length;
+    const readTime = Math.ceil(wordCount / wordsPerMinute);
+    console.log("src/util/create-pages.ts: ", {
+      wordTokens,
+      wordCount,
+      readTime,
+    });
+
     const showTitle = `${node.name || CONSTANTS.fallbackShowName} Introduction`;
     const introductionPostPath = path.join(
       CONSTANTS.artworkCategoryPath,
@@ -47,6 +61,9 @@ export const createShowIntroductionPosts = (
       context: {
         value: node._rawIntroduction,
         title: showTitle,
+        wordCount,
+        readTime,
+        author: node.author?.name,
       },
     });
   }

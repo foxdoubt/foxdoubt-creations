@@ -1,7 +1,7 @@
 import {
   generateArtworkPostPath,
   createArtworkPostContext,
-} from "../src/util/create-artwork-post-context";
+} from "../src/util/create-post-context";
 import { createShowIntroductionPosts } from "../src/util/create-pages";
 import CONSTANTS from "../src/util/constants";
 import path from "path";
