@@ -1,7 +1,8 @@
 .post-body {
   .paragraph {
+    font-size: $font-size-md;
     font-family: $font-secondary;
-    line-height: ($space-xs + $space-md);
+    line-height: ($space-sm + $space-md);
   }
   .line-break {
     margin: $space-md 0;

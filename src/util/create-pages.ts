@@ -59,7 +59,7 @@ export const createShowIntroductionPosts = (
         wordCount,
         readTime,
         author: node.author?.name,
-        lastUpdatedAt: node._updatedAt,
+        updatedAt: node._updatedAt,
       },
     });
   }
