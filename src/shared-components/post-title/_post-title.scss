@@ -1,0 +1,11 @@
+.title-container {
+  margin-bottom: $space-lg;
+  .font-heading {
+    font-size: $font-size-lg;
+  }
+  .post-additional-data {
+    margin-top: $space-sm;
+    font-size: $font-size-sm;
+    color: $grey;
+  }
+}

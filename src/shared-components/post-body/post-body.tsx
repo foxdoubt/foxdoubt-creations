@@ -43,11 +43,9 @@ export default ({
   title?: string | null;
 }) => {
   return (
-    <div className="post-body-outer-container flex-row-center">
-      <div className="post-body-inner-container">
-        {title && <h2>{title}</h2>}
-        <PortableText value={value} components={richTextComponents} />
-      </div>
+    <div className="post-body">
+      {title && <h2>{title}</h2>}
+      <PortableText value={value} components={richTextComponents} />
     </div>
   );
 };

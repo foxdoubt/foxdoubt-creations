@@ -36,18 +36,13 @@ export const createShowIntroductionPosts = (
   createPage: Actions["createPage"]
 ) => {
   if (node._rawIntroduction) {
-    const wordsPerMinute = 200;
+    const wordsPerMinute = 238;
     const introductionPlainText = portableTextBlocksToPlainText(
       node._rawIntroduction as any
     );
     const wordTokens = introductionPlainText.split(/\w+/g).filter(Boolean);
     const wordCount = wordTokens.length;
     const readTime = Math.ceil(wordCount / wordsPerMinute);
-    console.log("src/util/create-pages.ts: ", {
-      wordTokens,
-      wordCount,
-      readTime,
-    });
 
     const showTitle = `${node.name || CONSTANTS.fallbackShowName} Introduction`;
     const introductionPostPath = path.join(
@@ -64,6 +59,7 @@ export const createShowIntroductionPosts = (
         wordCount,
         readTime,
         author: node.author?.name,
+        lastUpdatedAt: node._updatedAt,
       },
     });
   }
