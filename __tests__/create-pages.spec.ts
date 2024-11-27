@@ -1,8 +1,13 @@
 import {
   generateArtworkPostPath,
   createArtworkPostContext,
+  getWordCount,
 } from "../src/util/create-post-context";
 import { createShowIntroductionPosts } from "../src/util/create-pages";
+import {
+  mockPortableText,
+  TEXT_BLOCK_WORD_COUNT_TOTAL,
+} from "./portable-text.mock";
 import CONSTANTS from "../src/util/constants";
 import path from "path";
 
@@ -88,14 +93,30 @@ describe("createPages helpers", () => {
       );
     });
   });
+  describe("getWordCount", () => {
+    it("gets the number of words from portable text block data", () => {
+      const result = getWordCount(mockPortableText);
+      expect(result).toEqual(TEXT_BLOCK_WORD_COUNT_TOTAL);
+    });
+    it("does not count white spaces", () => {
+      const result1 = getWordCount(mockPortableText);
+      expect(result1).toEqual(TEXT_BLOCK_WORD_COUNT_TOTAL);
+      const modifiedPortableText = mockPortableText.map((block) => {
+        block.children[0].text = block.children[0].text.concat("\n", "\n");
+        return block;
+      });
+      const result2 = getWordCount(modifiedPortableText);
+      expect(result2).toEqual(TEXT_BLOCK_WORD_COUNT_TOTAL);
+    });
+  });
   describe("createShowIntroductionPosts", () => {
     it("calls its createPage arg with correct input when _rawIntroduction is present", () => {
       const mockCreatePage = jest.fn();
-      const mockIntroduction = JSON.stringify({ foo: true });
+
       const mockShowName = "My Show";
       let mockShow: Record<string, any> = {
         name: mockShowName,
-        _rawIntroduction: mockIntroduction,
+        _rawIntroduction: mockPortableText,
         slug: { current: showSlug },
         selectedWorks: allArtworks,
       };
@@ -108,8 +129,10 @@ describe("createPages helpers", () => {
         ),
         component: path.resolve(CONSTANTS.postPath),
         context: {
-          value: mockIntroduction,
+          value: mockPortableText,
           title: `${mockShowName} Introduction`,
+          readTime: 1,
+          wordCount: TEXT_BLOCK_WORD_COUNT_TOTAL,
         },
       });
       mockCreatePage.mockClear();

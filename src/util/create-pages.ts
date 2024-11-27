@@ -4,6 +4,7 @@ import {
   joinArtworkPathSegments,
   createArtworkPostContext,
   portableTextBlocksToPlainText,
+  getWordCount,
 } from "./create-post-context";
 import CONSTANTS from "./constants";
 
@@ -37,12 +38,8 @@ export const createShowIntroductionPosts = (
 ) => {
   if (node._rawIntroduction) {
     const wordsPerMinute = 238;
-    const introductionPlainText = portableTextBlocksToPlainText(
-      node._rawIntroduction as any
-    );
-    const wordTokens = introductionPlainText.split(/\w+/g).filter(Boolean);
-    const wordCount = wordTokens.length;
-    const readTime = Math.ceil(wordCount / wordsPerMinute);
+    const wordCount = getWordCount(node._rawIntroduction as any);
+    const readTime = wordCount && Math.ceil(wordCount / wordsPerMinute);
 
     const showTitle = `${node.name || CONSTANTS.fallbackShowName} Introduction`;
     const introductionPostPath = path.join(
@@ -50,6 +47,7 @@ export const createShowIntroductionPosts = (
       node.slug?.current || CONSTANTS.missingShowSlugValue,
       "introduction"
     );
+
     createPage({
       path: introductionPostPath,
       component: path.resolve(CONSTANTS.postPath),
@@ -59,7 +57,7 @@ export const createShowIntroductionPosts = (
         wordCount,
         readTime,
         author: node.author?.name,
-        updatedAt: node._updatedAt,
+        lastUpdatedAt: node._updatedAt,
       },
     });
   }
