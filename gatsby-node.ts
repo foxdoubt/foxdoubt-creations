@@ -3,6 +3,7 @@ import { ShowQueryEdges } from "./src/util/types";
 import {
   createArtworkPostsFromShow,
   createShowIntroductionPosts,
+  createAllPosts,
 } from "./src/util/create-pages";
 
 export const createSchemaCustomization = ({
@@ -18,13 +19,15 @@ export const createSchemaCustomization = ({
     }
 
     type PostContext {
-      value: JSON!
       title: String
+      description: String
+      author: String
+      value: JSON!
+      lastUpdatedAt: String!
+      mainImage: SanityImage
+      slug: String
       wordCount: Int
       readTime: String
-      author: String
-      description: String
-      lastUpdatedAt: String!
     }
   `);
 };
@@ -33,6 +36,9 @@ export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   actions,
 }) => {
+  const { createPage } = actions;
+  await createAllPosts(graphql, createPage);
+
   const { data: showsData, errors: showsErrors } =
     await graphql<Queries.GetAllShowsQuery>(`
     query GetAllShows {
@@ -63,7 +69,6 @@ export const createPages: GatsbyNode["createPages"] = async ({
     throw showsErrors;
   }
   const edges: ShowQueryEdges = showsData?.allSanityShow.edges || [];
-  const { createPage } = actions;
 
   edges.forEach(({ node }) => {
     createArtworkPostsFromShow(node, createPage);
