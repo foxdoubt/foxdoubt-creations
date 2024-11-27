@@ -35,16 +35,9 @@ const richTextComponents: Partial<PortableTextReactComponents> = {
   },
 };
 
-export default ({
-  value,
-  title,
-}: {
-  value: ArbitraryTypedObject;
-  title?: string | null;
-}) => {
+export default ({ value }: { value: ArbitraryTypedObject }) => {
   return (
     <div className="post-body">
-      {title && <h2>{title}</h2>}
       <PortableText value={value} components={richTextComponents} />
     </div>
   );
