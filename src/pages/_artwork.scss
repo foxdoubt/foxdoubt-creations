@@ -9,11 +9,12 @@
   }
   .show-name {
     font-family: $font-heading;
-    font-size: $font-size-md + 7;
+    font-size: $font-size-lg;
   }
   .show-introduction {
     font-family: $font-heading;
     color: $font-color-accent;
+    font-size: $font-size-md + 7px;
   }
 }
 
