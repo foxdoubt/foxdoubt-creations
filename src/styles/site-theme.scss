@@ -4,10 +4,6 @@
 
 p {
   font-family: $font-main;
-  &.text-body {
-    font-family: $font-secondary;
-    line-height: ($space-xs + $space-md);
-  }
 }
 
 h2,
@@ -75,3 +71,5 @@ blockquote {
 @import "../shared-components/layout/layout";
 @import "../shared-components/post-body/post-body";
 @import "../pages/artwork";
+@import "../templates/post/post";
+@import "../shared-components/post-title/post-title";

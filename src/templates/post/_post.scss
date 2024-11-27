@@ -1,0 +1,11 @@
+.post {
+  margin-top: $space-lg;
+  .post-inner-container {
+    margin: 0 $space-md;
+  }
+  @include tablet {
+    .post-inner-container {
+      max-width: $post-text-max-width;
+    }
+  }
+}

@@ -3,7 +3,9 @@ import path from "path";
 import {
   joinArtworkPathSegments,
   createArtworkPostContext,
-} from "./create-artwork-post-context";
+  portableTextBlocksToPlainText,
+  getWordCount,
+} from "./create-post-context";
 import CONSTANTS from "./constants";
 
 type ShowNode = Queries.GetAllShowsQuery["allSanityShow"]["edges"][0]["node"];
@@ -35,18 +37,27 @@ export const createShowIntroductionPosts = (
   createPage: Actions["createPage"]
 ) => {
   if (node._rawIntroduction) {
+    const wordsPerMinute = 238;
+    const wordCount = getWordCount(node._rawIntroduction as any);
+    const readTime = wordCount && Math.ceil(wordCount / wordsPerMinute);
+
     const showTitle = `${node.name || CONSTANTS.fallbackShowName} Introduction`;
     const introductionPostPath = path.join(
       CONSTANTS.artworkCategoryPath,
       node.slug?.current || CONSTANTS.missingShowSlugValue,
       "introduction"
     );
+
     createPage({
       path: introductionPostPath,
       component: path.resolve(CONSTANTS.postPath),
       context: {
         value: node._rawIntroduction,
         title: showTitle,
+        wordCount,
+        readTime,
+        author: node.author?.name,
+        lastUpdatedAt: node._updatedAt,
       },
     });
   }

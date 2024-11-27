@@ -20,6 +20,11 @@ export const createSchemaCustomization = ({
     type PostContext {
       value: JSON!
       title: String
+      wordCount: Int
+      readTime: String
+      author: String
+      description: String
+      lastUpdatedAt: String!
     }
   `);
 };
@@ -35,7 +40,11 @@ export const createPages: GatsbyNode["createPages"] = async ({
         edges {
           node {
             name
+            _updatedAt(formatString: "MMMM D, YYYY")
             _rawIntroduction
+            author {
+              name
+            }
             slug {
               current
             }
