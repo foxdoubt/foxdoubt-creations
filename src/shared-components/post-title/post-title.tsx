@@ -8,6 +8,22 @@ export default ({
   description,
   lastUpdatedAt,
 }: Partial<Queries.PostContext>) => {
+  const authorHtml = author && <p className="byline">{`By ${author}`}</p>;
+  let additionalDataHtml = null;
+  const hasAdditionalData = lastUpdatedAt || readTime || wordCount;
+  if (hasAdditionalData) {
+    additionalDataHtml = (
+      <div className="post-additional-data">
+        {lastUpdatedAt && (
+          <p className="last-updated-at">{`Posted ${lastUpdatedAt}`}</p>
+        )}
+        {readTime && wordCount && (
+          <p className="read-time">{`Read time: ${readTime}m (${wordCount?.toLocaleString()} words)`}</p>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className="post-title-container">
       <div className="post-title">
@@ -15,13 +31,10 @@ export default ({
         {description && (
           <p className="font-secondary post-description">{description}</p>
         )}
-        <p className="byline">{`By ${author}`}</p>
+        {authorHtml}
       </div>
 
-      <div className="post-additional-data">
-        <p className="last-updated-at">{`Posted ${lastUpdatedAt}`}</p>
-        <p className="read-time">{`Read time: ${readTime}m (${wordCount?.toLocaleString()} words)`}</p>
-      </div>
+      {additionalDataHtml}
     </div>
   );
 };
