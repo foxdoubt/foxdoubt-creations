@@ -3,12 +3,7 @@ $post-title-container-height: 150px;
 .post-title-container {
   margin: $space-sm 0 $space-md;
   padding-bottom: $space-sm;
-  // height: $post-title-container-height;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: space-around;
   border-bottom: 1px solid $light-grey;
-
   .post-title-text {
     font-size: $font-size-xl;
     margin: 0;

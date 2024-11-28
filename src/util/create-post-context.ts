@@ -83,6 +83,7 @@ export const createPostContext = ({
   _rawBody,
   _updatedAt,
   mainImage,
+  mainImageCaption,
   slug,
 }: Queries.SanityPost) => {
   const wordCount = _rawBody && getWordCount(_rawBody as any);
@@ -93,6 +94,7 @@ export const createPostContext = ({
     value: _rawBody,
     lastUpdatedAt: _updatedAt,
     mainImage,
+    mainImageCaption,
     slug: slug?.current,
     wordCount,
     readTime: getReadTime(wordCount),

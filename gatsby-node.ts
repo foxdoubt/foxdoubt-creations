@@ -28,6 +28,7 @@ export const createSchemaCustomization = ({
       slug: String
       wordCount: Int
       readTime: String
+      mainImageCaption: String
     }
   `);
 };

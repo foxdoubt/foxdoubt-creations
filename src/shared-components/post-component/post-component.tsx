@@ -3,7 +3,7 @@ import Layout from "../layout/layout";
 import PostBody from "./post-body/post-body";
 import PostTitle from "./post-title/post-title";
 import type { ArbitraryTypedObject } from "@portabletext/types";
-// import { IGatsbyImageData } from "gatsby-plugin-image";
+import PostMainImage from "./post-main-image/post-main-image";
 
 export default ({
   wordCount,
@@ -14,6 +14,7 @@ export default ({
   lastUpdatedAt,
   description,
   mainImage,
+  mainImageCaption,
 }: Queries.PostContext) => {
   const postTitleProps = {
     title,
@@ -22,7 +23,6 @@ export default ({
     author,
     lastUpdatedAt,
     description,
-    mainImage,
   };
 
   return (
@@ -30,6 +30,10 @@ export default ({
       <div className="post flex-row-center">
         <div className="post-inner-container">
           <PostTitle {...postTitleProps} />
+          <PostMainImage
+            image={mainImage}
+            mainImageCaption={mainImageCaption}
+          />
           <PostBody value={value as ArbitraryTypedObject} />
         </div>
       </div>

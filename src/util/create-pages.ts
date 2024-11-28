@@ -77,6 +77,7 @@ export const createAllPosts = async (
             title
             _updatedAt(formatString: "MMMM D, YYYY")
             description
+            mainImageCaption
             mainImage {
               asset {
                 gatsbyImageData(height: 500)

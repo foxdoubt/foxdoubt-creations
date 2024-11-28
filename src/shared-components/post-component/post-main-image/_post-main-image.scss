@@ -1,0 +1,14 @@
+.post-main-image-container {
+  border-bottom: 1px solid $light-grey;
+  margin-bottom: $space-md;
+  .post-main-image {
+    width: 100%;
+    background-color: $black;
+  }
+
+  .post-main-image-caption {
+    padding: $space-sm 0;
+    font-size: $font-size-sm;
+    color: $grey;
+  }
+}
