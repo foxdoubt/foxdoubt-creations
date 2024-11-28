@@ -79,7 +79,8 @@ export const createAllPosts = async (
             description
             mainImage {
               asset {
-                gatsbyImageData
+                gatsbyImageData(height: 500)
+                altText
               }
             }
             slug {

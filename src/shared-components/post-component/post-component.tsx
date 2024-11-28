@@ -1,5 +1,4 @@
 import * as React from "react";
-// import { PageProps } from "gatsby";
 import Layout from "../layout/layout";
 import PostBody from "./post-body/post-body";
 import PostTitle from "./post-title/post-title";
@@ -14,6 +13,7 @@ export default ({
   author,
   lastUpdatedAt,
   description,
+  mainImage,
 }: Queries.PostContext) => {
   const postTitleProps = {
     title,
@@ -22,6 +22,7 @@ export default ({
     author,
     lastUpdatedAt,
     description,
+    mainImage,
   };
 
   return (
