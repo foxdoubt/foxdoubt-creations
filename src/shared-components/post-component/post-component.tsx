@@ -4,6 +4,12 @@ import PostBody from "./post-body/post-body";
 import PostTitle from "./post-title/post-title";
 import type { ArbitraryTypedObject } from "@portabletext/types";
 import PostMainImage from "./post-main-image/post-main-image";
+import { Link } from "gatsby";
+import { IPostLinkState } from "../../util/types";
+
+type PostComponentProps = Queries.PostContext & {
+  nextStepsState: IPostLinkState;
+};
 
 export default ({
   wordCount,
@@ -15,7 +21,8 @@ export default ({
   description,
   mainImage,
   mainImageCaption,
-}: Queries.PostContext) => {
+  nextStepsState,
+}: PostComponentProps) => {
   const postTitleProps = {
     title,
     wordCount,
@@ -24,6 +31,13 @@ export default ({
     lastUpdatedAt,
     description,
   };
+  const { nextStepLinkText, nextStepsLinkPath } = nextStepsState;
+  const nextStepsHtml =
+    nextStepLinkText && nextStepsLinkPath ? (
+      <Link className="post-next-steps-link" to={nextStepsLinkPath}>
+        <p>{nextStepLinkText}</p>
+      </Link>
+    ) : null;
 
   return (
     <Layout pathname={location.pathname}>
@@ -34,7 +48,10 @@ export default ({
             image={mainImage}
             mainImageCaption={mainImageCaption}
           />
-          <PostBody value={value as ArbitraryTypedObject} />
+          <div className="post-body">
+            <PostBody value={value as ArbitraryTypedObject} />
+            {nextStepsHtml}
+          </div>
         </div>
       </div>
     </Layout>

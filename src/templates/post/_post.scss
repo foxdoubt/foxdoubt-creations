@@ -8,4 +8,20 @@
       max-width: $post-text-max-width;
     }
   }
+  .post-body {
+    .paragraph {
+      font-size: $font-size-md;
+      font-family: $font-secondary;
+      line-height: ($space-sm + $space-md);
+    }
+    .line-break {
+      margin: $space-md 0;
+    }
+    .post-next-steps-link {
+      display: block;
+      margin-bottom: $space-lg;
+      font-size: $font-size-md;
+      color: $font-color-accent;
+    }
+  }
 }

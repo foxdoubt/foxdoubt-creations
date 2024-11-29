@@ -2,6 +2,7 @@ import * as React from "react";
 import Layout from "../shared-components/layout/layout";
 import { graphql, Link, PageProps } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
+import CONSTANTS from "../util/constants";
 
 export default ({
   data,
@@ -15,7 +16,13 @@ export default ({
             return (
               <div className="show-preview-outer-container">
                 <h3 className="show-name">{node.name}</h3>
-                <Link to={`/artwork/${node.slug?.current}/introduction`}>
+                <Link
+                  to={`/artwork/${node.slug?.current}/introduction`}
+                  state={{
+                    nextStepsLinkPath: CONSTANTS.artworkCategoryPath,
+                    nextStepLinkText: "Back to show page",
+                  }}
+                >
                   <h3 className="show-introduction">Read Introduction</h3>
                 </Link>
                 <div className="show-preview-inner-container">
