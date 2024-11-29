@@ -1,9 +1,9 @@
-import { Actions } from "gatsby";
+import { Actions, CreatePagesArgs } from "gatsby";
 import path from "path";
 import {
   joinArtworkPathSegments,
   createArtworkPostContext,
-  portableTextBlocksToPlainText,
+  createPostContext,
   getWordCount,
 } from "./create-post-context";
 import CONSTANTS from "./constants";
@@ -61,4 +61,45 @@ export const createShowIntroductionPosts = (
       },
     });
   }
+};
+
+export const createAllPosts = async (
+  graphql: CreatePagesArgs["graphql"],
+  createPage: Actions["createPage"]
+) => {
+  const { data, errors } = await graphql<{
+    allSanityPost: Queries.SanityPostConnection;
+  }>(`
+    query GetAllPosts {
+      allSanityPost {
+        edges {
+          node {
+            title
+            _updatedAt(formatString: "MMMM D, YYYY")
+            description
+            mainImageCaption
+            mainImage {
+              asset {
+                gatsbyImageData(height: 500)
+                altText
+              }
+            }
+            slug {
+              current
+            }
+            _rawBody
+          }
+        }
+      }
+    }`);
+
+  if (errors) throw errors;
+
+  (data?.allSanityPost.edges || []).forEach(({ node }) => {
+    createPage({
+      path: path.join("posts", node.slug?.current),
+      component: path.resolve(CONSTANTS.postPath),
+      context: createPostContext(node),
+    });
+  });
 };

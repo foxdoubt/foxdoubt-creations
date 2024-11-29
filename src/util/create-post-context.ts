@@ -70,3 +70,33 @@ export const getWordCount = (blocks: PortableTextBlock[]) => {
   const wordTokens = plainText.match(/(\b[^\s]+\b)/g);
   return wordTokens && wordTokens.length;
 };
+
+export const getReadTime = (wordCount: number | null) => {
+  const wordsPerMinute = 238;
+  return wordCount && Math.ceil(wordCount / wordsPerMinute);
+};
+
+export const createPostContext = ({
+  title,
+  description,
+  author,
+  _rawBody,
+  _updatedAt,
+  mainImage,
+  mainImageCaption,
+  slug,
+}: Queries.SanityPost) => {
+  const wordCount = _rawBody && getWordCount(_rawBody as any);
+  return {
+    title,
+    description,
+    author: author?.name,
+    value: _rawBody,
+    lastUpdatedAt: _updatedAt,
+    mainImage,
+    mainImageCaption,
+    slug: slug?.current,
+    wordCount,
+    readTime: getReadTime(wordCount),
+  };
+};

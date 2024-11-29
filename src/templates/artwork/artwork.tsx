@@ -3,6 +3,7 @@ import { isNull } from "lodash";
 import useScreenDimensions from "../../hooks/use-screen-dimensions";
 import leftArrow from "../../images/caret-left.svg";
 import rightArrow from "../../images/caret-right.svg";
+import { ArbitraryTypedObject } from "@portabletext/types";
 
 import { PageProps, graphql, Link } from "gatsby";
 import {
@@ -12,7 +13,7 @@ import {
 } from "gatsby-plugin-image";
 
 import Layout from "../../shared-components/layout/layout";
-import PostBody from "../../shared-components/post-body/post-body";
+import PostBody from "../../shared-components/post-component/post-body/post-body";
 
 const MOBILE_BREAKPOINT_WIDTH = 480;
 
@@ -48,7 +49,13 @@ const ArtworkPostBody = ({
 }: PageProps<Queries.GetArtworkPostQuery>["data"]) => {
   if (sanityArtwork?._rawBody) {
     const value = sanityArtwork._rawBody as any;
-    return <PostBody value={value} title="Description" />;
+    return (
+      <div className="post flex-row-center">
+        <div className="post-inner-container">
+          <PostBody value={value as ArbitraryTypedObject} />
+        </div>
+      </div>
+    );
   }
   return null;
 };

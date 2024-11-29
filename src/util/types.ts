@@ -3,3 +3,8 @@ export type SelectedWorks = ShowQueryEdges[0]["node"]["selectedWorks"];
 export type Artwork = {
   readonly slug: { readonly current: string | null } | null;
 };
+
+export interface IPostLinkState {
+  nextStepsLinkPath: string;
+  nextStepLinkText: string;
+}

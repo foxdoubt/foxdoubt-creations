@@ -1,11 +1,14 @@
 import * as React from "react";
 
 import { Link, graphql, useStaticQuery } from "gatsby";
+import CONSTANTS from "../../util/constants";
 
 const Navigation = ({
   selectedNavItem,
+  isAboutPage = false,
 }: {
   selectedNavItem: string | null;
+  isAboutPage: boolean;
 }) => {
   const result = useStaticQuery<Queries.getAllCategoriesQuery>(graphql` 
     query getAllCategories {
@@ -29,10 +32,10 @@ const Navigation = ({
         <nav className="site-navigation">
           <div className="about-item-container flex-row-center">
             <div className="width-fit-content">
-              <Link to="/about">
+              <Link to={CONSTANTS.homePagePath}>
                 <p
                   className={
-                    selectedNavItem === "about"
+                    isAboutPage
                       ? aboutItemClassNames.concat(" ", "selected")
                       : aboutItemClassNames
                   }

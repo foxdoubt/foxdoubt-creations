@@ -69,7 +69,7 @@ blockquote {
 @import "../templates/artwork/artwork";
 @import "../shared-components/footer/footer";
 @import "../shared-components/layout/layout";
-@import "../shared-components/post-body/post-body";
 @import "../pages/artwork";
 @import "../templates/post/post";
-@import "../shared-components/post-title/post-title";
+@import "../shared-components/post-component/post-title/post-title";
+@import "../shared-components/post-component/post-main-image/post-main-image";
