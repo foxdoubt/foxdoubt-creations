@@ -11,6 +11,7 @@ $nav-border: 1px solid $light-grey;
     padding: $space-xs;
     border-right: $nav-border;
     width: 25%;
+    min-width: 80px;
   }
   .about-nav-item {
     text-align: center;
@@ -20,6 +21,15 @@ $nav-border: 1px solid $light-grey;
     width: 75%;
     padding-top: $space-xs;
     padding-bottom: $space-xs;
+    margin-left: $space-md;
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    @include tablet {
+      white-space: initial;
+      overflow-x: initial;
+      overflow-y: initial;
+    }
   }
   .flex-container {
     display: flex;
@@ -30,6 +40,10 @@ $nav-border: 1px solid $light-grey;
     &.disabled {
       color: $light-grey;
     }
+  }
+  .nav-item-category {
+    margin-right: $space-md;
+    text-align: center;
   }
   .selected {
     border-bottom: 2px solid $font-color-accent;
