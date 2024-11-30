@@ -2,6 +2,15 @@
 // 1152px corresponds roughly to 12 in. (96 PPI)
 $max-artwork-width: 1152px;
 
+.margin-bottom {
+  margin-bottom: $space-lg;
+}
+
+.artwork-post-container {
+  border-top: 1px solid $light-grey;
+  padding-top: $space-lg;
+}
+
 .artwork-label {
   text-transform: capitalize;
 
@@ -36,7 +45,6 @@ $max-artwork-width: 1152px;
   color: $grey;
   .artwork-options {
     margin: 0 $space-lg;
-    border-bottom: 1px solid $light-grey;
     padding: $space-sm 0;
   }
 }

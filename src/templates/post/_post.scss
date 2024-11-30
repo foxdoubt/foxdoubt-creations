@@ -9,6 +9,7 @@
     }
   }
   .post-body {
+    margin-bottom: $space-lg;
     .paragraph {
       font-size: $font-size-md;
       font-family: $font-secondary;
@@ -19,7 +20,6 @@
     }
     .post-next-steps-link {
       display: block;
-      margin-bottom: $space-lg;
       font-size: $font-size-md;
       color: $font-color-accent;
     }
