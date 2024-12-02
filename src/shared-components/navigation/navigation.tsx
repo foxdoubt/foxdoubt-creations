@@ -51,11 +51,11 @@ const Navigation = ({
                 const slug = node.slug?.current;
 
                 // temporary link disabling for non-existent category pages
-                let classNames = "nav-item disabled";
+                let classNames = "nav-item nav-item-category disabled";
                 let linkPath = "#";
 
                 if (slug === "artwork") {
-                  classNames = "nav-item";
+                  classNames = "nav-item nav-item-category";
                   linkPath = `/${slug}`;
                 }
 
@@ -65,7 +65,7 @@ const Navigation = ({
                     : classNames;
 
                 return (
-                  <Link to={linkPath}>
+                  <Link to={linkPath} className="nav-link">
                     <p
                       className={classNames}
                       key={`nav-item-${node.title}-${i}`}

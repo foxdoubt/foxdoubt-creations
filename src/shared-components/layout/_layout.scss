@@ -1,3 +1,7 @@
 .main-page-content {
-  min-height: 650px;
+  margin-bottom: $space-lg;
+  min-height: 400px;
+  @include tablet {
+    min-height: 650px;
+  }
 }

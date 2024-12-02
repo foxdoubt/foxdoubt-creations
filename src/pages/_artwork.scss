@@ -1,10 +1,12 @@
+$show-gallery-width: 820px;
+
 .all-shows-outer-container {
-  margin: $space-xl 0;
+  margin: $space-xl $space-md;
 }
 
 .show-preview-outer-container {
   @include tablet {
-    width: 600px;
+    max-width: $show-gallery-width;
     margin: 0 auto;
   }
   .show-name {
@@ -23,8 +25,13 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .artwork-thumbnail {
-  margin: 0 $space-md 0 0;
+  margin: $space-xs $space-xs;
+  width: 75px;
+  @include tablet {
+    width: 125px;
+  }
 }

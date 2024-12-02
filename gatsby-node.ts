@@ -1,9 +1,10 @@
 import type { CreateSchemaCustomizationArgs, GatsbyNode } from "gatsby";
-import { ShowQueryEdges } from "./src/util/types";
+
 import {
   createArtworkPostsFromShow,
   createShowIntroductionPosts,
   createAllPosts,
+  getAllShows,
 } from "./src/util/create-pages";
 
 export const createSchemaCustomization = ({
@@ -40,36 +41,12 @@ export const createPages: GatsbyNode["createPages"] = async ({
   const { createPage } = actions;
   await createAllPosts(graphql, createPage);
 
-  const { data: showsData, errors: showsErrors } =
-    await graphql<Queries.GetAllShowsQuery>(`
-    query GetAllShows {
-      allSanityShow(sort: {selectedWorks: {publishedAt: ASC}}) {
-        edges {
-          node {
-            name
-            _updatedAt(formatString: "MMMM D, YYYY")
-            _rawIntroduction
-            author {
-              name
-            }
-            slug {
-              current
-            }
-            selectedWorks {
-              slug {
-                current
-              }
-            }
-          }
-        }
-      }
-    }
-`);
+  const { data: showsData, errors: showsErrors } = await getAllShows(graphql);
 
   if (showsErrors) {
     throw showsErrors;
   }
-  const edges: ShowQueryEdges = showsData?.allSanityShow.edges || [];
+  const edges = showsData?.allSanityShow.edges || [];
 
   edges.forEach(({ node }) => {
     createArtworkPostsFromShow(node, createPage);

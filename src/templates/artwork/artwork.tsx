@@ -1,9 +1,9 @@
 import * as React from "react";
-import { isNull } from "lodash";
 import useScreenDimensions from "../../hooks/use-screen-dimensions";
 import leftArrow from "../../images/caret-left.svg";
 import rightArrow from "../../images/caret-right.svg";
 import { ArbitraryTypedObject } from "@portabletext/types";
+import isNull from "lodash/isNull";
 
 import { PageProps, graphql, Link } from "gatsby";
 import {
@@ -45,19 +45,19 @@ const getMainImageProps = (
 };
 
 const ArtworkPostBody = ({
-  sanityArtwork,
-}: PageProps<Queries.GetArtworkPostQuery>["data"]) => {
-  if (sanityArtwork?._rawBody) {
-    const value = sanityArtwork._rawBody as any;
-    return (
-      <div className="post flex-row-center">
-        <div className="post-inner-container">
+  value,
+}: {
+  value: Record<string, unknown> | null;
+}) => {
+  return (
+    <div className="post flex-row-center artwork-post-container">
+      <div className="post-inner-container">
+        <div className="post-body">
           <PostBody value={value as ArbitraryTypedObject} />
         </div>
       </div>
-    );
-  }
-  return null;
+    </div>
+  );
 };
 
 const Artwork = ({
@@ -120,9 +120,28 @@ const Artwork = ({
       </button>
     ) : null;
 
+  const artworkOptionsHtml = (artworkMessageHtml ||
+    artworkFormatButtonHtml) && (
+    <div className="artwork-options-container full-width-container">
+      <div className="artwork-options">
+        {artworkMessageHtml}
+        {artworkFormatButtonHtml}
+      </div>
+    </div>
+  );
+
+  const artworkPostHtml = data.sanityArtwork?._rawBody ? (
+    <ArtworkPostBody value={data.sanityArtwork?._rawBody} />
+  ) : null;
+
+  let containerClassnames = `artwork-template-container`;
+  if (!isUserOnMobileDevice && !artworkPostHtml) {
+    containerClassnames = containerClassnames.concat(" margin-bottom");
+  }
+
   return (
     <Layout pathname={location.pathname}>
-      <div className="artwork-template-container">
+      <div className={containerClassnames}>
         <div className="flex-column-center artwork-label">
           <h3 className="artwork-title">{title}</h3>
           <div className="navigation-container">
@@ -154,13 +173,9 @@ const Artwork = ({
             </div>
           </div>
         )}
-        <div className="artwork-options-container full-width-container">
-          <div className="artwork-options">
-            {artworkMessageHtml}
-            {artworkFormatButtonHtml}
-          </div>
-        </div>
-        <ArtworkPostBody {...data} />
+
+        {artworkOptionsHtml}
+        {artworkPostHtml}
       </div>
     </Layout>
   );
@@ -171,7 +186,7 @@ export const query = graphql`
     sanityArtwork(slug: $slug) {
       size
       medium
-      completionYear
+      completionYear(formatString: "MMMM YYYY")
       title
       mainImage {
         hotspot {
@@ -185,16 +200,7 @@ export const query = graphql`
           )
         }
       }
-      publishedAt
       _rawBody
-      body {
-        children {
-          text
-          marks
-        }
-        style
-        listItem
-      }
     }
   }
 `;

@@ -2,7 +2,8 @@
 @import "./variables";
 @import "../styles/mixins";
 
-p {
+p,
+a {
   font-family: $font-main;
 }
 

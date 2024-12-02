@@ -3,6 +3,7 @@ import Layout from "../shared-components/layout/layout";
 import { graphql, Link, PageProps } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import CONSTANTS from "../util/constants";
+import orderBy from "lodash/orderBy";
 
 export default ({
   data,
@@ -13,6 +14,12 @@ export default ({
       <div className="all-shows-outer-container">
         <div className="all-shows-inner-container">
           {data.allSanityShow.edges.map(({ node }) => {
+            const dateOrderedSelectedWorks = orderBy(
+              node.selectedWorks,
+              ["completionYear"],
+              ["desc"]
+            );
+
             return (
               <div className="show-preview-outer-container">
                 <h3 className="show-name">{node.name}</h3>
@@ -26,19 +33,21 @@ export default ({
                   <h3 className="show-introduction">Read Introduction</h3>
                 </Link>
                 <div className="show-preview-inner-container">
-                  {(node.selectedWorks || []).map((work) => (
-                    <Link
-                      to={`${node.slug?.current}/${work?.slug?.current}`}
-                      className="artwork-thumbnail"
-                    >
-                      {work?.mainImage?.asset?.gatsbyImageData && (
-                        <GatsbyImage
-                          image={work?.mainImage?.asset?.gatsbyImageData}
-                          alt={work.title || "unavailable"}
-                        />
-                      )}
-                    </Link>
-                  ))}
+                  {(dateOrderedSelectedWorks || []).map((work, i) => {
+                    return (
+                      <Link
+                        to={`${node.slug?.current}/${work?.slug?.current}`}
+                        className="artwork-thumbnail"
+                      >
+                        {work?.mainImage?.asset?.gatsbyImageData && (
+                          <GatsbyImage
+                            image={work?.mainImage?.asset?.gatsbyImageData}
+                            alt={work.title || "unavailable"}
+                          />
+                        )}
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             );
@@ -51,7 +60,7 @@ export default ({
 
 export const query = graphql`
   query GetAllShowsForArtworkIndex {
-    allSanityShow(sort: {selectedWorks: {publishedAt: ASC}}) {
+    allSanityShow {
       edges {
         node {
           name
