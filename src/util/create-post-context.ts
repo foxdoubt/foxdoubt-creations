@@ -28,6 +28,7 @@ export const createArtworkPostContext = (
   index: number
 ) => {
   const works = allArtworks || [];
+
   return {
     slug: { current: { eq: artwork.slug?.current } },
     currentArtworkPostPath: joinArtworkPathSegments(artwork, showSlug),

@@ -7,22 +7,30 @@ import {
   getWordCount,
 } from "./create-post-context";
 import CONSTANTS from "./constants";
+import { orderBy } from "lodash";
 
-type ShowNode = Queries.GetAllShowsQuery["allSanityShow"]["edges"][0]["node"];
+type ShowNode = Queries.SanityShow;
 
 export const createArtworkPostsFromShow = (
   node: ShowNode,
   createPage: Actions["createPage"]
 ) => {
   const showSlug = node.slug?.current || CONSTANTS.missingShowSlugValue;
-  node.selectedWorks?.forEach((work, index) => {
+  const orderedSelectedWorks = orderBy(
+    node.selectedWorks || [],
+    ["completionYear"],
+    ["desc"]
+  );
+
+  orderedSelectedWorks.forEach((work, index) => {
     if (work && work.slug?.current) {
       const artworkPostContext = createArtworkPostContext(
         work,
-        node.selectedWorks,
+        orderedSelectedWorks,
         showSlug,
         index
       );
+
       createPage({
         path: joinArtworkPathSegments(work, showSlug),
         component: path.resolve(CONSTANTS.artworkTemplatePath),
@@ -97,9 +105,36 @@ export const createAllPosts = async (
 
   (data?.allSanityPost.edges || []).forEach(({ node }) => {
     createPage({
-      path: path.join("posts", node.slug?.current),
+      path: path.join("posts", node.slug?.current as string),
       component: path.resolve(CONSTANTS.postPath),
       context: createPostContext(node),
     });
   });
 };
+
+export const getAllShows = async (graphql: CreatePagesArgs["graphql"]) =>
+  graphql<{ allSanityShow: Queries.SanityShowConnection }>(`
+    query GetAllShows {
+      allSanityShow {
+        edges {
+          node {
+            _updatedAt(formatString: "MMMM D, YYYY")
+            name
+            author {
+              name
+            }
+            slug {
+              current
+            }
+            _rawIntroduction
+            selectedWorks {
+              slug {
+                current
+              }
+              completionYear
+            }
+          }
+        }
+      }
+    }
+`);

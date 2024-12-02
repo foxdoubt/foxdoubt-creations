@@ -1,9 +1,9 @@
 import * as React from "react";
-import { isNull } from "lodash";
 import useScreenDimensions from "../../hooks/use-screen-dimensions";
 import leftArrow from "../../images/caret-left.svg";
 import rightArrow from "../../images/caret-right.svg";
 import { ArbitraryTypedObject } from "@portabletext/types";
+import isNull from "lodash/isNull";
 
 import { PageProps, graphql, Link } from "gatsby";
 import {
@@ -200,16 +200,7 @@ export const query = graphql`
           )
         }
       }
-      publishedAt
       _rawBody
-      body {
-        children {
-          text
-          marks
-        }
-        style
-        listItem
-      }
     }
   }
 `;
