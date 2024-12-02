@@ -18,6 +18,7 @@ export const generateArtworkPostPath = (
   index: number
 ) => {
   const artwork = allWorks ? allWorks[index] : null;
+
   return joinArtworkPathSegments(artwork, showSlug);
 };
 
@@ -28,18 +29,21 @@ export const createArtworkPostContext = (
   index: number
 ) => {
   const works = allArtworks || [];
+  const previousShowIndex = index - 1 < 0 ? works.length - 1 : index - 1;
+  const nextShowIndex = index === works.length - 1 ? 0 : index + 1;
 
   return {
     slug: { current: { eq: artwork.slug?.current } },
-    currentArtworkPostPath: joinArtworkPathSegments(artwork, showSlug),
-    previousArtworkPostPath:
-      index - 1 < 0
-        ? null
-        : generateArtworkPostPath(works, showSlug, index - 1),
-    nextArtworkPostPath:
-      index === works.length - 1
-        ? null
-        : generateArtworkPostPath(works, showSlug, index + 1),
+    previousArtworkPostPath: generateArtworkPostPath(
+      works,
+      showSlug,
+      previousShowIndex
+    ),
+    nextArtworkPostPath: generateArtworkPostPath(
+      works,
+      showSlug,
+      nextShowIndex
+    ),
   };
 };
 

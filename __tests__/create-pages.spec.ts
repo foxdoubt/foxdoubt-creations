@@ -66,7 +66,6 @@ describe("createPages helpers", () => {
       ).toEqual(
         objectContaining({
           slug: { current: { eq: slug0 } },
-          currentArtworkPostPath: path0,
           previousArtworkPostPath: null,
           nextArtworkPostPath: path1,
         })
@@ -77,7 +76,6 @@ describe("createPages helpers", () => {
         objectContaining({
           previousArtworkPostPath: path0,
           nextArtworkPostPath: path2,
-          currentArtworkPostPath: path1,
           slug: { current: { eq: slug1 } },
         })
       );
@@ -86,7 +84,6 @@ describe("createPages helpers", () => {
       ).toEqual(
         objectContaining({
           slug: { current: { eq: slug2 } },
-          currentArtworkPostPath: path2,
           previousArtworkPostPath: path1,
           nextArtworkPostPath: null,
         })
