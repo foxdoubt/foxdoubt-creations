@@ -3,9 +3,7 @@ import appConfig from "./app-config";
 import netlifyAdapter from "gatsby-adapter-netlify";
 
 const config: GatsbyConfig = {
-  adapter: {
-    adapter: netlifyAdapter,
-  },
+  adapter: netlifyAdapter(),
   siteMetadata: {
     title: `foxdoubt-blogcast`,
     siteUrl: `https://www.yourdomain.tld`,
