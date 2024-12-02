@@ -70,11 +70,7 @@ const Artwork = ({
   const size = data.sanityArtwork?.size;
   const completionYear = data.sanityArtwork?.completionYear;
   const gatsbyImageData = data.sanityArtwork?.mainImage?.asset?.gatsbyImageData;
-  const {
-    previousArtworkPostPath,
-    nextArtworkPostPath,
-    currentArtworkPostPath,
-  } = pageContext;
+  const { previousArtworkPostPath, nextArtworkPostPath } = pageContext;
   const hotspot = data.sanityArtwork?.mainImage?.hotspot;
   const hasImageCrop = Boolean(hotspot?.height || hotspot?.width);
 
@@ -84,14 +80,6 @@ const Artwork = ({
 
   const [shouldShowCroppedImage, setShouldShowCroppedImage] =
     useState(hasImageCrop);
-
-  const prevPostPath = !isNull(previousArtworkPostPath)
-    ? previousArtworkPostPath
-    : currentArtworkPostPath;
-
-  const nextPostPath = !isNull(nextArtworkPostPath)
-    ? nextArtworkPostPath
-    : currentArtworkPostPath;
 
   const artworkViewMessages = {
     croppedMessage: "cropped for optimum viewing on mobile devices.",
@@ -145,7 +133,7 @@ const Artwork = ({
         <div className="flex-column-center artwork-label">
           <h3 className="artwork-title">{title}</h3>
           <div className="navigation-container">
-            <Link to={prevPostPath}>
+            <Link to={previousArtworkPostPath}>
               <img src={leftArrow} alt="left-arrow" />
             </Link>
 
@@ -154,7 +142,7 @@ const Artwork = ({
               <p className="artwork-year">{completionYear}</p>
             </div>
 
-            <Link to={nextPostPath}>
+            <Link to={nextArtworkPostPath}>
               <img src={rightArrow} alt="right-arrow" />
             </Link>
           </div>

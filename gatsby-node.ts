@@ -14,7 +14,6 @@ export const createSchemaCustomization = ({
 
   createTypes(`
     type ArtworkTemplateContext {
-      currentArtworkPostPath: String!
       previousArtworkPostPath: String!
       nextArtworkPostPath: String!
     }
