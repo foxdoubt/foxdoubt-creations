@@ -9,6 +9,7 @@ import { IPostLinkState } from "../../util/types";
 
 type PostComponentProps = Queries.PostContext & {
   nextStepsState: IPostLinkState;
+  pathname: string;
 };
 
 export default ({
@@ -21,7 +22,11 @@ export default ({
   description,
   mainImage,
   mainImageCaption,
-  nextStepsState,
+  pathname,
+  nextStepsState = {
+    nextStepLinkText: undefined,
+    nextStepsLinkPath: undefined,
+  },
 }: PostComponentProps) => {
   const postTitleProps = {
     title,
@@ -40,7 +45,7 @@ export default ({
     ) : null;
 
   return (
-    <Layout pathname={location.pathname}>
+    <Layout pathname={pathname}>
       <div className="post flex-row-center">
         <div className="post-inner-container">
           <PostTitle {...postTitleProps} />

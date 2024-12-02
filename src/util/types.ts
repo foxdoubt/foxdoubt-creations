@@ -4,6 +4,6 @@ export type Artwork = {
 };
 
 export interface IPostLinkState {
-  nextStepLinkText: string;
-  nextStepsLinkPath: string;
+  nextStepLinkText?: string;
+  nextStepsLinkPath?: string;
 }

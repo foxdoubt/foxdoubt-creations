@@ -1,9 +1,18 @@
 import { useState, useEffect } from "react";
+import isBrowser from "../util/is-browser";
 
-const getScreenDimensions = () => ({
-  width: window.innerWidth,
-  height: window.innerHeight,
-});
+const getScreenDimensions = () => {
+  if (isBrowser) {
+    return {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+  }
+  return {
+    width: 0,
+    height: 0,
+  };
+};
 
 export default () => {
   const [windowDimensions, setWindowDimensions] = useState(
@@ -15,8 +24,8 @@ export default () => {
       setWindowDimensions(getScreenDimensions());
     };
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window && window.addEventListener("resize", handleResize);
+    return () => window && window.removeEventListener("resize", handleResize);
   }, []);
 
   return windowDimensions;
