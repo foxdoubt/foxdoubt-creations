@@ -48,6 +48,7 @@ const Navigation = ({
           <div className="nav-items-container">
             <div className="flex-container">
               {result.allSanityCategory.edges.map(({ node }, i) => {
+                const categoryKey = `${i}-${node.slug?.current}-category`;
                 const slug = node.slug?.current;
 
                 // temporary link disabling for non-existent category pages
@@ -65,7 +66,7 @@ const Navigation = ({
                     : classNames;
 
                 return (
-                  <Link to={linkPath} className="nav-link">
+                  <Link to={linkPath} className="nav-link" key={categoryKey}>
                     <p
                       className={classNames}
                       key={`nav-item-${node.title}-${i}`}
