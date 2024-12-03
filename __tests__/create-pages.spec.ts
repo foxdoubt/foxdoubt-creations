@@ -16,6 +16,7 @@ describe("createPages helpers", () => {
   const slug0 = "test-artwork-0";
   const slug1 = "test-artwork-1";
   const slug2 = "test-artwork-2";
+
   const path0 = path.join(
     CONSTANTS.artworkCategoryPath,
     showSlug,
@@ -65,9 +66,9 @@ describe("createPages helpers", () => {
         createArtworkPostContext(firstArtwork, allArtworks, showSlug, 0)
       ).toEqual(
         objectContaining({
-          slug: { current: { eq: slug0 } },
-          previousArtworkPostPath: null,
+          previousArtworkPostPath: path2,
           nextArtworkPostPath: path1,
+          slug: { current: { eq: slug0 } },
         })
       );
       expect(
@@ -85,7 +86,7 @@ describe("createPages helpers", () => {
         objectContaining({
           slug: { current: { eq: slug2 } },
           previousArtworkPostPath: path1,
-          nextArtworkPostPath: null,
+          nextArtworkPostPath: path0,
         })
       );
     });
