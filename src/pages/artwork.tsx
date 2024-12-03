@@ -13,7 +13,9 @@ export default ({
     <Layout pathname={location.pathname}>
       <div className="all-shows-outer-container">
         <div className="all-shows-inner-container">
-          {data.allSanityShow.edges.map(({ node }) => {
+          {data.allSanityShow.edges.map(({ node }, i) => {
+            const showSlug = node.slug?.current;
+            const showKey = `${i}-${showSlug}-show`;
             const dateOrderedSelectedWorks = orderBy(
               node.selectedWorks,
               ["completionYear"],
@@ -21,10 +23,10 @@ export default ({
             );
 
             return (
-              <div className="show-preview-outer-container">
+              <div className="show-preview-outer-container" key={showKey}>
                 <h3 className="show-name">{node.name}</h3>
                 <Link
-                  to={`/artwork/${node.slug?.current}/introduction`}
+                  to={`/artwork/${showSlug}/introduction`}
                   state={{
                     nextStepsLinkPath: CONSTANTS.artworkCategoryPath,
                     nextStepLinkText: "Back to show page",
@@ -34,10 +36,13 @@ export default ({
                 </Link>
                 <div className="show-preview-inner-container">
                   {(dateOrderedSelectedWorks || []).map((work, i) => {
+                    const workSlug = work?.slug?.current;
+                    const selectedWorkKey = `${i}-${workSlug}-selected-work`;
                     return (
                       <Link
-                        to={`${node.slug?.current}/${work?.slug?.current}`}
+                        to={`${node.slug?.current}/${workSlug}`}
                         className="artwork-thumbnail"
+                        key={selectedWorkKey}
                       >
                         {work?.mainImage?.asset?.gatsbyImageData && (
                           <GatsbyImage
