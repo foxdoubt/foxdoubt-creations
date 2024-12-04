@@ -5,7 +5,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import CONSTANTS from "../util/constants";
 import orderBy from "lodash/orderBy";
 
-export default ({
+const ArtworkPage = ({
   data,
   location,
 }: PageProps<Queries.GetAllShowsForArtworkIndexQuery>) => {
@@ -62,6 +62,8 @@ export default ({
     </Layout>
   );
 };
+
+export default ArtworkPage;
 
 export const query = graphql`
   query GetAllShowsForArtworkIndex {

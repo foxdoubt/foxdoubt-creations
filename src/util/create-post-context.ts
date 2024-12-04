@@ -91,7 +91,8 @@ export const createPostContext = ({
   mainImageCaption,
   slug,
 }: Queries.SanityPost) => {
-  const wordCount = _rawBody && getWordCount(_rawBody as any);
+  const wordCount =
+    _rawBody && getWordCount(_rawBody as unknown as PortableTextBlock[]);
   return {
     title,
     description,

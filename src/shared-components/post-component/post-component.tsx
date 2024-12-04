@@ -12,7 +12,7 @@ type PostComponentProps = Queries.PostContext & {
   pathname: string;
 };
 
-export default ({
+const PostComponent = ({
   wordCount,
   readTime,
   value,
@@ -62,3 +62,5 @@ export default ({
     </Layout>
   );
 };
+
+export default PostComponent;

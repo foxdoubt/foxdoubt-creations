@@ -24,7 +24,7 @@ export default () => {
       setWindowDimensions(getScreenDimensions());
     };
 
-    window && window.addEventListener("resize", handleResize);
+    if (window) window.addEventListener("resize", handleResize);
     return () => window && window.removeEventListener("resize", handleResize);
   }, []);
 

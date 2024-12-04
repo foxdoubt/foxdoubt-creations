@@ -3,7 +3,6 @@ import useScreenDimensions from "../../hooks/use-screen-dimensions";
 import leftArrow from "../../images/caret-left.svg";
 import rightArrow from "../../images/caret-right.svg";
 import { ArbitraryTypedObject } from "@portabletext/types";
-import isNull from "lodash/isNull";
 
 import { PageProps, graphql, Link } from "gatsby";
 import {
@@ -25,7 +24,7 @@ const getMainImageProps = (
   hotspot: { width: number | null; height: number | null } | null | undefined,
   showCroppedDims: boolean
 ) => {
-  let finalProps: GatsbyImageProps = {
+  const finalProps: GatsbyImageProps = {
     alt: title,
     loading: "eager",
     image: imageData,

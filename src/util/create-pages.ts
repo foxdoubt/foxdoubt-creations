@@ -8,6 +8,7 @@ import {
 } from "./create-post-context";
 import CONSTANTS from "./constants";
 import { orderBy } from "lodash";
+import { PortableTextBlock } from "@portabletext/react";
 
 type ShowNode = Queries.SanityShow;
 
@@ -46,7 +47,9 @@ export const createShowIntroductionPosts = (
 ) => {
   if (node._rawIntroduction) {
     const wordsPerMinute = 238;
-    const wordCount = getWordCount(node._rawIntroduction as any);
+    const wordCount = getWordCount(
+      node._rawIntroduction as unknown as PortableTextBlock[]
+    );
     const readTime = wordCount && Math.ceil(wordCount / wordsPerMinute);
 
     const showTitle = `${node.name || CONSTANTS.fallbackShowName} Introduction`;

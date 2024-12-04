@@ -1,0 +1,23 @@
+{
+  "workbench.colorTheme": "Solarized Light",
+  "terminal.external.osxExec": "Terminal.app",
+  "terminal.external.linuxExec": "Terminal.app",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "git.ignoreMissingGitWarning": true,
+  "security.workspace.trust.untrustedFiles": "open",
+  "terminal.integrated.useWslProfiles": false,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "window.zoomLevel": 1,
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "prettier.embeddedLanguageFormatting": "off",
+  "workbench.editor.enablePreview": false,
+  "eslint.codeActionsOnSave.rules": null,
+  "eslint.useFlatConfig": true,
+  "eslint.options": {
+    "overrideConfigFile": "./eslint.config.mjs"
+  }
+}
