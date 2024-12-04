@@ -8,7 +8,7 @@ import isBrowser from "../util/is-browser";
 // will route later with pages, templates, etc.
 
 const IndexPage: React.FC<PageProps> = () => {
-  isBrowser && navigate(CONSTANTS.homePagePath);
+  if (isBrowser) navigate(CONSTANTS.homePagePath);
   return null;
 };
 

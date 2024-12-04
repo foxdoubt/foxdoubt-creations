@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export default ({
+const PostTitle = ({
   wordCount,
   readTime,
   author,
@@ -42,3 +42,5 @@ export default ({
     </div>
   );
 };
+
+export default PostTitle;

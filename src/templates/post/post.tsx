@@ -4,7 +4,7 @@ import { PageProps } from "gatsby";
 import PostComponent from "../../shared-components/post-component/post-component";
 import { IPostLinkState } from "../../util/types";
 
-export default ({
+const PostTemplate = ({
   pageContext,
   location,
 }: PageProps<any, Queries.PostContext, IPostLinkState>) => {
@@ -15,3 +15,5 @@ export default ({
   };
   return <PostComponent {...postProps} />;
 };
+
+export default PostTemplate;

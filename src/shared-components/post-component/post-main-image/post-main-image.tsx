@@ -1,7 +1,7 @@
 import * as React from "react";
 import { GatsbyImage, GatsbyImageProps } from "gatsby-plugin-image";
 
-export default ({
+const PostMainImage = ({
   image,
   mainImageCaption,
 }: {
@@ -27,3 +27,5 @@ export default ({
     </div>
   );
 };
+
+export default PostMainImage;
