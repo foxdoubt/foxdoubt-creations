@@ -7,7 +7,7 @@ import { IPostLinkState } from "../../util/types";
 const PostTemplate = ({
   pageContext,
   location,
-}: PageProps<any, Queries.PostContext, IPostLinkState>) => {
+}: PageProps<Queries.SanityPost, Queries.PostContext, IPostLinkState>) => {
   const postProps = {
     pathname: location.pathname,
     nextStepsState: location.state,
