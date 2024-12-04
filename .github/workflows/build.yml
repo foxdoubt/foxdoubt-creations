@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint:
-    name: "Run eslint"
+    name: Run ESlint
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,7 +24,7 @@ jobs:
       - run: npm run lint
 
   type_check:
-    name: "Type check"
+    name: Check TypeScript types
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -40,6 +40,7 @@ jobs:
       - run: npm run typecheck
 
   test:
+    name: Run tests
     runs-on: ubuntu-latest
 
     strategy:
@@ -58,6 +59,7 @@ jobs:
       - run: npm run test
 
   build:
+    name: Build Gatsby
     runs-on: ubuntu-latest
 
     strategy:
