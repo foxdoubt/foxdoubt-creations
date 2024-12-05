@@ -60,6 +60,10 @@ jobs:
 
   build:
     environment: production
+    env:
+      SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+      SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+      SANITY_DATASET: production
     name: Build Gatsby
     runs-on: ubuntu-latest
 
@@ -71,10 +75,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build Gatsby on ${{ matrix.node-version }}
-        env:
-          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
-          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
-          SANITY_DATASET: production
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
