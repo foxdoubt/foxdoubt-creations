@@ -1,4 +1,4 @@
-name: Lint, Check Types, Test and Build Gatsby
+name: Build Gatsby
 
 on:
   push:
