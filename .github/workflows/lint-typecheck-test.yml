@@ -59,6 +59,7 @@ jobs:
       - run: npm run test
 
   build:
+    environment: production
     name: Build Gatsby
     runs-on: ubuntu-latest
 
