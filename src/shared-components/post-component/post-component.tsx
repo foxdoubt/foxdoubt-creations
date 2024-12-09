@@ -2,6 +2,7 @@ import * as React from "react";
 import Layout from "../layout/layout";
 import PostBody from "./post-body/post-body";
 import PostTitle from "./post-title/post-title";
+import PostAudio from "./post-audio/post-audio";
 import type { ArbitraryTypedObject } from "@portabletext/types";
 import PostMainImage from "./post-main-image/post-main-image";
 import { Link } from "gatsby";
@@ -53,6 +54,7 @@ const PostComponent = ({
             image={mainImage}
             mainImageCaption={mainImageCaption}
           />
+          <PostAudio />
           <div className="post-body">
             <PostBody value={value as ArbitraryTypedObject} />
             {nextStepsHtml}
