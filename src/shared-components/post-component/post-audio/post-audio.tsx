@@ -1,8 +1,13 @@
 import * as React from "react";
 import AudioPlayer from "react-h5-audio-player";
 import { StaticImage } from "gatsby-plugin-image";
+import useScreenDimensions from "../../../hooks/use-screen-dimensions";
+import CONSTANTS from "../../../util/constants";
 
 const PostAudio = () => {
+  const screenDimensions = useScreenDimensions();
+  const isUserOnMobileDevice =
+    screenDimensions.width <= CONSTANTS.mobileBreakpointWidth;
   const playIcon = (
     <StaticImage
       src="../../../images/post-audio-player-play-icon.svg"
@@ -30,6 +35,10 @@ const PostAudio = () => {
       alt="audio-skip-back-button"
     />
   );
+
+  const mobileSpecificProps = {
+    customVolumeControls: isUserOnMobileDevice ? [] : undefined,
+  };
   return (
     <div className="post-audio-container">
       <AudioPlayer
@@ -42,6 +51,7 @@ const PostAudio = () => {
           forward: fastForwardIcon,
         }}
         src="https://www.freesoundslibrary.com/wp-content/uploads/2020/12/blue-jay-sounds.mp3"
+        {...mobileSpecificProps}
       />
     </div>
   );
