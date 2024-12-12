@@ -1,0 +1,59 @@
+@import "react-h5-audio-player/lib/styles.css";
+
+.rhap_container {
+  font-family: $font-main;
+  box-shadow: none;
+
+  .rhap_time {
+    &.rhap_current-time,
+    &.rhap_total-time {
+      font-size: 12px;
+    }
+  }
+  .rhap_progress-bar,
+  .rhap_volume-bar {
+    height: 2px;
+  }
+
+  .rhap_download-progress,
+  .rhap_volume-bar {
+    background-color: $black;
+  }
+
+  .rhap_volume-button {
+    margin-right: 15px;
+  }
+
+  .rhap_progress-indicator,
+  .rhap_volume-indicator {
+    width: 10px;
+    height: 10px;
+    margin-left: -7px;
+    top: -3px;
+    box-shadow: none;
+    background-color: $black;
+  }
+
+  .rhap_progress-filled {
+    background-color: $orange;
+  }
+
+  .rhap_main-controls {
+    justify-content: space-evenly;
+    .rhap_main-controls-button {
+      margin: 0 9px;
+    }
+  }
+
+  .rhap_play-pause-button {
+    width: 35px;
+  }
+  .rhap_rewind-button,
+  .rhap_forward-button {
+    width: 28px;
+  }
+
+  .rhap_volume-button {
+    color: $black;
+  }
+}

@@ -3,6 +3,7 @@ import useScreenDimensions from "../../hooks/use-screen-dimensions";
 import leftArrow from "../../images/caret-left.svg";
 import rightArrow from "../../images/caret-right.svg";
 import { ArbitraryTypedObject } from "@portabletext/types";
+import CONSTANTS from "../../util/constants";
 
 import { PageProps, graphql, Link } from "gatsby";
 import {
@@ -13,8 +14,6 @@ import {
 
 import Layout from "../../shared-components/layout/layout";
 import PostBody from "../../shared-components/post-component/post-body/post-body";
-
-const MOBILE_BREAKPOINT_WIDTH = 480;
 
 const { useState } = React;
 
@@ -75,7 +74,7 @@ const Artwork = ({
 
   const screenDimensions = useScreenDimensions();
   const isUserOnMobileDevice =
-    screenDimensions.width <= MOBILE_BREAKPOINT_WIDTH;
+    screenDimensions.width <= CONSTANTS.mobileBreakpointWidth;
 
   const [shouldShowCroppedImage, setShouldShowCroppedImage] =
     useState(hasImageCrop);
