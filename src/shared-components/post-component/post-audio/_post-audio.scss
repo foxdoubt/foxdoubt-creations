@@ -10,15 +10,22 @@
       font-size: 12px;
     }
   }
-  .rhap_progress-bar {
+  .rhap_progress-bar,
+  .rhap_volume-bar {
     height: 2px;
   }
 
-  .rhap_download-progress {
+  .rhap_download-progress,
+  .rhap_volume-bar {
     background-color: $black;
   }
 
-  .rhap_progress-indicator {
+  .rhap_volume-button {
+    margin-right: 15px;
+  }
+
+  .rhap_progress-indicator,
+  .rhap_volume-indicator {
     width: 10px;
     height: 10px;
     margin-left: -7px;
@@ -45,4 +52,17 @@
   .rhap_forward-button {
     width: 28px;
   }
+
+  .rhap_volume-button {
+    color: $black;
+  }
+
+  // .rhap_volume-bar {
+  //   height: 2px;
+  //   background-color: $black;
+  // }
+
+  // .rhap_volume-indicator {
+  //   background-color: black;
+  // }
 }
