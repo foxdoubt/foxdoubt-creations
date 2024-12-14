@@ -1,8 +1,6 @@
 import * as React from "react";
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import { StaticImage } from "gatsby-plugin-image";
-import useScreenDimensions from "../../../hooks/use-screen-dimensions";
-import CONSTANTS from "../../../util/constants";
 
 interface IPostAudioState {
   isVisible: boolean;
@@ -13,9 +11,6 @@ const PostAudio = ({ isVisible = false, close }: IPostAudioState) => {
   console.log({ isVisible });
   const src =
     "https://www.soundsnap.com/bird_young_blue_jay_calls_and_wings_flapping_4";
-  const screenDimensions = useScreenDimensions();
-  const isUserOnMobileDevice =
-    screenDimensions.width <= CONSTANTS.mobileBreakpointWidth;
 
   const playIcon = (
     <StaticImage
