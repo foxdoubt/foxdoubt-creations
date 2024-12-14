@@ -13,6 +13,8 @@ type PostComponentProps = Queries.PostContext & {
   pathname: string;
 };
 
+const { useState } = React;
+
 const PostComponent = ({
   wordCount,
   readTime,
@@ -29,6 +31,7 @@ const PostComponent = ({
     nextStepsLinkPath: undefined,
   },
 }: PostComponentProps) => {
+  const [isPostAudioPlaying, setIsPostAudioPlaying] = useState(false);
   const postTitleProps = {
     title,
     wordCount,
@@ -46,22 +49,33 @@ const PostComponent = ({
     ) : null;
 
   return (
-    <Layout pathname={pathname}>
-      <div className="post flex-row-center">
-        <div className="post-inner-container">
-          <PostTitle {...postTitleProps} />
-          <PostMainImage
-            image={mainImage}
-            mainImageCaption={mainImageCaption}
-          />
-          <PostAudio />
-          <div className="post-body">
-            <PostBody value={value as ArbitraryTypedObject} />
-            {nextStepsHtml}
+    <>
+      <Layout pathname={pathname}>
+        <div className="post flex-row-center">
+          <div className="post-inner-container">
+            <PostTitle {...postTitleProps} />
+            <PostMainImage
+              image={mainImage}
+              mainImageCaption={mainImageCaption}
+            />
+            {/* TODO: Replace with component that has play icon and correct styles */}
+            <p
+              className="show-introduction"
+              onClick={() => {
+                setIsPostAudioPlaying(!isPostAudioPlaying);
+              }}
+            >
+              Play post as audio
+            </p>
+            <div className="post-body">
+              <PostBody value={value as ArbitraryTypedObject} />
+              {nextStepsHtml}
+            </div>
           </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+      <PostAudio isPostAudioPlaying={isPostAudioPlaying} />
+    </>
   );
 };
 

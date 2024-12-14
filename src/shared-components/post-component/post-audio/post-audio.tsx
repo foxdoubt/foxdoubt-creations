@@ -4,8 +4,13 @@ import { StaticImage } from "gatsby-plugin-image";
 import useScreenDimensions from "../../../hooks/use-screen-dimensions";
 import CONSTANTS from "../../../util/constants";
 
-const PostAudio = () => {
-  const src = null;
+interface IPostAudioState {
+  isPostAudioPlaying: boolean;
+}
+
+const PostAudio = ({ isPostAudioPlaying = false }: IPostAudioState) => {
+  const src =
+    "https://www.soundsnap.com/bird_young_blue_jay_calls_and_wings_flapping_4";
   const screenDimensions = useScreenDimensions();
   const isUserOnMobileDevice =
     screenDimensions.width <= CONSTANTS.mobileBreakpointWidth;
@@ -61,8 +66,12 @@ const PostAudio = () => {
   const mobileSpecificProps = {
     customVolumeControls: isUserOnMobileDevice ? [] : undefined,
   };
+
+  const containerClassNames = `post-audio-container ${
+    isPostAudioPlaying ? "audio-playing" : ""
+  }`;
   return src ? (
-    <div className="post-audio-container">
+    <div className={containerClassNames}>
       <AudioPlayer
         className="post-audio"
         customAdditionalControls={[]}

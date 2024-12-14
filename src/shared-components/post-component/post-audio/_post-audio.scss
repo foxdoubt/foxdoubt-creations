@@ -3,6 +3,8 @@
 .rhap_container {
   font-family: $font-main;
   box-shadow: none;
+  background-color: #fab908;
+  opacity: 0.8;
 
   .rhap_time {
     &.rhap_current-time,
@@ -55,5 +57,28 @@
 
   .rhap_volume-button {
     color: $black;
+  }
+}
+
+.post-audio-container {
+  background: rgba(16, 24, 32, 0.95);
+  bottom: 0;
+  filter: blur(5px);
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  transform: translateY(100%) scale(1.0001) translateZ(0);
+  transition: all 0.1s ease-in-out 0s;
+  visibility: hidden;
+  width: 100%;
+  will-change: transform opacity;
+  z-index: 1000;
+  &.audio-playing {
+    filter: blur(0);
+    opacity: 1;
+    pointer-events: inherit;
+    transform: translateY(0) scale(1) translateZ(0);
+    visibility: visible;
   }
 }
