@@ -15,6 +15,18 @@ type PostComponentProps = Queries.PostContext & {
 
 const { useState } = React;
 
+interface IPostComponentAudioState {
+  isPlayerVisible: boolean;
+  isPlayerHidden: boolean | null;
+  isPlayerPlaying: boolean;
+}
+
+const initialState: IPostComponentAudioState = {
+  isPlayerVisible: false,
+  isPlayerHidden: null,
+  isPlayerPlaying: false,
+};
+
 const PostComponent = ({
   wordCount,
   readTime,
@@ -31,7 +43,20 @@ const PostComponent = ({
     nextStepsLinkPath: undefined,
   },
 }: PostComponentProps) => {
-  const [isPostAudioPlaying, setIsPostAudioPlaying] = useState(false);
+  const [postAudioState, setPostAudioState] =
+    useState<IPostComponentAudioState>(initialState);
+
+  const showPostAudio = () => {
+    setPostAudioState({
+      ...postAudioState,
+      isPlayerVisible: true,
+    });
+  };
+
+  const closePostAudio = () => {
+    setPostAudioState(initialState);
+  };
+
   const postTitleProps = {
     title,
     wordCount,
@@ -59,12 +84,7 @@ const PostComponent = ({
               mainImageCaption={mainImageCaption}
             />
             {/* TODO: Replace with component that has play icon and correct styles */}
-            <p
-              className="show-introduction"
-              onClick={() => {
-                setIsPostAudioPlaying(!isPostAudioPlaying);
-              }}
-            >
+            <p className="show-introduction" onClick={showPostAudio}>
               Play post as audio
             </p>
             <div className="post-body">
@@ -74,7 +94,10 @@ const PostComponent = ({
           </div>
         </div>
       </Layout>
-      <PostAudio isPostAudioPlaying={isPostAudioPlaying} />
+      <PostAudio
+        isVisible={postAudioState.isPlayerVisible}
+        close={closePostAudio}
+      />
     </>
   );
 };

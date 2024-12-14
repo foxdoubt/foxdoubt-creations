@@ -1,14 +1,16 @@
 import * as React from "react";
-import AudioPlayer from "react-h5-audio-player";
+import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import { StaticImage } from "gatsby-plugin-image";
 import useScreenDimensions from "../../../hooks/use-screen-dimensions";
 import CONSTANTS from "../../../util/constants";
 
 interface IPostAudioState {
-  isPostAudioPlaying: boolean;
+  isVisible: boolean;
+  close: () => void;
 }
 
-const PostAudio = ({ isPostAudioPlaying = false }: IPostAudioState) => {
+const PostAudio = ({ isVisible = false, close }: IPostAudioState) => {
+  console.log({ isVisible });
   const src =
     "https://www.soundsnap.com/bird_young_blue_jay_calls_and_wings_flapping_4";
   const screenDimensions = useScreenDimensions();
@@ -63,18 +65,16 @@ const PostAudio = ({ isPostAudioPlaying = false }: IPostAudioState) => {
     />
   );
 
-  const mobileSpecificProps = {
-    customVolumeControls: isUserOnMobileDevice ? [] : undefined,
-  };
-
   const containerClassNames = `post-audio-container ${
-    isPostAudioPlaying ? "audio-playing" : ""
+    isVisible ? "audio-playing" : ""
   }`;
   return src ? (
     <div className={containerClassNames}>
       <AudioPlayer
         className="post-audio"
+        layout="horizontal-reverse"
         customAdditionalControls={[]}
+        customVolumeControls={[]}
         customIcons={{
           play: playIcon,
           pause: pauseIcon,
@@ -83,9 +83,16 @@ const PostAudio = ({ isPostAudioPlaying = false }: IPostAudioState) => {
           volume: volumeIcon,
           volumeMute: muteIcon,
         }}
+        customProgressBarSection={[
+          RHAP_UI.CURRENT_TIME,
+          RHAP_UI.PROGRESS_BAR,
+          RHAP_UI.DURATION,
+          <div key="close-btn" onClick={close} style={{ marginLeft: "30px" }}>
+            X
+          </div>,
+        ]}
         progressJumpStep={15000}
         src="https://www.freesoundslibrary.com/wp-content/uploads/2020/12/blue-jay-sounds.mp3"
-        {...mobileSpecificProps}
       />
     </div>
   ) : null;
