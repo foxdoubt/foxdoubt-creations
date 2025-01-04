@@ -93,7 +93,7 @@ const PostAudio = ({
         className="post-audio"
         layout="horizontal-reverse"
         header={[
-          <div key="post-title" className="post-title">
+          <div key="post-title" className="post-audio-title">
             {postTitle}
           </div>,
         ]}
@@ -107,6 +107,7 @@ const PostAudio = ({
           volume: volumeIcon,
           volumeMute: muteIcon,
         }}
+        customControlsSection={[RHAP_UI.MAIN_CONTROLS]}
         customProgressBarSection={[
           RHAP_UI.CURRENT_TIME,
           RHAP_UI.PROGRESS_BAR,
