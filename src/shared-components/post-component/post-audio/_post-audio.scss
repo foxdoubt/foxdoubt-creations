@@ -1,9 +1,10 @@
 @import "react-h5-audio-player/lib/styles.css";
+$audio-background-color: #fab908;
 
 .rhap_container {
   font-family: $font-main;
   box-shadow: none;
-  background-color: #fab908;
+  background-color: $audio-background-color;
   opacity: 0.8;
   .rhap_header {
     display: flex;
@@ -74,32 +75,30 @@
 
 .post-audio-container {
   .close-and-hide {
-    background-color: #fab908;
+    background-color: $audio-background-color;
     position: absolute;
     cursor: pointer;
     right: 0;
     z-index: 1;
+    .hide-show-btn {
+      margin-left: 30px;
+    }
   }
   &.audio-hidden {
     .close-and-hide {
-      position: absolute;
       transform: translateY(-100%);
-      transition: all 0s ease-in-out 0.3s;
-      .hide-show-btn {
-        margin-left: 30px;
-      }
+      transition: all 0.1s ease-in-out 0.3s;
     }
   }
   bottom: 0;
   margin: 0;
-  // opacity: 0;
   position: fixed;
   transform: translateY(100%) scale(1.0001) translateZ(0);
   transition: all 0.1s ease-in-out 0s;
   width: 100%;
   will-change: transform opacity;
-  // z-index: 1000;
-  &.audio-playing {
+
+  &.audio-visible {
     filter: blur(0);
     opacity: 1;
     pointer-events: inherit;

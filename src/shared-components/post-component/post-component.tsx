@@ -17,14 +17,14 @@ const { useState } = React;
 
 interface IPostComponentAudioState {
   isPlayerVisible: boolean;
-  isPlayerHidden: boolean | null;
   isPlayerPlaying: boolean;
+  isInitialState: boolean;
 }
 
 const initialState: IPostComponentAudioState = {
   isPlayerVisible: false,
-  isPlayerHidden: null,
   isPlayerPlaying: false,
+  isInitialState: true,
 };
 
 const PostComponent = ({
@@ -47,23 +47,23 @@ const PostComponent = ({
     useState<IPostComponentAudioState>(initialState);
 
   const togglePostAudioVisibility = () => {
+    const { isPlayerVisible } = postAudioState;
     setPostAudioState({
       ...postAudioState,
-      isPlayerVisible: !postAudioState.isPlayerVisible,
+      isPlayerVisible: !isPlayerVisible,
     });
   };
 
-  const closePostAudio = () => {
+  const initializePostAudioPlayer = () => {
+    setPostAudioState({
+      isPlayerPlaying: true,
+      isPlayerVisible: true,
+      isInitialState: false,
+    });
+  };
+
+  const resetPostAudio = () => {
     setPostAudioState(initialState);
-  };
-
-  const togglePostAudioHidden = () => {
-    console.log("togglePostAudioHidden...");
-    setPostAudioState({
-      ...postAudioState,
-      isPlayerVisible: !postAudioState.isPlayerVisible,
-      isPlayerHidden: !postAudioState.isPlayerHidden,
-    });
   };
 
   const postTitleProps = {
@@ -96,7 +96,7 @@ const PostComponent = ({
             {/* TODO: Replace with component that has play icon and correct styles */}
             <p
               className="show-introduction"
-              onClick={togglePostAudioVisibility}
+              onClick={initializePostAudioPlayer}
             >
               Play post as audio
             </p>
@@ -108,10 +108,11 @@ const PostComponent = ({
         </div>
       </Layout>
       <PostAudio
+        isInitialState={postAudioState.isInitialState}
         isVisible={postAudioState.isPlayerVisible}
-        isHidden={postAudioState.isPlayerHidden}
-        close={closePostAudio}
-        hide={togglePostAudioHidden}
+        isPlaying={postAudioState.isPlayerPlaying}
+        toggleVisibility={togglePostAudioVisibility}
+        close={resetPostAudio}
         postTitle={title}
       />
     </>

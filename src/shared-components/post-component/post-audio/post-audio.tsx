@@ -4,19 +4,20 @@ import { StaticImage } from "gatsby-plugin-image";
 
 interface IPostAudioState {
   isVisible: boolean;
-  isHidden: boolean;
+  isInitialState: boolean;
+  isPlaying: boolean;
   close: () => void;
-  hide: () => void;
+  toggleVisibility: () => void;
   postTitle: Queries.Maybe<string>;
-  postAuthor: Queries.Maybe<string>;
 }
 
 const PostAudio = ({
   isVisible = false,
+  isInitialState,
+  // isPlaying,
   close,
+  toggleVisibility,
   postTitle,
-  isHidden = false,
-  hide,
 }: IPostAudioState) => {
   const src =
     "https://www.soundsnap.com/bird_young_blue_jay_calls_and_wings_flapping_4";
@@ -72,16 +73,17 @@ const PostAudio = ({
   const xIcon = "X";
   const hideIcon = "v";
   const expandIcon = "^";
+  const initialStateContainerClassNames = "post-audio-container";
 
-  const containerClassNames = `post-audio-container ${
-    isVisible ? "audio-playing" : ""
-  } ${isHidden ? "audio-hidden" : ""}`;
+  const containerClassNames = isInitialState
+    ? initialStateContainerClassNames
+    : `post-audio-container${isVisible ? " audio-visible" : " audio-hidden"}`;
 
   return src ? (
     <div className={containerClassNames}>
       <div className="close-and-hide">
-        <span onClick={hide} className="hide-show-btn">
-          {isHidden ? expandIcon : hideIcon}
+        <span onClick={toggleVisibility} className="hide-show-btn">
+          {isVisible ? hideIcon : expandIcon}
         </span>
         <span key="close-btn" onClick={close} style={{ marginLeft: "30px" }}>
           {xIcon}
