@@ -4,11 +4,20 @@ import { StaticImage } from "gatsby-plugin-image";
 
 interface IPostAudioState {
   isVisible: boolean;
+  isHidden: boolean;
   close: () => void;
+  hide: () => void;
+  postTitle: Queries.Maybe<string>;
+  postAuthor: Queries.Maybe<string>;
 }
 
-const PostAudio = ({ isVisible = false, close }: IPostAudioState) => {
-  console.log({ isVisible });
+const PostAudio = ({
+  isVisible = false,
+  close,
+  postTitle,
+  isHidden = false,
+  hide,
+}: IPostAudioState) => {
   const src =
     "https://www.soundsnap.com/bird_young_blue_jay_calls_and_wings_flapping_4";
 
@@ -60,14 +69,32 @@ const PostAudio = ({ isVisible = false, close }: IPostAudioState) => {
     />
   );
 
+  const xIcon = "X";
+  const hideIcon = "v";
+  const expandIcon = "^";
+
   const containerClassNames = `post-audio-container ${
     isVisible ? "audio-playing" : ""
-  }`;
+  } ${isHidden ? "audio-hidden" : ""}`;
+
   return src ? (
     <div className={containerClassNames}>
+      <div className="close-and-hide">
+        <span onClick={hide} className="hide-show-btn">
+          {isHidden ? expandIcon : hideIcon}
+        </span>
+        <span key="close-btn" onClick={close} style={{ marginLeft: "30px" }}>
+          {xIcon}
+        </span>
+      </div>
       <AudioPlayer
         className="post-audio"
         layout="horizontal-reverse"
+        header={[
+          <div key="post-title" className="post-title">
+            {postTitle}
+          </div>,
+        ]}
         customAdditionalControls={[]}
         customVolumeControls={[]}
         customIcons={{
@@ -82,9 +109,6 @@ const PostAudio = ({ isVisible = false, close }: IPostAudioState) => {
           RHAP_UI.CURRENT_TIME,
           RHAP_UI.PROGRESS_BAR,
           RHAP_UI.DURATION,
-          <div key="close-btn" onClick={close} style={{ marginLeft: "30px" }}>
-            X
-          </div>,
         ]}
         progressJumpStep={15000}
         src="https://www.freesoundslibrary.com/wp-content/uploads/2020/12/blue-jay-sounds.mp3"

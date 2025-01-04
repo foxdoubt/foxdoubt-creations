@@ -46,15 +46,24 @@ const PostComponent = ({
   const [postAudioState, setPostAudioState] =
     useState<IPostComponentAudioState>(initialState);
 
-  const showPostAudio = () => {
+  const togglePostAudioVisibility = () => {
     setPostAudioState({
       ...postAudioState,
-      isPlayerVisible: true,
+      isPlayerVisible: !postAudioState.isPlayerVisible,
     });
   };
 
   const closePostAudio = () => {
     setPostAudioState(initialState);
+  };
+
+  const togglePostAudioHidden = () => {
+    console.log("togglePostAudioHidden...");
+    setPostAudioState({
+      ...postAudioState,
+      isPlayerVisible: !postAudioState.isPlayerVisible,
+      isPlayerHidden: !postAudioState.isPlayerHidden,
+    });
   };
 
   const postTitleProps = {
@@ -65,6 +74,7 @@ const PostComponent = ({
     lastUpdatedAt,
     description,
   };
+
   const { nextStepLinkText, nextStepsLinkPath } = nextStepsState;
   const nextStepsHtml =
     nextStepLinkText && nextStepsLinkPath ? (
@@ -84,7 +94,10 @@ const PostComponent = ({
               mainImageCaption={mainImageCaption}
             />
             {/* TODO: Replace with component that has play icon and correct styles */}
-            <p className="show-introduction" onClick={showPostAudio}>
+            <p
+              className="show-introduction"
+              onClick={togglePostAudioVisibility}
+            >
               Play post as audio
             </p>
             <div className="post-body">
@@ -96,7 +109,10 @@ const PostComponent = ({
       </Layout>
       <PostAudio
         isVisible={postAudioState.isPlayerVisible}
+        isHidden={postAudioState.isPlayerHidden}
         close={closePostAudio}
+        hide={togglePostAudioHidden}
+        postTitle={title}
       />
     </>
   );
