@@ -72,10 +72,6 @@ $audio-background-color: #fab908;
   .rhap_play-pause-button {
     width: 35px;
   }
-  .rhap_rewind-button,
-  .rhap_forward-button {
-    width: 28px;
-  }
 
   .rhap_volume-button {
     color: $black;
@@ -83,6 +79,13 @@ $audio-background-color: #fab908;
 }
 
 .post-audio-container {
+  bottom: 0;
+  margin: 0;
+  position: fixed;
+  transform: translateY(100%) scale(1.0001) translateZ(0);
+  transition: all 0.1s ease-in-out 0s;
+  width: 100%;
+  will-change: transform;
   .close-and-hide {
     position: absolute;
     cursor: pointer;
@@ -101,14 +104,6 @@ $audio-background-color: #fab908;
       border-radius: 4px 4px 0 0;
     }
   }
-  bottom: 0;
-  margin: 0;
-  position: fixed;
-  transform: translateY(100%) scale(1.0001) translateZ(0);
-  transition: all 0.1s ease-in-out 0s;
-  width: 100%;
-  will-change: transform;
-
   &.audio-visible {
     filter: blur(0);
     opacity: 1;
