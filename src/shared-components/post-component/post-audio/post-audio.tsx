@@ -1,14 +1,14 @@
 import * as React from "react";
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
-import { StaticImage } from "gatsby-plugin-image";
+
 import {
   TbRewindForward15,
   TbRewindBackward15,
   TbPlayerPlayFilled,
   TbPlayerPauseFilled,
-  TbCaretDownFilled,
-  TbCaretUpFilled,
+  TbChevronUp,
   TbX,
+  TbChevronDown,
 } from "react-icons/tb";
 
 interface IPostAudioState {
@@ -35,9 +35,9 @@ const PostAudio = ({
   const pauseIcon = <TbPlayerPauseFilled color="black" />;
   const rewindIcon = <TbRewindBackward15 color="black" />;
   const fastForwardIcon = <TbRewindForward15 color="black" />;
-  const xIcon = <TbX color="black" />;
-  const hideIcon = <TbCaretDownFilled color="black" />;
-  const expandIcon = <TbCaretUpFilled color="black" />;
+  const xIcon = <TbX color="black" size="1.5em" />;
+  const hideIcon = <TbChevronDown color="black" size="1.5em" />;
+  const expandIcon = <TbChevronUp color="black" size="1.5em" />;
 
   const initialStateContainerClassNames = "post-audio-container";
 
@@ -47,13 +47,15 @@ const PostAudio = ({
 
   return src ? (
     <div className={containerClassNames}>
-      <div className="close-and-hide">
-        <span onClick={toggleVisibility} className="hide-show-btn">
-          {isVisible ? hideIcon : expandIcon}
-        </span>
-        <span key="close-btn" onClick={close} style={{ marginLeft: "30px" }}>
-          {xIcon}
-        </span>
+      <div className="close-and-hide-section-container">
+        <div className="close-and-hide-section">
+          <span onClick={toggleVisibility} className="hide-show-btn">
+            {isVisible ? hideIcon : expandIcon}
+          </span>
+          <span key="close-btn" onClick={close}>
+            {xIcon}
+          </span>
+        </div>
       </div>
       <AudioPlayer
         className="post-audio"
