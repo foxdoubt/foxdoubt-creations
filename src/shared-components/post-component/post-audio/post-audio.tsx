@@ -1,5 +1,7 @@
 import * as React from "react";
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
+import useScreenDimensions from "../../../hooks/use-screen-dimensions";
+import CONSTANTS from "../../../util/constants";
 
 import {
   TbRewindForward15,
@@ -23,13 +25,28 @@ interface IPostAudioState {
 const PostAudio = ({
   isVisible = false,
   isInitialState,
-  // isPlaying,
   close,
   toggleVisibility,
   postTitle,
 }: IPostAudioState) => {
   const src =
     "https://www.soundsnap.com/bird_young_blue_jay_calls_and_wings_flapping_4";
+
+  const screenDimensions = useScreenDimensions();
+
+  const isUserOnTabletOrNarrower =
+    screenDimensions.width <= CONSTANTS.tabletBreakpointWidth;
+
+  let screenSizeDependentProps = {
+    layout: "horizontal-reverse",
+    className: "post-audio",
+  };
+  if (isUserOnTabletOrNarrower) {
+    screenSizeDependentProps = {
+      layout: "stacked-reverse",
+      className: "post-audio is-tablet-or-narrower",
+    };
+  }
 
   const playIcon = <TbPlayerPlayFilled color="black" />;
   const pauseIcon = <TbPlayerPauseFilled color="black" />;
@@ -58,8 +75,9 @@ const PostAudio = ({
         </div>
       </div>
       <AudioPlayer
-        className="post-audio"
-        layout="horizontal-reverse"
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        layout={screenSizeDependentProps.layout as any}
+        className={screenSizeDependentProps.className}
         header={[
           <div key="post-title" className="post-audio-title">
             {postTitle}

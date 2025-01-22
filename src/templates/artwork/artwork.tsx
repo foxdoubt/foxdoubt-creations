@@ -73,6 +73,7 @@ const Artwork = ({
   const hasImageCrop = Boolean(hotspot?.height || hotspot?.width);
 
   const screenDimensions = useScreenDimensions();
+
   const isUserOnMobileDevice =
     screenDimensions.width <= CONSTANTS.mobileBreakpointWidth;
 

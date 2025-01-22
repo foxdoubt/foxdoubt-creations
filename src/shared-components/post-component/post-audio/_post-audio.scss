@@ -6,6 +6,15 @@ $audio-background-color: #fab908;
   box-shadow: none;
   background-color: $audio-background-color;
   opacity: 0.9;
+  &.is-tablet-or-narrower {
+    .rhap_controls-section {
+      width: 100%;
+      justify-content: center;
+    }
+    .rhap_progress-section {
+      width: 100%;
+    }
+  }
   .rhap_header {
     width: $post-text-max-width;
     margin: 0 auto;
