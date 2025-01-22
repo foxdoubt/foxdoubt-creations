@@ -13,6 +13,20 @@ type PostComponentProps = Queries.PostContext & {
   pathname: string;
 };
 
+const { useState } = React;
+
+interface IPostComponentAudioState {
+  isPlayerVisible: boolean;
+  isPlayerPlaying: boolean;
+  isInitialState: boolean;
+}
+
+const initialState: IPostComponentAudioState = {
+  isPlayerVisible: false,
+  isPlayerPlaying: false,
+  isInitialState: true,
+};
+
 const PostComponent = ({
   wordCount,
   readTime,
@@ -29,6 +43,29 @@ const PostComponent = ({
     nextStepsLinkPath: undefined,
   },
 }: PostComponentProps) => {
+  const [postAudioState, setPostAudioState] =
+    useState<IPostComponentAudioState>(initialState);
+
+  const togglePostAudioVisibility = () => {
+    const { isPlayerVisible } = postAudioState;
+    setPostAudioState({
+      ...postAudioState,
+      isPlayerVisible: !isPlayerVisible,
+    });
+  };
+
+  const initializePostAudioPlayer = () => {
+    setPostAudioState({
+      isPlayerPlaying: true,
+      isPlayerVisible: true,
+      isInitialState: false,
+    });
+  };
+
+  const resetPostAudio = () => {
+    setPostAudioState(initialState);
+  };
+
   const postTitleProps = {
     title,
     wordCount,
@@ -37,6 +74,7 @@ const PostComponent = ({
     lastUpdatedAt,
     description,
   };
+
   const { nextStepLinkText, nextStepsLinkPath } = nextStepsState;
   const nextStepsHtml =
     nextStepLinkText && nextStepsLinkPath ? (
@@ -46,22 +84,38 @@ const PostComponent = ({
     ) : null;
 
   return (
-    <Layout pathname={pathname}>
-      <div className="post flex-row-center">
-        <div className="post-inner-container">
-          <PostTitle {...postTitleProps} />
-          <PostMainImage
-            image={mainImage}
-            mainImageCaption={mainImageCaption}
-          />
-          <PostAudio />
-          <div className="post-body">
-            <PostBody value={value as ArbitraryTypedObject} />
-            {nextStepsHtml}
+    <>
+      <Layout pathname={pathname}>
+        <div className="post flex-row-center">
+          <div className="post-inner-container">
+            <PostTitle {...postTitleProps} />
+            <PostMainImage
+              image={mainImage}
+              mainImageCaption={mainImageCaption}
+            />
+            {/* TODO: Replace with component that has play icon and correct styles */}
+            <p
+              className="show-introduction"
+              onClick={initializePostAudioPlayer}
+            >
+              Play post as audio
+            </p>
+            <div className="post-body">
+              <PostBody value={value as ArbitraryTypedObject} />
+              {nextStepsHtml}
+            </div>
           </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+      <PostAudio
+        isInitialState={postAudioState.isInitialState}
+        isVisible={postAudioState.isPlayerVisible}
+        isPlaying={postAudioState.isPlayerPlaying}
+        toggleVisibility={togglePostAudioVisibility}
+        close={resetPostAudio}
+        postTitle={title}
+      />
+    </>
   );
 };
 

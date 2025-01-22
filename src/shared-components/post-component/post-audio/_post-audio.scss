@@ -1,13 +1,31 @@
 @import "react-h5-audio-player/lib/styles.css";
+$audio-background-color: #fab908;
 
 .rhap_container {
   font-family: $font-main;
   box-shadow: none;
+  background-color: $audio-background-color;
+  opacity: 0.9;
+  .rhap_header {
+    width: $post-text-max-width;
+    margin: 0 auto;
 
+    .post-audio-title {
+      font-family: $font-heading;
+      flex: 1;
+    }
+    .close-and-hide {
+      cursor: pointer;
+      .hide-show-btn {
+        margin-left: 30px;
+      }
+    }
+  }
   .rhap_time {
     &.rhap_current-time,
     &.rhap_total-time {
-      font-size: 12px;
+      font-size: $font-size-xs;
+      font-family: $font-main;
     }
   }
   .rhap_progress-bar,
@@ -34,26 +52,67 @@
     background-color: $black;
   }
 
+  .rhap_progress-section {
+    width: 75%;
+  }
+
+  .rhap_progress-container {
+    width: $post-text-max-width;
+    flex: initial;
+  }
+
   .rhap_progress-filled {
-    background-color: $orange;
+    background-color: $grey;
   }
 
-  .rhap_main-controls {
-    justify-content: space-evenly;
-    .rhap_main-controls-button {
-      margin: 0 9px;
-    }
-  }
-
-  .rhap_play-pause-button {
-    width: 35px;
-  }
-  .rhap_rewind-button,
-  .rhap_forward-button {
-    width: 28px;
+  .rhap_controls-section {
+    width: 25%;
+    justify-content: center;
   }
 
   .rhap_volume-button {
     color: $black;
+  }
+  .rhap_main-controls {
+    width: 75%;
+    justify-content: space-evenly;
+  }
+}
+
+.post-audio-container {
+  bottom: 0;
+  margin: 0;
+  position: fixed;
+  transform: translateY(100%) scale(1.0001) translateZ(0);
+  transition: all 0.1s ease-in-out 0s;
+  width: 100%;
+  will-change: transform;
+  .close-and-hide-section-container {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    z-index: 1;
+    .close-and-hide-section {
+      display: flex;
+      width: 85px;
+      justify-content: space-between;
+      padding: $space-xs $space-sm 0;
+    }
+  }
+  &.audio-hidden {
+    .close-and-hide-section-container {
+      opacity: 0.8;
+      background-color: $audio-background-color;
+      transform: translateY(-100%);
+      transition: all 0.1s ease-in-out 0.3s;
+      border-radius: 4px 4px 0 0;
+    }
+  }
+  &.audio-visible {
+    filter: blur(0);
+    opacity: 1;
+    pointer-events: inherit;
+    transform: translateY(0) scale(1) translateZ(0);
+    visibility: visible;
   }
 }

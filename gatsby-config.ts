@@ -21,6 +21,13 @@ const config: GatsbyConfig = {
         dataset: appConfig.sanityDataset,
       },
     },
+
+    {
+      resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
+      options: {
+        devMode: false,
+      },
+    },
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
