@@ -95,7 +95,7 @@ const PostComponent = ({
             />
             {/* TODO: Replace with component that has play icon and correct styles */}
             <p
-              className="show-introduction"
+              className="post-as-audio-button"
               onClick={initializePostAudioPlayer}
             >
               Play post as audio
