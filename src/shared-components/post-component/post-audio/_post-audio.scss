@@ -6,9 +6,21 @@ $audio-background-color: #fab908;
   box-shadow: none;
   background-color: $audio-background-color;
   opacity: 0.9;
+  &.is-tablet-or-narrower {
+    .rhap_controls-section {
+      width: 100%;
+      justify-content: center;
+    }
+    .rhap_progress-section {
+      width: 100%;
+    }
+    .rhap_header {
+      width: unset;
+    }
+  }
   .rhap_header {
     width: $post-text-max-width;
-    margin: 0 auto;
+    margin: 0 auto 10px;
 
     .post-audio-title {
       font-family: $font-heading;
@@ -77,6 +89,9 @@ $audio-background-color: #fab908;
     width: 75%;
     justify-content: space-evenly;
   }
+  .rhap_main {
+    margin-bottom: $space-sm;
+  }
 }
 
 .post-audio-container {
@@ -87,21 +102,19 @@ $audio-background-color: #fab908;
   transition: all 0.1s ease-in-out 0s;
   width: 100%;
   will-change: transform;
-  .close-and-hide-section-container {
-    position: absolute;
-    cursor: pointer;
-    right: 0;
-    z-index: 1;
-    .close-and-hide-section {
-      display: flex;
-      width: 85px;
-      justify-content: space-between;
-      padding: $space-xs $space-sm 0;
+  &.tablet {
+    .close-and-hide-section-container {
+      position: relative;
+      opacity: 0.9;
+      background-color: $audio-background-color;
+      .close-and-hide-section {
+        width: initial;
+      }
     }
   }
   &.audio-hidden {
     .close-and-hide-section-container {
-      opacity: 0.8;
+      opacity: 0.9;
       background-color: $audio-background-color;
       transform: translateY(-100%);
       transition: all 0.1s ease-in-out 0.3s;
@@ -114,5 +127,17 @@ $audio-background-color: #fab908;
     pointer-events: inherit;
     transform: translateY(0) scale(1) translateZ(0);
     visibility: visible;
+  }
+  .close-and-hide-section-container {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    z-index: 1;
+    .close-and-hide-section {
+      display: flex;
+      width: 85px;
+      justify-content: space-between;
+      padding: $space-xs $space-sm 0;
+    }
   }
 }

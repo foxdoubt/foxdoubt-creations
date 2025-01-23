@@ -6,4 +6,5 @@ export default {
   postPath: `./src/templates/post/post.tsx`,
   fallbackShowName: "Show",
   mobileBreakpointWidth: 480,
+  tabletBreakpointWidth: 768,
 };
