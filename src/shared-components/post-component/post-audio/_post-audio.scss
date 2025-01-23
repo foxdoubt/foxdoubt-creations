@@ -17,7 +17,7 @@ $audio-background-color: #fab908;
   }
   .rhap_header {
     width: $post-text-max-width;
-    margin: 0 auto;
+    margin: 0 auto 10px;
 
     .post-audio-title {
       font-family: $font-heading;
@@ -86,6 +86,9 @@ $audio-background-color: #fab908;
     width: 75%;
     justify-content: space-evenly;
   }
+  .rhap_main {
+    margin-bottom: $space-sm;
+  }
 }
 
 .post-audio-container {
@@ -97,6 +100,8 @@ $audio-background-color: #fab908;
   width: 100%;
   will-change: transform;
   .close-and-hide-section-container {
+    opacity: 0.9;
+    background-color: $audio-background-color;
     position: absolute;
     cursor: pointer;
     right: 0;
@@ -108,10 +113,16 @@ $audio-background-color: #fab908;
       padding: $space-xs $space-sm 0;
     }
   }
+  &.tablet {
+    .close-and-hide-section-container {
+      position: relative;
+      .close-and-hide-section {
+        width: initial;
+      }
+    }
+  }
   &.audio-hidden {
     .close-and-hide-section-container {
-      opacity: 0.8;
-      background-color: $audio-background-color;
       transform: translateY(-100%);
       transition: all 0.1s ease-in-out 0.3s;
       border-radius: 4px 4px 0 0;

@@ -41,11 +41,14 @@ const PostAudio = ({
     layout: "horizontal-reverse",
     className: "post-audio",
   };
+  let closeAndHideContainerScreenSize = "desktop";
+
   if (isUserOnTabletOrNarrower) {
     screenSizeDependentProps = {
       layout: "stacked-reverse",
       className: "post-audio is-tablet-or-narrower",
     };
+    closeAndHideContainerScreenSize = "tablet";
   }
 
   const playIcon = <TbPlayerPlayFilled color="black" />;
@@ -58,9 +61,11 @@ const PostAudio = ({
 
   const initialStateContainerClassNames = "post-audio-container";
 
-  const containerClassNames = isInitialState
-    ? initialStateContainerClassNames
-    : `post-audio-container${isVisible ? " audio-visible" : " audio-hidden"}`;
+  const containerClassNames = (
+    isInitialState
+      ? initialStateContainerClassNames
+      : `post-audio-container${isVisible ? " audio-visible" : " audio-hidden"}`
+  ).concat(" ", closeAndHideContainerScreenSize);
 
   return src ? (
     <div className={containerClassNames}>
