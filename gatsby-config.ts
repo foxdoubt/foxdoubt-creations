@@ -36,7 +36,7 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        icon: "src/images/fox-icon.svg",
+        icon: "src/images/fox.svg",
       },
     },
     {
