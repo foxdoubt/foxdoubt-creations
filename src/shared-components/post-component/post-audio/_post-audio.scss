@@ -14,6 +14,9 @@ $audio-background-color: #fab908;
     .rhap_progress-section {
       width: 100%;
     }
+    .rhap_header {
+      width: unset;
+    }
   }
   .rhap_header {
     width: $post-text-max-width;
@@ -99,23 +102,11 @@ $audio-background-color: #fab908;
   transition: all 0.1s ease-in-out 0s;
   width: 100%;
   will-change: transform;
-  .close-and-hide-section-container {
-    opacity: 0.9;
-    background-color: $audio-background-color;
-    position: absolute;
-    cursor: pointer;
-    right: 0;
-    z-index: 1;
-    .close-and-hide-section {
-      display: flex;
-      width: 85px;
-      justify-content: space-between;
-      padding: $space-xs $space-sm 0;
-    }
-  }
   &.tablet {
     .close-and-hide-section-container {
       position: relative;
+      opacity: 0.9;
+      background-color: $audio-background-color;
       .close-and-hide-section {
         width: initial;
       }
@@ -123,6 +114,8 @@ $audio-background-color: #fab908;
   }
   &.audio-hidden {
     .close-and-hide-section-container {
+      opacity: 0.9;
+      background-color: $audio-background-color;
       transform: translateY(-100%);
       transition: all 0.1s ease-in-out 0.3s;
       border-radius: 4px 4px 0 0;
@@ -134,5 +127,17 @@ $audio-background-color: #fab908;
     pointer-events: inherit;
     transform: translateY(0) scale(1) translateZ(0);
     visibility: visible;
+  }
+  .close-and-hide-section-container {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    z-index: 1;
+    .close-and-hide-section {
+      display: flex;
+      width: 85px;
+      justify-content: space-between;
+      padding: $space-xs $space-sm 0;
+    }
   }
 }
