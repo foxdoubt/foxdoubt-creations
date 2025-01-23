@@ -7,6 +7,7 @@ import type { ArbitraryTypedObject } from "@portabletext/types";
 import PostMainImage from "./post-main-image/post-main-image";
 import { Link } from "gatsby";
 import { IPostLinkState } from "../../util/types";
+import { TbPlayerPlayFilled, TbPlayerPauseFilled } from "react-icons/tb";
 
 type PostComponentProps = Queries.PostContext & {
   nextStepsState: IPostLinkState;
@@ -94,12 +95,12 @@ const PostComponent = ({
               mainImageCaption={mainImageCaption}
             />
             {/* TODO: Replace with component that has play icon and correct styles */}
-            <p
-              className="post-as-audio-button"
-              onClick={initializePostAudioPlayer}
-            >
-              Play post as audio
-            </p>
+            <div className="post-as-audio-button">
+              <span className="flex-column-center post-as-audio-icon">
+                <TbPlayerPlayFilled onClick={initializePostAudioPlayer} />
+              </span>
+              <p className="post-as-audio-text">Play post as audio</p>
+            </div>
             <div className="post-body">
               <PostBody value={value as ArbitraryTypedObject} />
               {nextStepsHtml}

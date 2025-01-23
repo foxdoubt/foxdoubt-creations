@@ -143,5 +143,19 @@ $audio-background-color: #fab908;
 }
 
 .post-as-audio-button {
-  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  .post-as-audio-icon {
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 50%;
+    width: $space-md;
+    height: $space-md;
+    margin-right: $space-sm;
+  }
+  .post-as-audio-text {
+    font-family: $font-heading;
+    color: $font-color-accent;
+    font-size: $font-size-md;
+  }
 }
