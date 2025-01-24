@@ -8,6 +8,7 @@ import PostMainImage from "./post-main-image/post-main-image";
 import { Link } from "gatsby";
 import { IPostLinkState } from "../../util/types";
 import { TbPlayerPlayFilled, TbPlayerPauseFilled } from "react-icons/tb";
+import AudioPlayer from "react-h5-audio-player";
 
 type PostComponentProps = Queries.PostContext & {
   nextStepsState: IPostLinkState;
@@ -67,6 +68,13 @@ const PostComponent = ({
     setPostAudioState(initialState);
   };
 
+  const setIsPlaying = (isPlayerPlaying: boolean) => {
+    setPostAudioState({
+      ...postAudioState,
+      isPlayerPlaying,
+    });
+  };
+
   const postTitleProps = {
     title,
     wordCount,
@@ -84,6 +92,30 @@ const PostComponent = ({
       </Link>
     ) : null;
 
+  const playerRef = React.useRef<AudioPlayer>(null);
+
+  React.useEffect(() => {
+    if (postAudioState.isPlayerPlaying) {
+      playerRef.current?.audio.current?.play();
+    } else {
+      playerRef.current?.audio.current?.pause();
+    }
+  });
+
+  const postAsAudioButtonOnClick = () => {
+    if (postAudioState.isInitialState) {
+      initializePostAudioPlayer();
+    } else {
+      setIsPlaying(!postAudioState.isPlayerPlaying);
+    }
+  };
+
+  const playerIcon = postAudioState.isPlayerPlaying ? (
+    <TbPlayerPauseFilled onClick={postAsAudioButtonOnClick} />
+  ) : (
+    <TbPlayerPlayFilled onClick={postAsAudioButtonOnClick} />
+  );
+
   return (
     <>
       <Layout pathname={pathname}>
@@ -94,10 +126,10 @@ const PostComponent = ({
               image={mainImage}
               mainImageCaption={mainImageCaption}
             />
-            {/* TODO: Replace with component that has play icon and correct styles */}
+
             <div className="post-as-audio-button">
               <span className="flex-column-center post-as-audio-icon">
-                <TbPlayerPlayFilled onClick={initializePostAudioPlayer} />
+                {playerIcon}
               </span>
               <p className="post-as-audio-text">Play post as audio</p>
             </div>
@@ -115,6 +147,8 @@ const PostComponent = ({
         toggleVisibility={togglePostAudioVisibility}
         close={resetPostAudio}
         postTitle={title}
+        player={playerRef}
+        togglePlay={setIsPlaying}
       />
     </>
   );

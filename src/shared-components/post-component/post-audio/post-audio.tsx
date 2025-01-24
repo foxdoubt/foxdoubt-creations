@@ -19,7 +19,9 @@ interface IPostAudioState {
   isPlaying: boolean;
   close: () => void;
   toggleVisibility: () => void;
+  togglePlay: (isPlaying: boolean) => void;
   postTitle: Queries.Maybe<string>;
+  player: React.RefObject<AudioPlayer>;
 }
 
 const PostAudio = ({
@@ -28,6 +30,9 @@ const PostAudio = ({
   close,
   toggleVisibility,
   postTitle,
+  player,
+  togglePlay,
+  isPlaying,
 }: IPostAudioState) => {
   const src =
     "https://www.soundsnap.com/bird_young_blue_jay_calls_and_wings_flapping_4";
@@ -80,6 +85,13 @@ const PostAudio = ({
         </div>
       </div>
       <AudioPlayer
+        onPause={() => {
+          togglePlay(false);
+        }}
+        onPlay={() => {
+          togglePlay(true);
+        }}
+        ref={player}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         layout={screenSizeDependentProps.layout as any}
         className={screenSizeDependentProps.className}
