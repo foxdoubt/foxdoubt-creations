@@ -7,3 +7,9 @@ export interface IPostLinkState {
   nextStepLinkText?: string;
   nextStepsLinkPath?: string;
 }
+
+export interface IPostComponentAudioState {
+  isPlayerVisible: boolean;
+  isPlayerPlaying: boolean;
+  isInitialState: boolean;
+}

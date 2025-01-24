@@ -9,19 +9,12 @@ import { Link } from "gatsby";
 import { IPostLinkState } from "../../util/types";
 import { TbPlayerPlayFilled, TbPlayerPauseFilled } from "react-icons/tb";
 import AudioPlayer from "react-h5-audio-player";
+import { IPostComponentAudioState } from "../../util/types";
 
 type PostComponentProps = Queries.PostContext & {
   nextStepsState: IPostLinkState;
   pathname: string;
 };
-
-const { useState } = React;
-
-interface IPostComponentAudioState {
-  isPlayerVisible: boolean;
-  isPlayerPlaying: boolean;
-  isInitialState: boolean;
-}
 
 const initialState: IPostComponentAudioState = {
   isPlayerVisible: false,
@@ -46,7 +39,7 @@ const PostComponent = ({
   },
 }: PostComponentProps) => {
   const [postAudioState, setPostAudioState] =
-    useState<IPostComponentAudioState>(initialState);
+    React.useState<IPostComponentAudioState>(initialState);
 
   const togglePostAudioVisibility = () => {
     const { isPlayerVisible } = postAudioState;
@@ -141,9 +134,9 @@ const PostComponent = ({
         </div>
       </Layout>
       <PostAudio
+        playerState={postAudioState}
         isInitialState={postAudioState.isInitialState}
         isVisible={postAudioState.isPlayerVisible}
-        isPlaying={postAudioState.isPlayerPlaying}
         toggleVisibility={togglePostAudioVisibility}
         close={resetPostAudio}
         postTitle={title}
