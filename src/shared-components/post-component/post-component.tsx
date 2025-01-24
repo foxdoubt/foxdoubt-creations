@@ -7,24 +7,65 @@ import type { ArbitraryTypedObject } from "@portabletext/types";
 import PostMainImage from "./post-main-image/post-main-image";
 import { Link } from "gatsby";
 import { IPostLinkState } from "../../util/types";
+import { TbPlayerPlayFilled, TbPlayerPauseFilled } from "react-icons/tb";
+import AudioPlayer from "react-h5-audio-player";
+import { IPostComponentAudioState } from "../../util/types";
 
 type PostComponentProps = Queries.PostContext & {
   nextStepsState: IPostLinkState;
   pathname: string;
 };
 
-const { useState } = React;
-
-interface IPostComponentAudioState {
-  isPlayerVisible: boolean;
-  isPlayerPlaying: boolean;
-  isInitialState: boolean;
-}
-
 const initialState: IPostComponentAudioState = {
   isPlayerVisible: false,
   isPlayerPlaying: false,
   isInitialState: true,
+};
+
+const PostAudioPlayerButton = ({
+  postAudioState,
+  setPostAudioState,
+  playerRef,
+}: {
+  postAudioState: IPostComponentAudioState;
+  setPostAudioState: (state: IPostComponentAudioState) => void;
+  playerRef: React.RefObject<AudioPlayer>;
+}) => {
+  const initializePostAudioPlayer = () => {
+    setPostAudioState({
+      isPlayerPlaying: true,
+      isPlayerVisible: true,
+      isInitialState: false,
+    });
+  };
+
+  const setIsPlaying = (isPlayerPlaying: boolean) => {
+    setPostAudioState({
+      ...postAudioState,
+      isPlayerPlaying,
+    });
+  };
+
+  React.useEffect(() => {
+    if (postAudioState.isPlayerPlaying) {
+      playerRef.current?.audio.current?.play();
+    } else {
+      playerRef.current?.audio.current?.pause();
+    }
+  });
+
+  const postAsAudioButtonOnClick = () => {
+    if (postAudioState.isInitialState) {
+      initializePostAudioPlayer();
+    } else {
+      setIsPlaying(!postAudioState.isPlayerPlaying);
+    }
+  };
+
+  if (postAudioState.isPlayerPlaying) {
+    return <TbPlayerPauseFilled onClick={postAsAudioButtonOnClick} />;
+  }
+  return <TbPlayerPlayFilled onClick={postAsAudioButtonOnClick} />;
 };
 
 const PostComponent = ({
@@ -44,7 +85,9 @@ const PostComponent = ({
   },
 }: PostComponentProps) => {
   const [postAudioState, setPostAudioState] =
-    useState<IPostComponentAudioState>(initialState);
+    React.useState<IPostComponentAudioState>(initialState);
+
+  const playerRef = React.useRef<AudioPlayer>(null);
 
   const togglePostAudioVisibility = () => {
     const { isPlayerVisible } = postAudioState;
@@ -54,16 +97,15 @@ const PostComponent = ({
     });
   };
 
-  const initializePostAudioPlayer = () => {
-    setPostAudioState({
-      isPlayerPlaying: true,
-      isPlayerVisible: true,
-      isInitialState: false,
-    });
-  };
-
   const resetPostAudio = () => {
     setPostAudioState(initialState);
+  };
+
+  const setIsPlaying = (isPlayerPlaying: boolean) => {
+    setPostAudioState({
+      ...postAudioState,
+      isPlayerPlaying,
+    });
   };
 
   const postTitleProps = {
@@ -93,13 +135,17 @@ const PostComponent = ({
               image={mainImage}
               mainImageCaption={mainImageCaption}
             />
-            {/* TODO: Replace with component that has play icon and correct styles */}
-            <p
-              className="show-introduction"
-              onClick={initializePostAudioPlayer}
-            >
-              Play post as audio
-            </p>
+
+            <div className="post-as-audio-button">
+              <span className="flex-column-center post-as-audio-icon">
+                <PostAudioPlayerButton
+                  postAudioState={postAudioState}
+                  setPostAudioState={setPostAudioState}
+                  playerRef={playerRef}
+                />
+              </span>
+              <p className="post-as-audio-text">Play post as audio</p>
+            </div>
             <div className="post-body">
               <PostBody value={value as ArbitraryTypedObject} />
               {nextStepsHtml}
@@ -108,12 +154,14 @@ const PostComponent = ({
         </div>
       </Layout>
       <PostAudio
+        playerState={postAudioState}
         isInitialState={postAudioState.isInitialState}
         isVisible={postAudioState.isPlayerVisible}
-        isPlaying={postAudioState.isPlayerPlaying}
         toggleVisibility={togglePostAudioVisibility}
         close={resetPostAudio}
         postTitle={title}
+        player={playerRef}
+        togglePlay={setIsPlaying}
       />
     </>
   );

@@ -2,6 +2,7 @@ import * as React from "react";
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import useScreenDimensions from "../../../hooks/use-screen-dimensions";
 import CONSTANTS from "../../../util/constants";
+import { IPostComponentAudioState } from "../../../util/types";
 
 import {
   TbRewindForward15,
@@ -14,21 +15,25 @@ import {
 } from "react-icons/tb";
 
 interface IPostAudioState {
+  playerState: IPostComponentAudioState;
   isVisible: boolean;
   isInitialState: boolean;
-  isPlaying: boolean;
   close: () => void;
   toggleVisibility: () => void;
+  togglePlay: (isPlaying: boolean) => void;
   postTitle: Queries.Maybe<string>;
+  player: React.RefObject<AudioPlayer>;
 }
 
 const PostAudio = ({
-  isVisible = false,
-  isInitialState,
+  playerState,
   close,
   toggleVisibility,
   postTitle,
+  player,
+  togglePlay,
 }: IPostAudioState) => {
+  const { isInitialState, isPlayerVisible: isVisible } = playerState;
   const src =
     "https://www.soundsnap.com/bird_young_blue_jay_calls_and_wings_flapping_4";
 
@@ -80,6 +85,13 @@ const PostAudio = ({
         </div>
       </div>
       <AudioPlayer
+        onPause={() => {
+          togglePlay(false);
+        }}
+        onPlay={() => {
+          togglePlay(true);
+        }}
+        ref={player}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         layout={screenSizeDependentProps.layout as any}
         className={screenSizeDependentProps.className}
