@@ -22,6 +22,52 @@ const initialState: IPostComponentAudioState = {
   isInitialState: true,
 };
 
+const PostAudioPlayerButton = ({
+  postAudioState,
+  setPostAudioState,
+  playerRef,
+}: {
+  postAudioState: IPostComponentAudioState;
+  setPostAudioState: (state: IPostComponentAudioState) => void;
+  playerRef: React.RefObject<AudioPlayer>;
+}) => {
+  const initializePostAudioPlayer = () => {
+    setPostAudioState({
+      isPlayerPlaying: true,
+      isPlayerVisible: true,
+      isInitialState: false,
+    });
+  };
+
+  const setIsPlaying = (isPlayerPlaying: boolean) => {
+    setPostAudioState({
+      ...postAudioState,
+      isPlayerPlaying,
+    });
+  };
+
+  React.useEffect(() => {
+    if (postAudioState.isPlayerPlaying) {
+      playerRef.current?.audio.current?.play();
+    } else {
+      playerRef.current?.audio.current?.pause();
+    }
+  });
+
+  const postAsAudioButtonOnClick = () => {
+    if (postAudioState.isInitialState) {
+      initializePostAudioPlayer();
+    } else {
+      setIsPlaying(!postAudioState.isPlayerPlaying);
+    }
+  };
+
+  if (postAudioState.isPlayerPlaying) {
+    return <TbPlayerPauseFilled onClick={postAsAudioButtonOnClick} />;
+  }
+  return <TbPlayerPlayFilled onClick={postAsAudioButtonOnClick} />;
+};
+
 const PostComponent = ({
   wordCount,
   readTime,
@@ -41,19 +87,13 @@ const PostComponent = ({
   const [postAudioState, setPostAudioState] =
     React.useState<IPostComponentAudioState>(initialState);
 
+  const playerRef = React.useRef<AudioPlayer>(null);
+
   const togglePostAudioVisibility = () => {
     const { isPlayerVisible } = postAudioState;
     setPostAudioState({
       ...postAudioState,
       isPlayerVisible: !isPlayerVisible,
-    });
-  };
-
-  const initializePostAudioPlayer = () => {
-    setPostAudioState({
-      isPlayerPlaying: true,
-      isPlayerVisible: true,
-      isInitialState: false,
     });
   };
 
@@ -85,30 +125,6 @@ const PostComponent = ({
       </Link>
     ) : null;
 
-  const playerRef = React.useRef<AudioPlayer>(null);
-
-  React.useEffect(() => {
-    if (postAudioState.isPlayerPlaying) {
-      playerRef.current?.audio.current?.play();
-    } else {
-      playerRef.current?.audio.current?.pause();
-    }
-  });
-
-  const postAsAudioButtonOnClick = () => {
-    if (postAudioState.isInitialState) {
-      initializePostAudioPlayer();
-    } else {
-      setIsPlaying(!postAudioState.isPlayerPlaying);
-    }
-  };
-
-  const playerIcon = postAudioState.isPlayerPlaying ? (
-    <TbPlayerPauseFilled onClick={postAsAudioButtonOnClick} />
-  ) : (
-    <TbPlayerPlayFilled onClick={postAsAudioButtonOnClick} />
-  );
-
   return (
     <>
       <Layout pathname={pathname}>
@@ -122,7 +138,11 @@ const PostComponent = ({
 
             <div className="post-as-audio-button">
               <span className="flex-column-center post-as-audio-icon">
-                {playerIcon}
+                <PostAudioPlayerButton
+                  postAudioState={postAudioState}
+                  setPostAudioState={setPostAudioState}
+                  playerRef={playerRef}
+                />
               </span>
               <p className="post-as-audio-text">Play post as audio</p>
             </div>
