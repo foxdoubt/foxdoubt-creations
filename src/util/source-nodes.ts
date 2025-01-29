@@ -1,0 +1,34 @@
+import Parser from "rss-parser";
+import appConfig from "../../app-config";
+import type { SourceNodesArgs } from "gatsby";
+
+// based on gatsbyjs.com/plugins/gatsby-source-podcast-rss-feed
+export const sourcePodcastNodes = async (
+  podcastName: string,
+  sourceNodeArgs: SourceNodesArgs
+) => {
+  const {
+    actions: { createNode },
+    createNodeId,
+    createContentDigest,
+  } = sourceNodeArgs;
+  const rssParser = new Parser();
+  const rssFeedUrl = `${appConfig.sanityRssServerUrl}/${appConfig.sanityProjectId}/${appConfig.sanityDataset}/${podcastName}/rss`;
+  const rssFeed = await rssParser.parseURL(rssFeedUrl);
+  rssFeed.items.forEach((item) => {
+    const nodeId = item["guid"];
+    const type = `podcastRssFeedEpisode`;
+    const description = `This node represents an individual podcast episode from the provided podcast rss feed.`;
+    createNode({
+      item,
+      id: createNodeId(`${type}${nodeId}`),
+      parent: null,
+      children: [],
+      internal: {
+        contentDigest: createContentDigest(item),
+        type,
+        description,
+      },
+    });
+  });
+};
