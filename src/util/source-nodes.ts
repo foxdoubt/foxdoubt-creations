@@ -14,12 +14,13 @@ export const sourcePodcastNodes = async (
   } = sourceNodeArgs;
   const rssParser = new Parser({
     customFields: {
-      item: ["description"],
+      item: ["description", "slug"],
     },
   });
   const rssFeedUrl = `${appConfig.sanityRssServerUrl}/${appConfig.sanityProjectId}/${appConfig.sanityDataset}/${podcastName}/rss`;
   const rssFeed = await rssParser.parseURL(rssFeedUrl);
   rssFeed.items.forEach((item) => {
+    console.log({ item });
     const nodeId = item["guid"];
     const type = `podcastRssFeedEpisode`;
 
