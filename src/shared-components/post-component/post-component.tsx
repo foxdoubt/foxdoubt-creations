@@ -11,10 +11,11 @@ import { TbPlayerPlayFilled, TbPlayerPauseFilled } from "react-icons/tb";
 import AudioPlayer from "react-h5-audio-player";
 import { IPostComponentAudioState } from "../../util/types";
 
-type PostComponentProps = Queries.PostContext & {
-  nextStepsState: IPostLinkState;
-  pathname: string;
-};
+type PostComponentProps = Queries.PostContext &
+  Queries.getPodcastEpisodeBySlugQuery & {
+    nextStepsState: IPostLinkState;
+    pathname: string;
+  };
 
 const initialState: IPostComponentAudioState = {
   isPlayerVisible: false,
@@ -79,11 +80,13 @@ const PostComponent = ({
   mainImage,
   mainImageCaption,
   pathname,
+  podcastRssFeedEpisode,
   nextStepsState = {
     nextStepLinkText: undefined,
     nextStepsLinkPath: undefined,
   },
 }: PostComponentProps) => {
+  const rssData = podcastRssFeedEpisode?.item;
   const [postAudioState, setPostAudioState] =
     React.useState<IPostComponentAudioState>(initialState);
 
@@ -154,6 +157,7 @@ const PostComponent = ({
         </div>
       </Layout>
       <PostAudio
+        rssData={rssData}
         playerState={postAudioState}
         isInitialState={postAudioState.isInitialState}
         isVisible={postAudioState.isPlayerVisible}

@@ -90,6 +90,7 @@ export const createPostContext = ({
   mainImage,
   mainImageCaption,
   slug,
+  podcastEpisodeSlug,
 }: Queries.SanityPost) => {
   const wordCount =
     _rawBody && getWordCount(_rawBody as unknown as PortableTextBlock[]);
@@ -104,5 +105,6 @@ export const createPostContext = ({
     slug: slug?.current,
     wordCount,
     readTime: getReadTime(wordCount),
+    episodeSlug: podcastEpisodeSlug?.current,
   };
 };

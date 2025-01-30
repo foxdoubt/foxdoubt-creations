@@ -12,13 +12,17 @@ export const sourcePodcastNodes = async (
     createNodeId,
     createContentDigest,
   } = sourceNodeArgs;
-  const rssParser = new Parser();
+  const rssParser = new Parser({
+    customFields: {
+      item: ["description"],
+    },
+  });
   const rssFeedUrl = `${appConfig.sanityRssServerUrl}/${appConfig.sanityProjectId}/${appConfig.sanityDataset}/${podcastName}/rss`;
   const rssFeed = await rssParser.parseURL(rssFeedUrl);
   rssFeed.items.forEach((item) => {
     const nodeId = item["guid"];
     const type = `podcastRssFeedEpisode`;
-    const description = `This node represents an individual podcast episode from the provided podcast rss feed.`;
+
     createNode({
       item,
       id: createNodeId(`${type}${nodeId}`),
@@ -27,7 +31,7 @@ export const sourcePodcastNodes = async (
       internal: {
         contentDigest: createContentDigest(item),
         type,
-        description,
+        description: item.description,
       },
     });
   });

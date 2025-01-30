@@ -1830,6 +1830,7 @@ type Query_sanityPostArgs = {
   _rawBody: InputMaybe<JSONQueryOperatorInput>;
   _rawCategories: InputMaybe<JSONQueryOperatorInput>;
   _rawMainImage: InputMaybe<JSONQueryOperatorInput>;
+  _rawPodcastEpisodeSlug: InputMaybe<JSONQueryOperatorInput>;
   _rawSlug: InputMaybe<JSONQueryOperatorInput>;
   _rev: InputMaybe<StringQueryOperatorInput>;
   _type: InputMaybe<StringQueryOperatorInput>;
@@ -1844,6 +1845,7 @@ type Query_sanityPostArgs = {
   mainImage: InputMaybe<SanityImageFilterInput>;
   mainImageCaption: InputMaybe<StringQueryOperatorInput>;
   parent: InputMaybe<NodeFilterInput>;
+  podcastEpisodeSlug: InputMaybe<SanitySlugFilterInput>;
   publishedAt: InputMaybe<DateQueryOperatorInput>;
   slug: InputMaybe<SanitySlugFilterInput>;
   title: InputMaybe<StringQueryOperatorInput>;
@@ -4500,6 +4502,7 @@ type SanityPost = Node & SanityDocument & {
   readonly _rawBody: Maybe<Scalars['JSON']>;
   readonly _rawCategories: Maybe<Scalars['JSON']>;
   readonly _rawMainImage: Maybe<Scalars['JSON']>;
+  readonly _rawPodcastEpisodeSlug: Maybe<Scalars['JSON']>;
   readonly _rawSlug: Maybe<Scalars['JSON']>;
   readonly _rev: Maybe<Scalars['String']>;
   readonly _type: Maybe<Scalars['String']>;
@@ -4514,6 +4517,7 @@ type SanityPost = Node & SanityDocument & {
   readonly mainImage: Maybe<SanityImage>;
   readonly mainImageCaption: Maybe<Scalars['String']>;
   readonly parent: Maybe<Node>;
+  readonly podcastEpisodeSlug: Maybe<SanitySlug>;
   readonly publishedAt: Maybe<Scalars['Date']>;
   readonly slug: Maybe<SanitySlug>;
   readonly title: Maybe<Scalars['String']>;
@@ -4544,6 +4548,11 @@ type SanityPost__rawCategoriesArgs = {
 
 
 type SanityPost__rawMainImageArgs = {
+  resolveReferences: InputMaybe<SanityResolveReferencesConfiguration>;
+};
+
+
+type SanityPost__rawPodcastEpisodeSlugArgs = {
   resolveReferences: InputMaybe<SanityResolveReferencesConfiguration>;
 };
 
@@ -4621,6 +4630,7 @@ type SanityPostFieldSelector = {
   readonly _rawBody: InputMaybe<FieldSelectorEnum>;
   readonly _rawCategories: InputMaybe<FieldSelectorEnum>;
   readonly _rawMainImage: InputMaybe<FieldSelectorEnum>;
+  readonly _rawPodcastEpisodeSlug: InputMaybe<FieldSelectorEnum>;
   readonly _rawSlug: InputMaybe<FieldSelectorEnum>;
   readonly _rev: InputMaybe<FieldSelectorEnum>;
   readonly _type: InputMaybe<FieldSelectorEnum>;
@@ -4635,6 +4645,7 @@ type SanityPostFieldSelector = {
   readonly mainImage: InputMaybe<SanityImageFieldSelector>;
   readonly mainImageCaption: InputMaybe<FieldSelectorEnum>;
   readonly parent: InputMaybe<NodeFieldSelector>;
+  readonly podcastEpisodeSlug: InputMaybe<SanitySlugFieldSelector>;
   readonly publishedAt: InputMaybe<FieldSelectorEnum>;
   readonly slug: InputMaybe<SanitySlugFieldSelector>;
   readonly title: InputMaybe<FieldSelectorEnum>;
@@ -4648,6 +4659,7 @@ type SanityPostFilterInput = {
   readonly _rawBody: InputMaybe<JSONQueryOperatorInput>;
   readonly _rawCategories: InputMaybe<JSONQueryOperatorInput>;
   readonly _rawMainImage: InputMaybe<JSONQueryOperatorInput>;
+  readonly _rawPodcastEpisodeSlug: InputMaybe<JSONQueryOperatorInput>;
   readonly _rawSlug: InputMaybe<JSONQueryOperatorInput>;
   readonly _rev: InputMaybe<StringQueryOperatorInput>;
   readonly _type: InputMaybe<StringQueryOperatorInput>;
@@ -4662,6 +4674,7 @@ type SanityPostFilterInput = {
   readonly mainImage: InputMaybe<SanityImageFilterInput>;
   readonly mainImageCaption: InputMaybe<StringQueryOperatorInput>;
   readonly parent: InputMaybe<NodeFilterInput>;
+  readonly podcastEpisodeSlug: InputMaybe<SanitySlugFilterInput>;
   readonly publishedAt: InputMaybe<DateQueryOperatorInput>;
   readonly slug: InputMaybe<SanitySlugFilterInput>;
   readonly title: InputMaybe<StringQueryOperatorInput>;
@@ -4716,6 +4729,7 @@ type SanityPostSortInput = {
   readonly _rawBody: InputMaybe<SortOrderEnum>;
   readonly _rawCategories: InputMaybe<SortOrderEnum>;
   readonly _rawMainImage: InputMaybe<SortOrderEnum>;
+  readonly _rawPodcastEpisodeSlug: InputMaybe<SortOrderEnum>;
   readonly _rawSlug: InputMaybe<SortOrderEnum>;
   readonly _rev: InputMaybe<SortOrderEnum>;
   readonly _type: InputMaybe<SortOrderEnum>;
@@ -4730,6 +4744,7 @@ type SanityPostSortInput = {
   readonly mainImage: InputMaybe<SanityImageSortInput>;
   readonly mainImageCaption: InputMaybe<SortOrderEnum>;
   readonly parent: InputMaybe<NodeSortInput>;
+  readonly podcastEpisodeSlug: InputMaybe<SanitySlugSortInput>;
   readonly publishedAt: InputMaybe<SortOrderEnum>;
   readonly slug: InputMaybe<SanitySlugSortInput>;
   readonly title: InputMaybe<SortOrderEnum>;
@@ -6217,9 +6232,11 @@ type podcastRssFeedEpisodeGroupConnection_sumArgs = {
 type podcastRssFeedEpisodeItem = {
   readonly content: Maybe<Scalars['String']>;
   readonly contentSnippet: Maybe<Scalars['String']>;
+  readonly description: Maybe<Scalars['String']>;
   readonly enclosure: Maybe<podcastRssFeedEpisodeItemEnclosure>;
   readonly guid: Maybe<Scalars['String']>;
   readonly itunes: Maybe<podcastRssFeedEpisodeItemItunes>;
+  readonly slug: Maybe<Scalars['String']>;
   readonly title: Maybe<Scalars['String']>;
 };
 
@@ -6250,18 +6267,22 @@ type podcastRssFeedEpisodeItemEnclosureSortInput = {
 type podcastRssFeedEpisodeItemFieldSelector = {
   readonly content: InputMaybe<FieldSelectorEnum>;
   readonly contentSnippet: InputMaybe<FieldSelectorEnum>;
+  readonly description: InputMaybe<FieldSelectorEnum>;
   readonly enclosure: InputMaybe<podcastRssFeedEpisodeItemEnclosureFieldSelector>;
   readonly guid: InputMaybe<FieldSelectorEnum>;
   readonly itunes: InputMaybe<podcastRssFeedEpisodeItemItunesFieldSelector>;
+  readonly slug: InputMaybe<FieldSelectorEnum>;
   readonly title: InputMaybe<FieldSelectorEnum>;
 };
 
 type podcastRssFeedEpisodeItemFilterInput = {
   readonly content: InputMaybe<StringQueryOperatorInput>;
   readonly contentSnippet: InputMaybe<StringQueryOperatorInput>;
+  readonly description: InputMaybe<StringQueryOperatorInput>;
   readonly enclosure: InputMaybe<podcastRssFeedEpisodeItemEnclosureFilterInput>;
   readonly guid: InputMaybe<StringQueryOperatorInput>;
   readonly itunes: InputMaybe<podcastRssFeedEpisodeItemItunesFilterInput>;
+  readonly slug: InputMaybe<StringQueryOperatorInput>;
   readonly title: InputMaybe<StringQueryOperatorInput>;
 };
 
@@ -6304,9 +6325,11 @@ type podcastRssFeedEpisodeItemItunesSortInput = {
 type podcastRssFeedEpisodeItemSortInput = {
   readonly content: InputMaybe<SortOrderEnum>;
   readonly contentSnippet: InputMaybe<SortOrderEnum>;
+  readonly description: InputMaybe<SortOrderEnum>;
   readonly enclosure: InputMaybe<podcastRssFeedEpisodeItemEnclosureSortInput>;
   readonly guid: InputMaybe<SortOrderEnum>;
   readonly itunes: InputMaybe<podcastRssFeedEpisodeItemItunesSortInput>;
+  readonly slug: InputMaybe<SortOrderEnum>;
   readonly title: InputMaybe<SortOrderEnum>;
 };
 
@@ -6360,6 +6383,13 @@ type GetArtworkPostQueryVariables = Exact<{
 
 
 type GetArtworkPostQuery = { readonly sanityArtwork: { readonly size: string | null, readonly medium: string | null, readonly completionYear: string | null, readonly title: string | null, readonly _rawBody: Record<string, unknown> | null, readonly mainImage: { readonly hotspot: { readonly width: number | null, readonly height: number | null } | null, readonly asset: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null } | null };
+
+type getPodcastEpisodeBySlugQueryVariables = Exact<{
+  episodeSlug: InputMaybe<Scalars['String']>;
+}>;
+
+
+type getPodcastEpisodeBySlugQuery = { readonly podcastRssFeedEpisode: { readonly item: { readonly title: string | null, readonly description: string | null, readonly enclosure: { readonly url: string | null, readonly type: string | null } | null } | null } | null };
 
 type TypegenPageQueryVariables = Exact<{ [key: string]: never; }>;
 

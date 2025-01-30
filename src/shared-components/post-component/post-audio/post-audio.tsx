@@ -23,6 +23,7 @@ interface IPostAudioState {
   togglePlay: (isPlaying: boolean) => void;
   postTitle: Queries.Maybe<string>;
   player: React.RefObject<AudioPlayer>;
+  rssData: Queries.podcastRssFeedEpisodeItem;
 }
 
 const PostAudio = ({
@@ -32,10 +33,10 @@ const PostAudio = ({
   postTitle,
   player,
   togglePlay,
+  rssData,
 }: IPostAudioState) => {
   const { isInitialState, isPlayerVisible: isVisible } = playerState;
-  const src =
-    "https://www.soundsnap.com/bird_young_blue_jay_calls_and_wings_flapping_4";
+  const src = rssData?.enclosure?.url;
 
   const screenDimensions = useScreenDimensions();
 
@@ -115,7 +116,7 @@ const PostAudio = ({
           RHAP_UI.DURATION,
         ]}
         progressJumpStep={15000}
-        src="https://www.freesoundslibrary.com/wp-content/uploads/2020/12/blue-jay-sounds.mp3"
+        src={src}
       />
     </div>
   ) : null;
