@@ -17,10 +17,10 @@ export const sourcePodcastNodes = async (
       item: ["description", "slug"],
     },
   });
-  const rssFeedUrl = `${appConfig.sanityRssServerUrl}/${appConfig.sanityProjectId}/${appConfig.sanityDataset}/${podcastName}/rss`;
-  const rssFeed = await rssParser.parseURL(rssFeedUrl);
+
+  const podcastUrl = `${appConfig.sanityRssServerUrl}/${podcastName}`;
+  const rssFeed = await rssParser.parseURL(podcastUrl);
   rssFeed.items.forEach((item) => {
-    console.log({ item });
     const nodeId = item["guid"];
     const type = `podcastRssFeedEpisode`;
 
