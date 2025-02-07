@@ -23,7 +23,17 @@ interface IPostAudioState {
   togglePlay: (isPlaying: boolean) => void;
   postTitle: Queries.Maybe<string>;
   player: React.RefObject<AudioPlayer>;
-  rssData: Queries.podcastRssFeedEpisodeItem;
+  rssData:
+    | {
+        readonly title: string | null;
+        readonly description: string | null;
+        readonly enclosure: {
+          readonly url: string | null;
+          readonly type: string | null;
+        } | null;
+      }
+    | null
+    | undefined;
 }
 
 const PostAudio = ({
