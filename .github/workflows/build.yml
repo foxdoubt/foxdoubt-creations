@@ -64,6 +64,7 @@ jobs:
       SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
       SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
       SANITY_DATASET: production
+      SANITY_RSS_SERVER_URL: ${{ secrets.SANITY_RSS_SERVER_URL }}
     name: Build Gatsby
     runs-on: ubuntu-latest
 

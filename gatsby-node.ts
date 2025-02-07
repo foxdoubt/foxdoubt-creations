@@ -1,4 +1,5 @@
 import type { CreateSchemaCustomizationArgs, GatsbyNode } from "gatsby";
+import { sourcePodcastNodes } from "./src/util/source-nodes";
 
 import {
   createArtworkPostsFromShow,
@@ -51,4 +52,10 @@ export const createPages: GatsbyNode["createPages"] = async ({
     createArtworkPostsFromShow(node, createPage);
     createShowIntroductionPosts(node, createPage);
   });
+};
+
+export const sourceNodes: GatsbyNode["sourceNodes"] = async (
+  sourceNodeArgs
+) => {
+  await sourcePodcastNodes("test-podcast", sourceNodeArgs);
 };

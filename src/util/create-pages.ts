@@ -98,6 +98,9 @@ export const createAllPosts = async (
             slug {
               current
             }
+            podcastEpisodeSlug {
+              current
+            }
             _rawBody
           }
         }
