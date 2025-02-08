@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import isBrowser from "../util/is-browser";
 
-const getScreenDimensions = () => {
+export const getScreenDimensions = () => {
   if (isBrowser) {
     return {
       width: window.innerWidth,

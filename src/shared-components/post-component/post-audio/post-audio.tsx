@@ -1,6 +1,6 @@
 import * as React from "react";
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
-import useScreenDimensions from "../../../hooks/use-screen-dimensions";
+import { getScreenDimensions } from "../../../hooks/use-screen-dimensions";
 import CONSTANTS from "../../../util/constants";
 import { IPostComponentAudioState } from "../../../util/types";
 
@@ -48,24 +48,38 @@ const PostAudio = ({
   const { isInitialState, isPlayerVisible: isVisible } = playerState;
   const src = rssData?.enclosure?.url;
 
-  const screenDimensions = useScreenDimensions();
-
-  const isUserOnTabletOrNarrower =
-    screenDimensions.width <= CONSTANTS.tabletBreakpointWidth;
-
-  let screenSizeDependentProps = {
+  const [audioLayout, setAudioLayout] = React.useState({
     layout: "horizontal-reverse",
     className: "post-audio",
-  };
-  let closeAndHideContainerScreenSize = "desktop";
+    closeAndHideContainerScreenSize: "desktop",
+  });
 
-  if (isUserOnTabletOrNarrower) {
-    screenSizeDependentProps = {
-      layout: "stacked-reverse",
-      className: "post-audio is-tablet-or-narrower",
+  const [windowDimensions, setWindowDimensions] = React.useState(
+    getScreenDimensions()
+  );
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setWindowDimensions(getScreenDimensions());
     };
-    closeAndHideContainerScreenSize = "tablet";
-  }
+
+    if (window) window.addEventListener("resize", handleResize);
+
+    if (windowDimensions.width <= CONSTANTS.tabletBreakpointWidth) {
+      setAudioLayout({
+        layout: "stacked-reverse",
+        className: "post-audio is-tablet-or-narrower",
+        closeAndHideContainerScreenSize: "tablet",
+      });
+    } else {
+      setAudioLayout({
+        layout: "horizontal-reverse",
+        className: "post-audio",
+        closeAndHideContainerScreenSize: "desktop",
+      });
+    }
+    return () => window && window.removeEventListener("resize", handleResize);
+  }, [playerState, windowDimensions]);
 
   const playIcon = <TbPlayerPlayFilled color="black" />;
   const pauseIcon = <TbPlayerPauseFilled color="black" />;
@@ -81,7 +95,7 @@ const PostAudio = ({
     isInitialState
       ? initialStateContainerClassNames
       : `post-audio-container${isVisible ? " audio-visible" : " audio-hidden"}`
-  ).concat(" ", closeAndHideContainerScreenSize);
+  ).concat(" ", audioLayout.closeAndHideContainerScreenSize);
 
   return src ? (
     <div className={containerClassNames}>
@@ -104,8 +118,8 @@ const PostAudio = ({
         }}
         ref={player}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        layout={screenSizeDependentProps.layout as any}
-        className={screenSizeDependentProps.className}
+        layout={audioLayout.layout as any}
+        className={audioLayout.className}
         header={[
           <div key="post-title" className="post-audio-title">
             {postTitle}
