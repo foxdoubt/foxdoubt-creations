@@ -4,6 +4,8 @@ import { getScreenDimensions } from "../../../hooks/use-screen-dimensions";
 import CONSTANTS from "../../../util/constants";
 import { IPostComponentAudioState } from "../../../util/types";
 
+const { useState, useEffect } = React;
+
 import {
   TbRewindForward15,
   TbRewindBackward15,
@@ -36,6 +38,14 @@ interface IPostAudioState {
     | undefined;
 }
 
+const secondsToDuration = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = Math.floor(seconds % 60);
+  const finalSeconds =
+    remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds;
+  return `${minutes}:${finalSeconds}`;
+};
+
 const PostAudio = ({
   playerState,
   close,
@@ -48,17 +58,17 @@ const PostAudio = ({
   const { isInitialState, isPlayerVisible: isVisible } = playerState;
   const src = rssData?.enclosure?.url;
 
-  const [audioLayout, setAudioLayout] = React.useState({
+  const [audioLayout, setAudioLayout] = useState({
     layout: "horizontal-reverse",
     className: "post-audio",
     closeAndHideContainerScreenSize: "desktop",
   });
 
-  const [windowDimensions, setWindowDimensions] = React.useState(
+  const [windowDimensions, setWindowDimensions] = useState(
     getScreenDimensions()
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
       setWindowDimensions(getScreenDimensions());
     };
@@ -137,7 +147,14 @@ const PostAudio = ({
         customProgressBarSection={[
           RHAP_UI.CURRENT_TIME,
           RHAP_UI.PROGRESS_BAR,
-          RHAP_UI.DURATION,
+          <div
+            key={`total-time-${src}`}
+            className={"rhap_time rhap_total-time"}
+          >
+            {player.current?.audio.current?.duration
+              ? `${secondsToDuration(player.current?.audio.current?.duration)}`
+              : "-:--"}
+          </div>,
         ]}
         progressJumpStep={15000}
         src={src}
