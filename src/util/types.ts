@@ -12,5 +12,4 @@ export interface IPostComponentAudioState {
   isPlayerVisible: boolean;
   isPlayerPlaying: boolean;
   isInitialState: boolean;
-  audioDurationDataReady: boolean;
 }

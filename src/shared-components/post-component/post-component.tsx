@@ -21,7 +21,6 @@ const initialState: IPostComponentAudioState = {
   isPlayerVisible: false,
   isPlayerPlaying: false,
   isInitialState: true,
-  audioDurationDataReady: false,
 };
 
 const PostAudioPlayerButton = ({
