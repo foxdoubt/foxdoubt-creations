@@ -81,10 +81,7 @@ const PostComponent = ({
   mainImageCaption,
   pathname,
   podcastRssFeedEpisode,
-  nextStepsState = {
-    nextStepLinkText: undefined,
-    nextStepsLinkPath: undefined,
-  },
+  nextStepsState,
 }: PostComponentProps) => {
   const rssData = podcastRssFeedEpisode?.item;
   const [postAudioState, setPostAudioState] =
@@ -120,7 +117,9 @@ const PostComponent = ({
     description,
   };
 
-  const { nextStepLinkText, nextStepsLinkPath } = nextStepsState;
+  const nextStepLinkText = nextStepsState?.nextStepLinkText;
+  const nextStepsLinkPath = nextStepsState?.nextStepsLinkPath;
+
   const nextStepsHtml =
     nextStepLinkText && nextStepsLinkPath ? (
       <Link className="post-next-steps-link" to={nextStepsLinkPath}>
